@@ -1,0 +1,50 @@
+App graph.Graph
+  -Frame "Graphics" 0 0 graphFrame
+    TabbedPane
+      VerticalPanel "Amanda"
+        +TextArea 40 60 transcript
+        -VerticalPanel
+           +TextField "" 10 command
+           +HorizontalPanel
+              -Button "<<" prev
+              -Button "" clear
+              -Button ">>" next
+              +Button "calculate" calc
+              -Button "load" load
+              -Button "reload" reload
+      VerticalPanel "Graph"
+        +AmaCanvas 400 400 graph
+        -TableInput "expr:min:max" 20 3 input
+      VerticalPanel "Graph2d"
+        +AmaCanvas 400 400 graph2d
+        -HorizontalPanel
+           +Padding 0 0
+          -VerticalPanel
+            -HorizontalPanel
+              -Button "^" up
+            -HorizontalPanel
+              -Button "<" left
+              -Button ">" right
+            -HorizontalPanel
+              -Button "v" down
+          +Padding 0 0
+          -VerticalPanel
+            -Button "change" changeButton
+          -List 5 figureList
+      VerticalPanel "AmaGraphics"
+        -HorizontalPanel
+           -Button "Start" startButton
+           -ComboBox "barriere|geen3|tetris|puzzel|life|spline|curve|convex|robot|graph|graph2d" program
+        -HorizontalPanel
+           -CheckBox "direct drawing" directDrawCheckBox
+  -Dialog "AmaGraphics" 600 100 graphDialog
+      VerticalPanel
+        +AmaCanvas 400 400 amagraphics
+        -HorizontalPanel
+           -VerticalPanel
+             -TableInput "expr:min:max" 5 3 params
+             -Button "Set" paramsButton
+           +Padding 0 0
+           -VerticalPanel
+             -ComboBox "25|30|35|40|45" actions
+             -Button "Do" actionButton

@@ -1,0 +1,26 @@
+#! /bin/bash
+
+./clean
+
+javac lib/util/*.java
+javac lib/swing/*.java
+javac lib/*.java
+
+## build commands for packages
+
+# java lib/Mocca *.mocca
+# javac *.java
+
+java lib/Mocca test/*.mocca
+javac test/*.java
+
+java lib/Mocca fun/*.mocca
+javac fun/*.java
+
+# java lib/Mocca graph/*.mocca
+javac graph/*.java
+
+java lib/Mocca wdk/*.mocca
+javac wdk/*.java
+
+
