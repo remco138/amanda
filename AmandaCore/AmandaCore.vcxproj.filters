@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="amalib\amcheck.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amcon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amerror.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\ameval.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amlex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amlib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\ammem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\ammodify.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amparse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\ampatter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amprint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amstack.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amsyslib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="amalib\amtable.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="amalib\amcheck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amerror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\ameval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amlex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\ammem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\ammodify.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\ampatter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amprint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amstack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amsyslib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amtable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\amtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amalib\bool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="hfg\amanda.html" />
+    <None Include="hfg\index_0.html" />
+    <None Include="hfg\index_1.html" />
+    <None Include="hfg\index_10.html" />
+    <None Include="hfg\index_11.html" />
+    <None Include="hfg\index_12.html" />
+    <None Include="hfg\index_13.html" />
+    <None Include="hfg\index_14.html" />
+    <None Include="hfg\index_2.html" />
+    <None Include="hfg\index_3.html" />
+    <None Include="hfg\index_4.html" />
+    <None Include="hfg\index_5.html" />
+    <None Include="hfg\index_6.html" />
+    <None Include="hfg\index_7.html" />
+    <None Include="hfg\index_8.html" />
+    <None Include="hfg\index_9.html" />
+    <None Include="Source.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

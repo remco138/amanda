@@ -1,0 +1,125 @@
+EXPORTS
+    CallRemote @1
+    CheckIO @2
+    CloseAllIOFiles @3
+    CloseIOFile @4
+    CreateInterpreter @5
+    CreateRemote @6
+    DropRemote @7
+    ExecuteCommand@4 @8
+    GetOption @9
+    GetRemote @10
+    GraphDisplay @11
+    InitOptions @12
+    InitRemote @13
+    Interpret @14
+    Load @15
+    MarkIOFile @16
+    OpenIOFileAppend @17
+    OpenIOFileRead @18
+    OpenIOFileWrite @19
+    PutRemote @20
+    ReadIOFile @21
+    SetIntSignal @22
+    Write @23
+    WriteCell @24
+    WriteIOFile @25
+    WriteString @26
+    WriteType @27
+    anonymousfunction @28
+    appenddirectors @29
+    appendrenamelistrec @30
+    applyIF @31
+    basepointer @32 DATA
+    checkdefinitions @33
+    checkexpression @34
+    checkinterrupt @35
+    checkmem @36
+    checkmemlarge @37
+    checkpattern @38
+    closeinput @39
+    comparecell @40
+    constantfunction @41
+    copydirector @42
+    createIO @43
+    createhashtable @44
+    createmem @45
+    createstack @46
+    emptydirector @47
+    eval @48
+    evalint @49
+    evalreal @50
+    finddirector @51
+    forallhashtable @52
+    forallstack @53
+    getPositionCode @54
+    gettemplate @55
+    gettoken @56
+    hashtable @57 DATA
+    inithashtable @58
+    initlex @59
+    initlib @60
+    initmodify @61
+    initrename @62
+    insert @63
+    insertabstype @64
+    insertoperator @65
+    insertsys @66
+    inserttypeexpr @67
+    inserttypestring @68
+    interruptcount @69 DATA
+    interrupted @70 DATA
+    lexerror @71
+    lockmem @72
+    main @73
+    mainenv @74 DATA
+    make @75
+    makeAPPLICATION @76
+    make_IF @77
+    makecompound @78
+    makeerror @79
+    makeinverse @80
+    makeset @81
+    match @82
+    matchpattern @83
+    modify_definitions @84
+    modify_expression @85
+    modifyerror @86
+    newcell @87
+    openfileinput @88
+    openinput @89
+    parseerror @90
+    parsefile @91
+    parseinput @92
+    parsetypeexpr @93
+    posCodeFileName @94
+    posCodeLinenr @95
+    printhashtable @96
+    printmeminfo @97
+    printusertypes @98
+    reclaim @99
+    replacedirectors @100
+    replacerenamelist @101
+    restoretemplates @102
+    rotatestack @103
+    runtimeerror @104
+    slide @105
+    squeeze @106
+    stack @107 DATA
+    stackpointer @108 DATA
+    starttiming @109
+    stoptiming @110
+    storefunctionname @111
+    systemerror @112
+    sysvalue_fread @113 DATA
+    template_false @114 DATA
+    template_match @115 DATA
+    template_nil @116 DATA
+    template_true @117 DATA
+    timing @118 DATA
+    tokenindent @119 DATA
+    tokenoffside @120 DATA
+    tokentype @121 DATA
+    tokenval @122 DATA
+    toplevel @123
+    unlockmem @124

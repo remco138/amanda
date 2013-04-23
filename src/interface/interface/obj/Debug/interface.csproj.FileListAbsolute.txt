@@ -1,7 +1,0 @@
-C:\git\amanda\src\interface\interface\obj\Debug\interface.Properties.Resources.resources
-C:\git\amanda\src\interface\interface\obj\Debug\interface.csproj.GenerateResource.Cache
-C:\git\amanda\src\interface\interface\bin\Debug\@interface.exe.config
-C:\git\amanda\src\interface\interface\bin\Debug\@interface.exe
-C:\git\amanda\src\interface\interface\bin\Debug\@interface.pdb
-C:\git\amanda\src\interface\interface\obj\Debug\@interface.exe
-C:\git\amanda\src\interface\interface\obj\Debug\@interface.pdb

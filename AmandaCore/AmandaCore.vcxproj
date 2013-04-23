@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{330EA74D-6BF1-4E01-817E-B78481834319}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)AmandaInterface\bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <CompileAs>CompileAsC</CompileAs>
+      <CallingConvention>Cdecl</CallingConvention>
+      <AdditionalOptions>/Tc %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>/Tc %(AdditionalOptions)</AdditionalOptions>
+      <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
+      <MapExports>true</MapExports>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="amalib\amcheck.c" />
+    <ClCompile Include="amalib\amcon.c" />
+    <ClCompile Include="amalib\amerror.c" />
+    <ClCompile Include="amalib\ameval.c" />
+    <ClCompile Include="amalib\amio.c" />
+    <ClCompile Include="amalib\amlex.c" />
+    <ClCompile Include="amalib\amlib.c" />
+    <ClCompile Include="amalib\ammem.c" />
+    <ClCompile Include="amalib\ammodify.c" />
+    <ClCompile Include="amalib\amparse.c" />
+    <ClCompile Include="amalib\ampatter.c" />
+    <ClCompile Include="amalib\amprint.c" />
+    <ClCompile Include="amalib\amstack.c" />
+    <ClCompile Include="amalib\amsyslib.c" />
+    <ClCompile Include="amalib\amtable.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="amalib\amcheck.h" />
+    <ClInclude Include="amalib\amcon.h" />
+    <ClInclude Include="amalib\amerror.h" />
+    <ClInclude Include="amalib\ameval.h" />
+    <ClInclude Include="amalib\amio.h" />
+    <ClInclude Include="amalib\amlex.h" />
+    <ClInclude Include="amalib\amlib.h" />
+    <ClInclude Include="amalib\ammem.h" />
+    <ClInclude Include="amalib\ammodify.h" />
+    <ClInclude Include="amalib\amparse.h" />
+    <ClInclude Include="amalib\ampatter.h" />
+    <ClInclude Include="amalib\amprint.h" />
+    <ClInclude Include="amalib\amstack.h" />
+    <ClInclude Include="amalib\amsyslib.h" />
+    <ClInclude Include="amalib\amtable.h" />
+    <ClInclude Include="amalib\amtypes.h" />
+    <ClInclude Include="amalib\bool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="hfg\amanda.html" />
+    <None Include="hfg\index_0.html" />
+    <None Include="hfg\index_1.html" />
+    <None Include="hfg\index_10.html" />
+    <None Include="hfg\index_11.html" />
+    <None Include="hfg\index_12.html" />
+    <None Include="hfg\index_13.html" />
+    <None Include="hfg\index_14.html" />
+    <None Include="hfg\index_2.html" />
+    <None Include="hfg\index_3.html" />
+    <None Include="hfg\index_4.html" />
+    <None Include="hfg\index_5.html" />
+    <None Include="hfg\index_6.html" />
+    <None Include="hfg\index_7.html" />
+    <None Include="hfg\index_8.html" />
+    <None Include="hfg\index_9.html" />
+    <None Include="Source.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
