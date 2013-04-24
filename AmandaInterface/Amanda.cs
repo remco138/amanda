@@ -27,10 +27,14 @@ namespace AmandaInterface
 
        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void Interpret(char[] expr);
+
+       [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr[] gethashtable([MarshalAs(UnmanagedType.LPStr)] string search);
     }
+
+
     class Amanda
     {
-
         public Amanda(string autorun = null)
         {
             AmandaHook.InitOptions(false, ""); //empty char will result in amanda loading up amanda.ini
@@ -42,6 +46,18 @@ namespace AmandaInterface
         {
             AmandaHook.Interpret(expression.ToCharArray());
             return true;
+        }
+
+        public List<string> GetIdentifiers(string search = "")
+        {
+            List<string> functionList = new List<string>();
+            IntPtr[] funcList = AmandaHook.gethashtable(search);
+
+            foreach (IntPtr t in funcList)
+            {
+                functionList.Add(Marshal.PtrToStringAnsi(t));
+            }
+            return functionList;
         }
 
     }

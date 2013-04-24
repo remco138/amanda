@@ -26,7 +26,8 @@ void createhashtable(void);
 void inithashtable(void);
 
 /* prints all definitions sorted by name */
-void printhashtable(void);
+void   printhashtable(void);
+char** gethashtable(char* search);
 
 /* prints the types of all user defined functions sorted by name */
 void printusertypes(void);
