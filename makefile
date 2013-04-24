@@ -1,4 +1,4 @@
-exename = ama.dll
+exename = AmandaCore.dll
 
 VPATH = AmandaCore/Amalib/ AmandaInterface/
 
