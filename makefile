@@ -1,4 +1,4 @@
-exename = ama.so
+exename = ama.dll
 
 VPATH = AmandaCore/Amalib/ AmandaInterface/
 
@@ -9,11 +9,9 @@ compiler = gcc
 .c.o:
 	$(compiler) -c -shared -fPIC -g -O0 $^
 
-interface: $(objfiles)
-   xbuild AmandaInterface/AmandaInterface.csproj
-
-core: $(objfiles)
-	$(compiler) -O0 -shared -fPIC $(objfiles) -g -lm  -o $(exename)
+all: $(objfiles)
+	$(compiler) -O0 -shared -fPIC $(objfiles) -g -lm  -o debug/$(exename)
+	xbuild AmandaInterface/AmandaInterface.csproj
 
 clean:
 	rm *.o ama.* ama

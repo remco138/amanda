@@ -14,7 +14,7 @@ namespace AmandaInterface
     public partial class Form1 : Form
     {
         // ExecuteCommand() staat in amcon.c!
-
+		/*
        [DllImport("AmandaCore.dll")]
         public static extern IntPtr ExecuteCommand(char[] input);
         [DllImport("AmandaCore.dll", EntryPoint="Load", CallingConvention = CallingConvention.Cdecl)]
@@ -43,5 +43,6 @@ namespace AmandaInterface
        
             showTextBox.Text = testAnsi;
         }
+		*/
     }
 }
