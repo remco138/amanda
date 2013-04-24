@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Hfg">
+      <UniqueIdentifier>{60231e99-5aad-4b63-abbd-6736f867d7d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="amalib\amcheck.c">
@@ -115,24 +118,53 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="hfg\amanda.html" />
-    <None Include="hfg\index_0.html" />
-    <None Include="hfg\index_1.html" />
-    <None Include="hfg\index_10.html" />
-    <None Include="hfg\index_11.html" />
-    <None Include="hfg\index_12.html" />
-    <None Include="hfg\index_13.html" />
-    <None Include="hfg\index_14.html" />
-    <None Include="hfg\index_2.html" />
-    <None Include="hfg\index_3.html" />
-    <None Include="hfg\index_4.html" />
-    <None Include="hfg\index_5.html" />
-    <None Include="hfg\index_6.html" />
-    <None Include="hfg\index_7.html" />
-    <None Include="hfg\index_8.html" />
-    <None Include="hfg\index_9.html" />
-    <None Include="Source.def">
-      <Filter>Source Files</Filter>
+    <None Include="hfg\amanda.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_0.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_1.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_10.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_11.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_12.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_13.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_14.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_2.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_3.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_4.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_5.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_6.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_7.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_8.html">
+      <Filter>Hfg</Filter>
+    </None>
+    <None Include="hfg\index_9.html">
+      <Filter>Hfg</Filter>
     </None>
   </ItemGroup>
 </Project>
