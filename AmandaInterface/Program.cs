@@ -13,31 +13,30 @@ namespace AmandaInterface
 {
     static class Program
     {
-
         // ExecuteCommand() staat in amcon.c!
 
-
-
-
-        /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            //stderr should be stdout... whatever
+            //stderr should be stdout... whatever, doesnt work
             MemoryStream stderr= new MemoryStream();
             StreamWriter stderrHook = new StreamWriter(stderr);
             StreamReader stderrReader = new StreamReader(stderr);
             Console.SetOut(stderrHook);
 
 
-            Amanda amanda = new Amanda("test.ama");
-            amanda.Interpret("[x | x < [0..999]]");
+            Amanda amanda = new Amanda("test.ama");//Works
+            amanda.Interpret("[x | x < [0..999]]");//Works
             amanda.Interpret("[x | x asa< [0..999]]");
             amanda.Interpret("WAT");
+            
+            List<string> functions = amanda.GetIdentifiers(); //Works
 
-            string errors = stderrReader.ReadToEnd();
+            amanda.Load("amanda = \"leuk\"\n" + //Works
+                        "ik = [0..999]\n" +
+                        "x = [x | x <- [0..1000]]");
 
 
             Application.EnableVisualStyles();

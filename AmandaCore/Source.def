@@ -124,3 +124,4 @@ EXPORTS
     tokenval @122 DATA
     toplevel @123
     unlockmem @124LIBRARY
+	gethashtable @125

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace AmandaInterface
 {
@@ -29,7 +30,7 @@ namespace AmandaInterface
         public static extern void Interpret(char[] expr);
 
        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr[] gethashtable([MarshalAs(UnmanagedType.LPStr)] string search);
+        public static extern IntPtr gethashtable([MarshalAs(UnmanagedType.LPStr)] string search);
     }
 
 
@@ -42,21 +43,42 @@ namespace AmandaInterface
             if (autorun != null) AmandaHook.Load(autorun);
         }
 
+        //Run a block of code (eg: definitions)
+        public bool Load(string code)
+        {
+            File.WriteAllText(".temp.ama", code);
+            bool success = AmandaHook.Load(".temp.ama");
+            File.Delete(".temp.ama");
+
+            return success;
+        }
+
+        //Run a single expression
         public bool Interpret(string expression)
         {
             AmandaHook.Interpret(expression.ToCharArray());
             return true;
         }
 
+        //C char** to C# string is nasty
         public List<string> GetIdentifiers(string search = "")
         {
             List<string> functionList = new List<string>();
-            IntPtr[] funcList = AmandaHook.gethashtable(search);
+            IntPtr ptr = AmandaHook.gethashtable(search);
+            int size = 2000;
 
-            foreach (IntPtr t in funcList)
+            for (int i = 0; i < size; i++)
             {
-                functionList.Add(Marshal.PtrToStringAnsi(t));
+                IntPtr strPtr = (IntPtr)Marshal.PtrToStructure(ptr, typeof(IntPtr));
+                functionList.Add(Marshal.PtrToStringAnsi(strPtr));
+                ptr = new IntPtr(ptr.ToInt64() + IntPtr.Size);
+                if (functionList[i] == "\0\0\0")
+                {
+                    functionList.RemoveAt(i);
+                    break;
+                }
             }
+
             return functionList;
         }
 

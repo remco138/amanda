@@ -149,6 +149,25 @@ void printhashtable(void)
   for(k=0; k<indexsize; k++) Write("%s ", hashtable[index[k]].name);
 }
 
+char** gethashtable(char* search)
+{
+  static char* strings[hashtablesize];
+  int k, index[hashtablesize], indexsize = 0;
+
+  for(k=0; k<hashtablesize; k++)
+  {
+    FuncDef *fun = &(hashtable[k]);
+    if(fun->name != NULL
+    && fun->name[0] != anonymousprefix
+    && (fun->typeexpr || fun->abstype)) index[indexsize++] = k;
+  }
+
+  qsort(index, indexsize, sizeof(int), comparefuncdef);
+  for(k=0; k<indexsize; k++)  strings[k] = hashtable[index[k]].name;
+  strings[k+1] = "\0\0\0";
+  return strings;
+}
+
 void printusertypes(void)
 {
   int k, index[hashtablesize], indexsize = 0;
