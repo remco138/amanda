@@ -30,6 +30,8 @@ namespace AmandaInterface
         [STAThread]
         static void Main()
         {
+            bool a = Loada(null);
+            CheckIO();
 			string test = Marshal.PtrToStringAnsi(ExecuteCommand("[1]".ToCharArray()));
 			Console.WriteLine(test);
 			Form1 window = new Form1();
