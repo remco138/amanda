@@ -198,11 +198,11 @@ void main(int argc, char *argv[])
  *
  * 	P4P Edit
  *
+ *   __stdcall is niet een C standaard maar een M$ extensie, bij gcc is het __attribute__((fastcall)), ook is de enige plek waar stdcall veel gebruikt word de M$-API, cdecl is default
  */
 
-#define DLL 
 
-DLL char* __stdcall ExecuteCommand(char *input)
+char* ExecuteCommand(char *input)
 {
 	// TODO: nu nog uitzoeken wat er precies in Main() gebeurt OMG!
 	//

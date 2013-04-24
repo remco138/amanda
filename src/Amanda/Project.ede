@@ -1,0 +1,13 @@
+;; Object amanda
+;; EDE project file.
+(ede-proj-project "amanda"
+  :name "amanda"
+  :file "Project.ede"
+  :targets (list 
+   (ede-proj-target-makefile-program "ama"
+    :name "ama"
+    :path ""
+    :source '("amcon.c")
+    )
+   )
+  )
