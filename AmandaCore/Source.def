@@ -123,4 +123,4 @@ EXPORTS
     tokentype @121 DATA
     tokenval @122 DATA
     toplevel @123
-    unlockmem @124
+    unlockmem @124LIBRARY
