@@ -159,12 +159,13 @@ char** gethashtable(char* search)
     FuncDef *fun = &(hashtable[k]);
     if(fun->name != NULL
     && fun->name[0] != anonymousprefix
-    && (fun->typeexpr || fun->abstype)) index[indexsize++] = k;
+    && (fun->typeexpr || fun->abstype)
+	&& strstr(fun->name, search) != NULL) index[indexsize++] = k;
   }
 
   qsort(index, indexsize, sizeof(int), comparefuncdef);
   for(k=0; k<indexsize; k++)  strings[k] = hashtable[index[k]].name;
-  strings[k+1] = "\0\0\0";
+  strings[k] = "\n\n\n";
   return strings;
 }
 

@@ -72,7 +72,7 @@ namespace AmandaInterface
                 IntPtr strPtr = (IntPtr)Marshal.PtrToStructure(ptr, typeof(IntPtr));
                 functionList.Add(Marshal.PtrToStringAnsi(strPtr));
                 ptr = new IntPtr(ptr.ToInt64() + IntPtr.Size);
-                if (functionList[i] == "\0\0\0")
+                if (functionList[i] == "\n\n\n") //pretty lame but who cares
                 {
                     functionList.RemoveAt(i);
                     break;

@@ -21,10 +21,10 @@ namespace AmandaInterface
         static void Main()
         {
             //stderr should be stdout... whatever, doesnt work
-            MemoryStream stderr= new MemoryStream();
-            StreamWriter stderrHook = new StreamWriter(stderr);
-            StreamReader stderrReader = new StreamReader(stderr);
-            Console.SetOut(stderrHook);
+            //MemoryStream stderr= new MemoryStream();
+            //StreamWriter stderrHook = new StreamWriter(stderr);
+            //StreamReader stderrReader = new StreamReader(stderr);
+            //Console.SetOut(stderrHook);
 
 
             Amanda amanda = new Amanda("test.ama");//Works
@@ -33,6 +33,9 @@ namespace AmandaInterface
             amanda.Interpret("WAT");
             
             List<string> functions = amanda.GetIdentifiers(); //Works
+            List<string> zip = amanda.GetIdentifiers("zip"); //Works
+
+            zip.ForEach(q => Console.WriteLine(q));
 
             amanda.Load("amanda = \"leuk\"\n" + //Works
                         "ik = [0..999]\n" +
