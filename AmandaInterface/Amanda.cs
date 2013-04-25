@@ -33,7 +33,10 @@ namespace AmandaInterface
         public static extern void Interpret(char[] expr);
 
         [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr gethashtable([MarshalAs(UnmanagedType.LPStr)] string search);
+        public static extern IntPtr gethashtable([MarshalAs(UnmanagedType.LPStr)] string search); //char**
+
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr getMessages();                                                //char**
 
         [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool SetOutputCallback([MarshalAs(UnmanagedType.FunctionPtr)] OutputCallback callbackPointer);
@@ -44,16 +47,22 @@ namespace AmandaInterface
     {
         public Amanda(string autorun = null)
         {
+            /*
             AmandaHook.SetOutputCallback(
-                (output) => /* Deze functie wordt bij elke WriteString() uitgevoerd */
+                (output) =>  //Deze functie wordt bij elke WriteString() uitgevoerd //
                 {
                     Console.WriteLine("Dit is niet zomaar output: " + output);
                 }
-            );
+            );*/
 
             AmandaHook.InitOptions(false, ""); //empty char will result in amanda loading up amanda.ini
             AmandaHook.CreateInterpreter();
             if (autorun != null) AmandaHook.Load(autorun);
+        }
+
+        public List<String> GetOutput()
+        {
+            return CStringPointerToList(AmandaHook.getMessages());
         }
 
         //Run a block of code (eg: definitions)
@@ -76,8 +85,14 @@ namespace AmandaInterface
         //C char** to C# string is nasty
         public List<string> GetIdentifiers(string search = "")
         {
+            return CStringPointerToList(AmandaHook.gethashtable(search));
+        }
+
+
+        private List<string> CStringPointerToList(IntPtr CStringPtr)
+        {
             List<string> functionList = new List<string>();
-            IntPtr ptr = AmandaHook.gethashtable(search);
+            IntPtr ptr = CStringPtr;
             int size = 2000;
 
             for (int i = 0; i < size; i++)
@@ -94,6 +109,5 @@ namespace AmandaInterface
 
             return functionList;
         }
-
     }
 }

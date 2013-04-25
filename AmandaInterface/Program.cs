@@ -41,6 +41,16 @@ namespace AmandaInterface
                         "x = [x | x <- [0..1000]]");
 
 
+
+            Thread MessageCollecter = new Thread(
+                (output) =>
+                {
+                    amanda.GetOutput().ForEach(q => Console.Write(q));
+                    Thread.Sleep(2000);
+                });
+            amanda.Interpret("[0..9000]");
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 			Form1 window = new Form1();

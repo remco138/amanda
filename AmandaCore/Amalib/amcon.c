@@ -40,7 +40,10 @@ void WriteString(char string[])
 {
 	/* P4P Callback */
 	if(writeStringCallback != NULL)
+	{
 		writeStringCallback(string);
+		storeMessage(string);
+	}
 
 	fputs(string, stdout);
 	fflush(stdout);

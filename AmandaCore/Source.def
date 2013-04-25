@@ -126,3 +126,4 @@ EXPORTS
     unlockmem @124LIBRARY
 	gethashtable @125
 	SetOutputCallback @126
+	getMessages @127
