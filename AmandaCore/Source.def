@@ -125,3 +125,4 @@ EXPORTS
     toplevel @123
     unlockmem @124LIBRARY
 	gethashtable @125
+	SetOutputCallback @126

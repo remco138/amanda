@@ -9,6 +9,9 @@ using System.IO;
 
 namespace AmandaInterface
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void OutputCallback(string output);
+
     class AmandaHook    //C-style chars MOETEN gemarchald worden, anders krijg je rare chars na de string (charArray is niet \0 terminated?)
     {
 		[DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -17,20 +20,23 @@ namespace AmandaInterface
         [DllImport("AmandaCore.dll",CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool Load([MarshalAs(UnmanagedType.LPStr)] string file);
 
-       [DllImport("AmandaCore.dll")]
+        [DllImport("AmandaCore.dll")]
         public static extern void CheckIO();
 
-       [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void InitOptions(bool console, [MarshalAs(UnmanagedType.LPStr)] string path);
 
-       [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void CreateInterpreter();
 
-       [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void Interpret(char[] expr);
 
-       [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr gethashtable([MarshalAs(UnmanagedType.LPStr)] string search);
+
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool SetOutputCallback([MarshalAs(UnmanagedType.FunctionPtr)] OutputCallback callbackPointer);
     }
 
 
@@ -38,6 +44,13 @@ namespace AmandaInterface
     {
         public Amanda(string autorun = null)
         {
+            AmandaHook.SetOutputCallback(
+                (output) => /* Deze functie wordt bij elke WriteString() uitgevoerd */
+                {
+                    Console.WriteLine("Dit is niet zomaar output: " + output);
+                }
+            );
+
             AmandaHook.InitOptions(false, ""); //empty char will result in amanda loading up amanda.ini
             AmandaHook.CreateInterpreter();
             if (autorun != null) AmandaHook.Load(autorun);

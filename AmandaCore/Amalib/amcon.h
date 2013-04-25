@@ -34,4 +34,15 @@ void WriteString(char string[]);
 void CheckIO(void);
 void GraphDisplay(char string[]);
 
+/* P4P Callback Test */
+typedef void (__cdecl *WriteStringCallback)(char output[]);
+WriteStringCallback writeStringCallback;
+
+bool SetOutputCallback(long pointerToWriteStringCallbackMethod)
+{
+	writeStringCallback = (WriteStringCallback)pointerToWriteStringCallbackMethod;
+
+	return true;
+}
+
 #endif

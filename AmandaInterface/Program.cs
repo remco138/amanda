@@ -26,7 +26,6 @@ namespace AmandaInterface
             //StreamReader stderrReader = new StreamReader(stderr);
             //Console.SetOut(stderrHook);
 
-
             Amanda amanda = new Amanda("test.ama");//Works
             amanda.Interpret("[x | x < [0..999]]");//Works
             amanda.Interpret("[x | x asa< [0..999]]");
