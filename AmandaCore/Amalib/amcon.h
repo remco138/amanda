@@ -38,23 +38,31 @@ void GraphDisplay(char string[]);
 typedef void (*WriteStringCallback)(char output[]);
 WriteStringCallback writeStringCallback;
 
-char* stdoutMessages[100*100];
+char* stdoutMessages[10000];
 int messageStoreIndex = 0;
 
-void storeMessage(char* out)
+void storeMessage(char out[])
 {
-	if(messageStoreIndex < 100)
+	
+	if(messageStoreIndex < 10000 & out != NULL)
 	{
-		strcpy(stdoutMessages[messageStoreIndex*100], out);
+		//strcpy(stdoutMessages[messageStoreIndex], out);
+		stdoutMessages[messageStoreIndex] = strdup(out);
 		messageStoreIndex++;
+		
 	}
 }
 
 char** getMessages()
 {
-	strcpy(stdoutMessages[messageStoreIndex*100], "\n\n\n");
-	messageStoreIndex = 0;
-	return stdoutMessages;
+	if(messageStoreIndex > 0)
+	{
+		stdoutMessages[messageStoreIndex] = "\n\n\n";
+		messageStoreIndex = 0;
+
+		return stdoutMessages;
+	}
+	return 0;
 }
 
 bool SetOutputCallback(long pointerToWriteStringCallbackMethod)

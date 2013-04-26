@@ -41,12 +41,14 @@ void WriteString(char string[])
 	/* P4P Callback */
 	if(writeStringCallback != NULL)
 	{
-		writeStringCallback(string);
-		storeMessage(string);
+		//writeStringCallback(string);
 	}
-
 	fputs(string, stdout);
 	fflush(stdout);
+
+	storeMessage(string);
+
+
 }
 
 static void initgetstring(void)

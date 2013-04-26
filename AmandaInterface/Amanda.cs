@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.ComponentModel;
 
 namespace AmandaInterface
 {
@@ -55,6 +56,7 @@ namespace AmandaInterface
                 }
             );*/
 
+
             AmandaHook.InitOptions(false, ""); //empty char will result in amanda loading up amanda.ini
             AmandaHook.CreateInterpreter();
             if (autorun != null) AmandaHook.Load(autorun);
@@ -93,9 +95,10 @@ namespace AmandaInterface
         {
             List<string> functionList = new List<string>();
             IntPtr ptr = CStringPtr;
+            if ((int)CStringPtr == 0) return new List<string>();
             int size = 2000;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0;i < size; i++)
             {
                 IntPtr strPtr = (IntPtr)Marshal.PtrToStructure(ptr, typeof(IntPtr));
                 functionList.Add(Marshal.PtrToStringAnsi(strPtr));
