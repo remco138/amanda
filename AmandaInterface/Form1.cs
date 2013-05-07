@@ -39,7 +39,7 @@ namespace AmandaInterface
 
             autocomplete = new AutocompleteMenu(LoadTextbox);
             autocomplete.MinFragmentLength = 1;
-            autocomplete.Items.MaximumSize = new System.Drawing.Size(400, 600);
+            autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
         }
 
@@ -75,10 +75,12 @@ namespace AmandaInterface
 
         private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
         {
-            string allowedPreviousChars = "([{}]);, ";
+            string allowedChars = "([{}]);,. ";
             int currentLine = LoadTextbox.Selection.Bounds.iStartLine;
-            string textTillCursor = LoadTextbox.GetLineText(currentLine);
-
+            string textTillCursor = LoadTextbox.GetLineText(currentLine).Substring(0, LoadTextbox.Selection.Bounds.iStartChar);
+            //string textAfterCursor = LoadTextbox.GetLineText(currentLine);
+            char charBeforeCursor = LoadTextbox.Selection.CharBeforeStart;
+            char charAfterCursor = LoadTextbox.Selection.CharAfterStart;
             if (e.KeyData == (Keys.K | Keys.Control))
             {
                 //forced show (MinFragmentLength will be ignored)
@@ -87,7 +89,12 @@ namespace AmandaInterface
             }
             if (System.Char.IsLetter((char)e.KeyValue) //warning, lisp programmer at work
                 && textTillCursor.Count() > 0
-                && allowedPreviousChars.Contains(textTillCursor[textTillCursor.Count() - 1]))
+                && allowedChars.Contains(charBeforeCursor)
+                && allowedChars.Contains(charAfterCursor))
+
+                /*&&  cursorIsNotInsideFunctionName
+                  &&  cursorIsCorrectlyIndented?? perhaps difficult with regex since parsing a language ain't easy
+                 */
             {
                 autocomplete.Show(true);
 
