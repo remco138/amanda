@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO.Pipes;
+using System.Text;
 
 
 namespace AmandaInterface
@@ -33,32 +34,31 @@ namespace AmandaInterface
 
             amanda.Load("amanda = \"leuk\"\n" + //Works
                         "ik = [0..999]\n" +
-                        "x = [x | x <- [0..900000]]");
-            amanda.GetOutput();
+                        "x = [x | x <- [0..900]]");
             
-            /*
-            Thread MessageCollecter = new Thread(
-                (output) =>
-                {
-                    string temp = "";
-                    amanda.GetOutput();
-                    Console.Write(temp);
-                    Thread.Sleep(200);
-                });
-             */
-
-            //amanda.Interpret("[x | x <- [0..100000]; False]");
 
             Thread gui = new Thread(StartInterface);
             gui.Start();
+            Thread ama = new Thread(StartAmanda);
+            ama.Start();
 
+        }
+
+        private static void StartAmanda()
+        {
+            StringBuilder output = new StringBuilder("Welcome to amanda!", 10000);
             for (; ; )
             {
+                Thread.Sleep(200);
                 foreach (string t in amanda.GetOutput())
                 {
-                    window.OutputTextbox.Invoke(new Action(() => window.OutputTextbox.Text += t)); //hack, C# likes to babysit other threads
+                    output.Append(t);
                 }
-                Thread.Sleep(50);
+                if (output.Length > 0)
+                {
+                    window.OutputTextbox.Invoke(new Action(() => window.OutputTextbox.Text += output)); //hack, C# likes to babysit other threads
+                    output.Clear();
+                }
             }
         }
 

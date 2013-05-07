@@ -96,9 +96,8 @@ namespace AmandaInterface
             List<string> functionList = new List<string>();
             IntPtr ptr = CStringPtr;
             if ((int)CStringPtr == 0) return new List<string>();
-            int size = 2000;
 
-            for (int i = 0;i < size; i++)
+            for (int i = 0;; i++)
             {
                 IntPtr strPtr = (IntPtr)Marshal.PtrToStructure(ptr, typeof(IntPtr));
                 functionList.Add(Marshal.PtrToStringAnsi(strPtr));
