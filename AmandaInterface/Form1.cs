@@ -101,6 +101,32 @@ namespace AmandaInterface
             }
         }
 
+        private void LoadTextbox_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
+        {
+            if (e.LineText.Trim() == "where")
+            {
+                e.ShiftNextLines = e.TabLength;
+            }
+
+            else if (e.LineText.Trim() == "")
+            {
+                e.ShiftNextLines = -e.TabLength;
+            }
+        }
+
+
+        Style DefaultStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
+        Style GreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
+
+        private void LoadTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            e.ChangedRange.ClearStyle(GreenStyle);
+            e.ChangedRange.SetStyle(GreenStyle, "(where|if|else|True|False|otherwise)");
+            
+            //foreach (Range found in LoadTextbox.GetRanges(@"where"))
+              //  LoadTextbox.Range.SetStyle(GreenStyle, found.Text);
+        }
+
 
     }
 }

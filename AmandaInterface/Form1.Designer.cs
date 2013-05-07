@@ -83,6 +83,8 @@
             this.LoadTextbox.TabIndex = 5;
             this.LoadTextbox.Text = "getEven = [x | x <- [0..100]; x % 2 = 0]";
             this.LoadTextbox.Zoom = 100;
+            this.LoadTextbox.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.LoadTextbox_TextChanged);
+            this.LoadTextbox.AutoIndentNeeded += new System.EventHandler<FastColoredTextBoxNS.AutoIndentEventArgs>(this.LoadTextbox_AutoIndentNeeded);
             this.LoadTextbox.Load += new System.EventHandler(this.LoadTextbox_Load);
             this.LoadTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoadTextbox_KeyDown);
             // 
