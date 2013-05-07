@@ -45,11 +45,6 @@ namespace AmandaInterface
         }
 
 
-        private static void prepareLoadTextbox(FastColoredTextBox codeWindow)
-        {
-        }
-
-
         private static void StartAmanda()
         {
             StringBuilder output = new StringBuilder("Welcome to amanda!", 10000);
@@ -76,8 +71,7 @@ namespace AmandaInterface
             window = new Form1();
             window.RunCallback = new Form1.RunCallbackD(amanda.Interpret);
             window.LoadCallback = new Form1.LoadCallbackD(amanda.Load);
-
-            prepareLoadTextbox(window.LoadTextbox);
+            window.AddAutocompleteEntries(amanda.GetIdentifiers());
 
 			Application.Run(window);
 

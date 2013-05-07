@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
+using System.Text.RegularExpressions;
 
 namespace AmandaInterface
 {
@@ -26,15 +27,20 @@ namespace AmandaInterface
 			System.Console.WriteLine("worked");
 		}
 
+        public void AddAutocompleteEntries(List<string> entries)
+        {
+            autocomplete.Items.SetAutocompleteItems(entries);
+        }
+
+
         public Form1()
         {
             InitializeComponent();
 
             autocomplete = new AutocompleteMenu(LoadTextbox);
-            autocomplete.MinFragmentLength = 2;
+            autocomplete.MinFragmentLength = 1;
             autocomplete.Items.MaximumSize = new System.Drawing.Size(400, 600);
             autocomplete.Items.Width = 400;
-            autocomplete.Items.SetAutocompleteItems(new List<string> {"aaaaaa", "bbbbbbbb", "ccccccc"});
         }
 
         private void OutputTextbox_TextChanged(object sender, EventArgs e)
@@ -69,11 +75,22 @@ namespace AmandaInterface
 
         private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
         {
+            string allowedPreviousChars = "([{}]);, ";
+            int currentLine = LoadTextbox.Selection.Bounds.iStartLine;
+            string textTillCursor = LoadTextbox.GetLineText(currentLine);
+
             if (e.KeyData == (Keys.K | Keys.Control))
             {
                 //forced show (MinFragmentLength will be ignored)
                 autocomplete.Show(true);
-                e.Handled = true;
+                //e.Handled = true;
+            }
+            if (System.Char.IsLetter((char)e.KeyValue) //warning, lisp programmer at work
+                && textTillCursor.Count() > 0
+                && allowedPreviousChars.Contains(textTillCursor[textTillCursor.Count() - 1]))
+            {
+                autocomplete.Show(true);
+
             }
         }
 
