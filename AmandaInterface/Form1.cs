@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FastColoredTextBoxNS;
 
 namespace AmandaInterface
 {
@@ -17,6 +18,7 @@ namespace AmandaInterface
         public RunCallbackD RunCallback;
         public delegate bool LoadCallbackD(string content);
         public LoadCallbackD LoadCallback;
+        public AutocompleteMenu autocomplete;
 
 		public void output(string t)
 		{
@@ -27,6 +29,12 @@ namespace AmandaInterface
         public Form1()
         {
             InitializeComponent();
+
+            autocomplete = new AutocompleteMenu(LoadTextbox);
+            autocomplete.MinFragmentLength = 2;
+            autocomplete.Items.MaximumSize = new System.Drawing.Size(400, 600);
+            autocomplete.Items.Width = 400;
+            autocomplete.Items.SetAutocompleteItems(new List<string> {"aaaaaa", "bbbbbbbb", "ccccccc"});
         }
 
         private void OutputTextbox_TextChanged(object sender, EventArgs e)
@@ -52,6 +60,21 @@ namespace AmandaInterface
         private void OutputTextbox_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void LoadTextbox_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == (Keys.K | Keys.Control))
+            {
+                //forced show (MinFragmentLength will be ignored)
+                autocomplete.Show(true);
+                e.Handled = true;
+            }
         }
 
 

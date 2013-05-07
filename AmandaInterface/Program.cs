@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO.Pipes;
 using System.Text;
-
+using FastColoredTextBoxNS;
 
 namespace AmandaInterface
 {
@@ -44,6 +44,12 @@ namespace AmandaInterface
 
         }
 
+
+        private static void prepareLoadTextbox(FastColoredTextBox codeWindow)
+        {
+        }
+
+
         private static void StartAmanda()
         {
             StringBuilder output = new StringBuilder("Welcome to amanda!", 10000);
@@ -71,6 +77,7 @@ namespace AmandaInterface
             window.RunCallback = new Form1.RunCallbackD(amanda.Interpret);
             window.LoadCallback = new Form1.LoadCallbackD(amanda.Load);
 
+            prepareLoadTextbox(window.LoadTextbox);
 
 			Application.Run(window);
 
