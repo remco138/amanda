@@ -49,6 +49,11 @@ namespace AmandaInterface
 
         }
 
+        private void OutputTextbox_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

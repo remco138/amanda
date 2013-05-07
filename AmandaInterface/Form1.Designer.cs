@@ -30,11 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.RunTextbox = new System.Windows.Forms.TextBox();
-            this.OutputTextbox = new System.Windows.Forms.RichTextBox();
             this.RunButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
             this.LoadTextbox = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.OutputTextbox = new FastColoredTextBoxNS.FastColoredTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OutputTextbox)).BeginInit();
             this.SuspendLayout();
             // 
             // RunTextbox
@@ -44,15 +45,6 @@
             this.RunTextbox.Size = new System.Drawing.Size(400, 20);
             this.RunTextbox.TabIndex = 0;
             this.RunTextbox.Text = "getEven";
-            // 
-            // OutputTextbox
-            // 
-            this.OutputTextbox.Location = new System.Drawing.Point(491, 28);
-            this.OutputTextbox.Name = "OutputTextbox";
-            this.OutputTextbox.Size = new System.Drawing.Size(263, 404);
-            this.OutputTextbox.TabIndex = 2;
-            this.OutputTextbox.Text = "";
-            this.OutputTextbox.TextChanged += new System.EventHandler(this.OutputTextbox_TextChanged);
             // 
             // RunButton
             // 
@@ -92,16 +84,36 @@
             this.LoadTextbox.Text = "getEven = [x | x <- [0..100]; x % 2 = 0]";
             this.LoadTextbox.Zoom = 100;
             // 
+            // OutputTextbox
+            // 
+            this.OutputTextbox.AutoScrollMinSize = new System.Drawing.Size(51, 14);
+            this.OutputTextbox.BackBrush = null;
+            this.OutputTextbox.CharHeight = 14;
+            this.OutputTextbox.CharWidth = 8;
+            this.OutputTextbox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.OutputTextbox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.OutputTextbox.IsReplaceMode = false;
+            this.OutputTextbox.Location = new System.Drawing.Point(489, 58);
+            this.OutputTextbox.Name = "OutputTextbox";
+            this.OutputTextbox.Paddings = new System.Windows.Forms.Padding(0);
+            this.OutputTextbox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.OutputTextbox.Size = new System.Drawing.Size(312, 374);
+            this.OutputTextbox.TabIndex = 6;
+            this.OutputTextbox.Text = "Yo!";
+            this.OutputTextbox.Zoom = 100;
+            this.OutputTextbox.Load += new System.EventHandler(this.OutputTextbox_Load);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(813, 444);
+            this.Controls.Add(this.OutputTextbox);
             this.Controls.Add(this.LoadTextbox);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.RunButton);
-            this.Controls.Add(this.OutputTextbox);
             this.Controls.Add(this.RunTextbox);
             this.Name = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OutputTextbox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,10 +122,10 @@
         #endregion
 
         public System.Windows.Forms.TextBox RunTextbox;
-        public System.Windows.Forms.RichTextBox OutputTextbox;
         public System.Windows.Forms.Button RunButton;
         public System.Windows.Forms.Button LoadButton;
-        private FastColoredTextBoxNS.FastColoredTextBox LoadTextbox;
+        public FastColoredTextBoxNS.FastColoredTextBox LoadTextbox;
+        public FastColoredTextBoxNS.FastColoredTextBox OutputTextbox;
 
     }
 }
