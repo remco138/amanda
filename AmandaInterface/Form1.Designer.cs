@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.RunTextbox = new System.Windows.Forms.TextBox();
-            this.LoadTextbox = new System.Windows.Forms.RichTextBox();
             this.OutputTextbox = new System.Windows.Forms.RichTextBox();
             this.RunButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
+            this.LoadTextbox = new FastColoredTextBoxNS.FastColoredTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).BeginInit();
             this.SuspendLayout();
             // 
             // RunTextbox
@@ -42,15 +44,6 @@
             this.RunTextbox.Size = new System.Drawing.Size(400, 20);
             this.RunTextbox.TabIndex = 0;
             this.RunTextbox.Text = "getEven";
-            // 
-            // LoadTextbox
-            // 
-            this.LoadTextbox.Location = new System.Drawing.Point(39, 58);
-            this.LoadTextbox.Name = "LoadTextbox";
-            this.LoadTextbox.Size = new System.Drawing.Size(374, 374);
-            this.LoadTextbox.TabIndex = 1;
-            this.LoadTextbox.Text = "getEven = [x | x <- [0..100]; x % 2 = 0]";
-            this.LoadTextbox.TextChanged += new System.EventHandler(this.LoadTextbox_TextChanged);
             // 
             // OutputTextbox
             // 
@@ -81,15 +74,34 @@
             this.LoadButton.UseVisualStyleBackColor = true;
             this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
+            // LoadTextbox
+            // 
+            this.LoadTextbox.AutoScrollMinSize = new System.Drawing.Size(347, 14);
+            this.LoadTextbox.BackBrush = null;
+            this.LoadTextbox.CharHeight = 14;
+            this.LoadTextbox.CharWidth = 8;
+            this.LoadTextbox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.LoadTextbox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.LoadTextbox.IsReplaceMode = false;
+            this.LoadTextbox.Location = new System.Drawing.Point(39, 58);
+            this.LoadTextbox.Name = "LoadTextbox";
+            this.LoadTextbox.Paddings = new System.Windows.Forms.Padding(0);
+            this.LoadTextbox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.LoadTextbox.Size = new System.Drawing.Size(374, 374);
+            this.LoadTextbox.TabIndex = 5;
+            this.LoadTextbox.Text = "getEven = [x | x <- [0..100]; x % 2 = 0]";
+            this.LoadTextbox.Zoom = 100;
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(813, 444);
+            this.Controls.Add(this.LoadTextbox);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.RunButton);
             this.Controls.Add(this.OutputTextbox);
-            this.Controls.Add(this.LoadTextbox);
             this.Controls.Add(this.RunTextbox);
             this.Name = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -98,10 +110,10 @@
         #endregion
 
         public System.Windows.Forms.TextBox RunTextbox;
-        public System.Windows.Forms.RichTextBox LoadTextbox;
         public System.Windows.Forms.RichTextBox OutputTextbox;
         public System.Windows.Forms.Button RunButton;
         public System.Windows.Forms.Button LoadButton;
+        private FastColoredTextBoxNS.FastColoredTextBox LoadTextbox;
 
     }
 }
