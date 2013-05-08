@@ -101,30 +101,72 @@ namespace AmandaInterface
             }
         }
 
+
+        private Stack<int> WhereIndents = new Stack<int>();
+        private Stack<int> ConditionIndents = new Stack<int>();
+
+        private int indentSize = 0;
+
+        static bool isInCondition = false;
         private void LoadTextbox_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
         {
-            if (e.LineText.Trim() == "where")
+            Match isIfRegex = Regex.Match(e.LineText.Trim(), ",* if");
+            Match isOtherwiseRegex = Regex.Match(e.LineText.Trim(), ",* otherwise");
+            Match isWhereRegex = Regex.Match(e.LineText, "where");
+
+            if (isWhereRegex.Success)
             {
                 e.ShiftNextLines = e.TabLength;
+                indentSize += e.TabLength;
+            }
+            if (isIfRegex.Success == true)
+             {
+                try
+                {
+                    if(e.LineText.Trim()[0] != '=')
+                    {
+                        int at = e.LineText.IndexOf('=');
+                        //e.ShiftNextLines = at - ((e.iLine != 0) ? e.iLine : 0);
+                        e.ShiftNextLines = e.TabLength; //FAIL
+                        //LoadTextbox.DoAutoIndent(at);
+                        isInCondition = true;
+                        //else e.ShiftNextLines -= e.TabLength;
+                    }
+                }
+                catch(Exception wat)
+                {
+                    //fucking exceptions
+                }
             }
 
-            else if (e.LineText.Trim() == "")
+
+           // if (e.LineText.Trim().Length > 0 && )
+            //{
+                //int at = e.LineText.IndexOf('=');
+                //e.ShiftNextLines = e.Shift = at;
+            //}
+            if (e.LineText.Trim() == "" || isOtherwiseRegex.Success == true)
             {
                 e.ShiftNextLines = -e.TabLength;
+                indentSize -= e.TabLength;
+                isInCondition = false;
+                return;
             }
         }
 
 
         Style DefaultStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
-        Style GreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
+        Style KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
+        Style CommentStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
+        Style ConstantStyle = new TextStyle(Brushes.Firebrick, null, FontStyle.Regular);
 
         private void LoadTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            e.ChangedRange.ClearStyle(GreenStyle);
-            e.ChangedRange.SetStyle(GreenStyle, "(where|if|else|True|False|otherwise)");
-            
-            //foreach (Range found in LoadTextbox.GetRanges(@"where"))
-              //  LoadTextbox.Range.SetStyle(GreenStyle, found.Text);
+            e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle);
+
+            e.ChangedRange.SetStyle(KeywordStyle,  @"\b(where|if|else|True|False|otherwise)\b");
+            e.ChangedRange.SetStyle(CommentStyle,  @"\|\|.*");
+            e.ChangedRange.SetStyle(ConstantStyle, @"-?[0-9]+\b");
         }
 
 

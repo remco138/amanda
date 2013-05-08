@@ -57,7 +57,7 @@ namespace AmandaInterface
                 }
                 if (output.Length > 0)
                 {
-                    window.OutputTextbox.Invoke(new Action(() => window.OutputTextbox.Text += output)); //hack, C# likes to babysit other threads
+                    ////window.OutputTextbox.Invoke(new Action(() => window.OutputTextbox.Text += output)); //hack, C# likes to babysit other threads
                     output.Clear();
                 }
             }
