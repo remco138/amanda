@@ -139,6 +139,11 @@
             Removes bookmark by line index
             </summary>
         </member>
+        <member name="M:FastColoredTextBoxNS.Bookmarks.GetBookmark(System.Int32)">
+            <summary>
+            Returns Bookmark by index.
+            </summary>
+        </member>
         <member name="T:FastColoredTextBoxNS.Bookmark">
             <summary>
             Bookmark of FastColoredTextbox
@@ -485,6 +490,23 @@
         <member name="T:FastColoredTextBoxNS.FCTBAction">
             <summary>
             Actions for shortcuts
+            </summary>
+        </member>
+        <member name="F:FastColoredTextBoxNS.Ruler.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:FastColoredTextBoxNS.Ruler.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:FastColoredTextBoxNS.Ruler.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="M:FastColoredTextBoxNS.SyntaxHighlighter.HighlightSyntax(FastColoredTextBoxNS.Language,FastColoredTextBoxNS.Range)">
@@ -2052,6 +2074,11 @@
         <member name="P:FastColoredTextBoxNS.AutoIndentEventArgs.ShiftNextLines">
             <summary>
             Additional spaces count for next line, relative to previous line
+            </summary>
+        </member>
+        <member name="P:FastColoredTextBoxNS.AutoIndentEventArgs.AbsoluteIndentation">
+            <summary>
+            Absolute indentation of current line. You can change this property if you want to set absolute indentation.
             </summary>
         </member>
         <member name="T:FastColoredTextBoxNS.HighlightingRangeType">
