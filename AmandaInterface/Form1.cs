@@ -55,7 +55,7 @@ namespace AmandaInterface
 
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            LoadCallback(LoadTextbox.Text);
+            
         }
 
         private void LoadTextbox_TextChanged(object sender, EventArgs e)
@@ -156,6 +156,16 @@ namespace AmandaInterface
             e.ChangedRange.SetStyle(ConstantStyle, @"(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
             e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
+        }
+
+        private void runButton_Click_1(object sender, EventArgs e)
+        {
+            RunCallback(RunTextbox.Text);
+        }
+
+        private void loadButton_Click_1(object sender, EventArgs e)
+        {
+            LoadCallback(LoadTextbox.Text);
         }
 
 
