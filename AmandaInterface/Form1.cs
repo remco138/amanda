@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FastColoredTextBoxNS;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace AmandaInterface
 {
     public partial class Form1 : Form
     {
-        public delegate bool RunCallbackD(string expression);
-        public RunCallbackD RunCallback;
-        public delegate bool LoadCallbackD(string content);
-        public LoadCallbackD LoadCallback;
+        private Amanda AmandaObj;
+        BackgroundWorker OutputBackgroundWorker;
         public AutocompleteMenu autocomplete;
 
 		public void output(string t)
@@ -27,50 +26,54 @@ namespace AmandaInterface
 			System.Console.WriteLine("worked");
 		}
 
-        public void AddAutocompleteEntries(List<string> entries)
-        {
-            autocomplete.Items.SetAutocompleteItems(entries);
-        }
-
-
         public Form1()
         {
             InitializeComponent();
+
+            AmandaObj = new Amanda();
 
             autocomplete = new AutocompleteMenu(LoadTextbox);
             autocomplete.MinFragmentLength = 1;
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
+            autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
+
+            OutputBackgroundWorker = new BackgroundWorker();
+            OutputBackgroundWorker.DoWork += (sender, e) =>
+                {
+                    StringBuilder output = new StringBuilder("Welcome to amanda!", 10000);
+                    for (; ; )
+                    {
+                        Thread.Sleep(200);
+                        foreach (string t in AmandaObj.GetOutput())
+                        {
+                            output.Append(t);
+                        }
+                        if (output.Length > 0)
+                        {
+                            OutputTextbox.Text += output;
+                            output.Clear();
+                        }
+                    }
+                };
+            OutputBackgroundWorker.RunWorkerAsync();
         }
 
-        private void OutputTextbox_TextChanged(object sender, EventArgs e)
+        private void OutputTextbox_TextChanged(object sender, EventArgs e) { }
+        private void LoadTextbox_TextChanged(object sender, EventArgs e) { }
+
+        private void LoadButton_Click(object sender, EventArgs e) { }
+        private void loadButton_Click_1(object sender, EventArgs e)
         {
-
+            AmandaObj.Load(LoadTextbox.Text);
         }
-
         private void RunButton_Click(object sender, EventArgs e)
         {
-            RunCallback(RunTextbox.Text);
+            AmandaObj.Interpret(RunTextbox.Text);
         }
-
-        private void LoadButton_Click(object sender, EventArgs e)
+        private void runButton_Click_1(object sender, EventArgs e)
         {
-            
-        }
-
-        private void LoadTextbox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void OutputTextbox_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LoadTextbox_Load(object sender, EventArgs e)
-        {
-
+            AmandaObj.Interpret(RunTextbox.Text);
         }
 
         private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
@@ -100,7 +103,6 @@ namespace AmandaInterface
 
             }
         }
-
 
         private void LoadTextbox_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
         {
@@ -157,19 +159,9 @@ namespace AmandaInterface
             e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
         }
-
-        private void runButton_Click_1(object sender, EventArgs e)
-        {
-            RunCallback(RunTextbox.Text);
-        }
-
-        private void loadButton_Click_1(object sender, EventArgs e)
-        {
-            LoadCallback(LoadTextbox.Text);
-        }
-
-
     }
+
+
 
 
     //Will do simple parsing of amanda code, fetches stuff about functions and other tags

@@ -78,7 +78,6 @@
             this.LoadTextbox.Zoom = 100;
             this.LoadTextbox.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.LoadTextbox_TextChanged);
             this.LoadTextbox.AutoIndentNeeded += new System.EventHandler<FastColoredTextBoxNS.AutoIndentEventArgs>(this.LoadTextbox_AutoIndentNeeded);
-            this.LoadTextbox.Load += new System.EventHandler(this.LoadTextbox_Load);
             this.LoadTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoadTextbox_KeyDown);
             // 
             // OutputTextbox
@@ -98,7 +97,6 @@
             this.OutputTextbox.TabIndex = 6;
             this.OutputTextbox.Text = "Yo!";
             this.OutputTextbox.Zoom = 100;
-            this.OutputTextbox.Load += new System.EventHandler(this.OutputTextbox_Load);
             // 
             // menuStrip1
             // 
