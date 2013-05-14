@@ -7,7 +7,6 @@ EXPORTS
     CreateInterpreter @5
     CreateRemote @6
     DropRemote @7
-    ExecuteCommand @8
     GetOption @9
     GetRemote @10
     GraphDisplay @11

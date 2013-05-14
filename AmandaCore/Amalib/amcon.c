@@ -41,14 +41,10 @@ void WriteString(char string[])
 	/* P4P Callback */
 	if(writeStringCallback != NULL)
 	{
-		//writeStringCallback(string);
+		writeStringCallback(string);
 	}
-	fputs(string, stdout);
-	fflush(stdout);
-
-	storeMessage(string);
-
-
+	//fputs(string, stdout);
+	//fflush(stdout);
 }
 
 static void initgetstring(void)
@@ -198,28 +194,4 @@ void main(int argc, char *argv[])
     getstring(GetOption("ConPrompt"), expr);
     Interpret(expr);
   }
-}
-
-
-
-/*****************************************************************************************************
- *
- *
- * 	P4P Edit
- *
- *   __stdcall is niet een C standaard maar een M$ extensie, bij gcc is het __attribute__((fastcall)), ook is de enige plek waar stdcall veel gebruikt word de M$-API, cdecl is default
- */
-
-
-
-
-
-char* ExecuteCommand(char *input)
-{
-	// TODO: nu nog uitzoeken wat er precies in Main() gebeurt OMG!
-	//
-	char* output = "Process die sjitz";
-
-	//return input; // test
-	return output;
 }

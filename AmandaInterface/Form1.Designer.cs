@@ -44,6 +44,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.runButton = new System.Windows.Forms.ToolStripButton();
             this.loadButton = new System.Windows.Forms.ToolStripButton();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OutputTextbox)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -67,6 +68,7 @@
             this.LoadTextbox.CharWidth = 8;
             this.LoadTextbox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.LoadTextbox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.LoadTextbox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.LoadTextbox.IsReplaceMode = false;
             this.LoadTextbox.Location = new System.Drawing.Point(0, 78);
             this.LoadTextbox.Name = "LoadTextbox";
@@ -82,20 +84,22 @@
             // 
             // OutputTextbox
             // 
-            this.OutputTextbox.AutoScrollMinSize = new System.Drawing.Size(51, 14);
+            this.OutputTextbox.AutoScrollMinSize = new System.Drawing.Size(0, 14);
             this.OutputTextbox.BackBrush = null;
             this.OutputTextbox.CharHeight = 14;
             this.OutputTextbox.CharWidth = 8;
             this.OutputTextbox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.OutputTextbox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.OutputTextbox.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.OutputTextbox.IsReplaceMode = false;
             this.OutputTextbox.Location = new System.Drawing.Point(589, 52);
             this.OutputTextbox.Name = "OutputTextbox";
             this.OutputTextbox.Paddings = new System.Windows.Forms.Padding(0);
             this.OutputTextbox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.OutputTextbox.Size = new System.Drawing.Size(595, 685);
+            this.OutputTextbox.Size = new System.Drawing.Size(595, 335);
             this.OutputTextbox.TabIndex = 6;
             this.OutputTextbox.Text = "Yo!";
+            this.OutputTextbox.WordWrap = true;
             this.OutputTextbox.Zoom = 100;
             // 
             // menuStrip1
@@ -176,7 +180,6 @@
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(23, 22);
             this.runButton.Text = "runtoolStripButton1";
-            this.runButton.Click += new System.EventHandler(this.runButton_Click_1);
             // 
             // loadButton
             // 
@@ -186,11 +189,19 @@
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(23, 22);
             this.loadButton.Text = "Load";
-            this.loadButton.Click += new System.EventHandler(this.loadButton_Click_1);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(624, 418);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(497, 302);
+            this.richTextBox1.TabIndex = 10;
+            this.richTextBox1.Text = "";
             // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1184, 762);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.OutputTextbox);
@@ -228,6 +239,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton runButton;
         private System.Windows.Forms.ToolStripButton loadButton;
+        private System.Windows.Forms.RichTextBox richTextBox1;
 
     }
 }

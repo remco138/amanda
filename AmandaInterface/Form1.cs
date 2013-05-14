@@ -16,20 +16,17 @@ namespace AmandaInterface
 {
     public partial class Form1 : Form
     {
-        private Amanda AmandaObj;
-        BackgroundWorker OutputBackgroundWorker;
-        public AutocompleteMenu autocomplete;
-
-		public void output(string t)
-		{
-			RunTextbox.Text = t;
-			System.Console.WriteLine("worked");
-		}
+        Amanda AmandaObj;
+        AutocompleteMenu autocomplete;
+        OutputCallback outputCallback;
 
         public Form1()
         {
             InitializeComponent();
 
+            outputCallback = OutputCallbackMethod;
+            AmandaHook.SetOutputCallback(outputCallback);
+          
             AmandaObj = new Amanda();
 
             autocomplete = new AutocompleteMenu(LoadTextbox);
@@ -38,42 +35,14 @@ namespace AmandaInterface
             autocomplete.Items.Width = 400;
             autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
 
-            OutputBackgroundWorker = new BackgroundWorker();
-            OutputBackgroundWorker.DoWork += (sender, e) =>
-                {
-                    StringBuilder output = new StringBuilder("Welcome to amanda!", 10000);
-                    for (; ; )
-                    {
-                        Thread.Sleep(200);
-                        foreach (string t in AmandaObj.GetOutput())
-                        {
-                            output.Append(t);
-                        }
-                        if (output.Length > 0)
-                        {
-                            OutputTextbox.Text += output;
-                            output.Clear();
-                        }
-                    }
-                };
-            OutputBackgroundWorker.RunWorkerAsync();
+            loadButton.Click += (sender,e) => AmandaObj.Load(LoadTextbox.Text);
+            runButton.Click += (sender, e) => AmandaObj.Interpret(RunTextbox.Text);
         }
 
-        private void OutputTextbox_TextChanged(object sender, EventArgs e) { }
-        private void LoadTextbox_TextChanged(object sender, EventArgs e) { }
-
-        private void LoadButton_Click(object sender, EventArgs e) { }
-        private void loadButton_Click_1(object sender, EventArgs e)
+        private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
         {
-            AmandaObj.Load(LoadTextbox.Text);
-        }
-        private void RunButton_Click(object sender, EventArgs e)
-        {
-            AmandaObj.Interpret(RunTextbox.Text);
-        }
-        private void runButton_Click_1(object sender, EventArgs e)
-        {
-            AmandaObj.Interpret(RunTextbox.Text);
+            //Console.WriteLine("Dit is niet zomaar output: " + output); // TRAAG !!
+            richTextBox1.AppendText(output);
         }
 
         private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)

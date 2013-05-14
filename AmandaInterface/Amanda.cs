@@ -48,15 +48,6 @@ namespace AmandaInterface
     {
         public Amanda(string autorun = null)
         {
-            /*
-            AmandaHook.SetOutputCallback(
-                (output) =>  //Deze functie wordt bij elke WriteString() uitgevoerd //
-                {
-                    Console.WriteLine("Dit is niet zomaar output: " + output);
-                }
-            );*/
-
-
             AmandaHook.InitOptions(false, ""); //empty char will result in amanda loading up amanda.ini
             AmandaHook.CreateInterpreter();
             if (autorun != null) AmandaHook.Load(autorun);

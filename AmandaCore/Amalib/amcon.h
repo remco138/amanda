@@ -67,7 +67,6 @@ char** getMessages()
 
 bool SetOutputCallback(long pointerToWriteStringCallbackMethod)
 {
-
 	writeStringCallback = (WriteStringCallback)pointerToWriteStringCallbackMethod;
 
 	return 1;
