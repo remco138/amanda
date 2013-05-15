@@ -37,6 +37,8 @@ namespace AmandaInterface
 
             loadButton.Click += (sender,e) => AmandaObj.Load(LoadTextbox.Text);
             runButton.Click += (sender, e) => AmandaObj.Interpret(RunTextbox.Text);
+            StatusLabel.Text = "Idle";
+            ProgressBar.Value = 0;
         }
 
         private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
