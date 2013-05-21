@@ -48,7 +48,7 @@ namespace AmandaInterface
     {
         public Amanda(string autorun = null)
         {
-            AmandaHook.InitOptions(false, ""); //empty char will result in amanda loading up amanda.ini
+            AmandaHook.InitOptions(true, ""); //empty char will result in amanda loading up amanda.ini
             AmandaHook.CreateInterpreter();
             if (autorun != null) AmandaHook.Load(autorun);
         }

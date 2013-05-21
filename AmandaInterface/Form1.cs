@@ -20,6 +20,8 @@ namespace AmandaInterface
         AutocompleteMenu autocomplete;
         OutputCallback outputCallback;
 
+        string tempOutput = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +30,8 @@ namespace AmandaInterface
             AmandaHook.SetOutputCallback(outputCallback);
           
             AmandaObj = new Amanda();
+            richTextBox1.AppendText(tempOutput);
+            tempOutput = "";
 
             autocomplete = new AutocompleteMenu(LoadTextbox);
             autocomplete.MinFragmentLength = 1;
@@ -35,16 +39,25 @@ namespace AmandaInterface
             autocomplete.Items.Width = 400;
             autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
 
+            runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender,e) => AmandaObj.Load(LoadTextbox.Text);
-            runButton.Click += (sender, e) => AmandaObj.Interpret(RunTextbox.Text);
+            
             StatusLabel.Text = "Idle";
-            ProgressBar.Value = 0;
+            //ProgressBar.Value = 0;
+        }
+
+        private void RunCode()
+        {
+            AmandaObj.Interpret(RunTextbox.Text);
+            richTextBox1.AppendText(tempOutput);
+            tempOutput = "";
+            richTextBox1.ScrollToCaret();
         }
 
         private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
         {
             //Console.WriteLine("Dit is niet zomaar output: " + output); // TRAAG !!
-            richTextBox1.AppendText(output);
+            tempOutput += output;
         }
 
         private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
@@ -129,6 +142,24 @@ namespace AmandaInterface
             e.ChangedRange.SetStyle(ConstantStyle, @"(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
             e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RunTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                RunCode();
+            }
         }
     }
 
