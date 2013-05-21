@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.RunTextbox = new System.Windows.Forms.TextBox();
+            this.tbRun = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fILEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,21 +52,21 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.runButton = new System.Windows.Forms.ToolStripButton();
             this.loadButton = new System.Windows.Forms.ToolStripButton();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.LoadTextbox = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.tbConsole = new System.Windows.Forms.RichTextBox();
+            this.tbEditor = new FastColoredTextBoxNS.FastColoredTextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbEditor)).BeginInit();
             this.SuspendLayout();
             // 
-            // RunTextbox
+            // tbRun
             // 
-            this.RunTextbox.Location = new System.Drawing.Point(12, 53);
-            this.RunTextbox.Name = "RunTextbox";
-            this.RunTextbox.Size = new System.Drawing.Size(884, 20);
-            this.RunTextbox.TabIndex = 0;
-            this.RunTextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RunTextbox_KeyPress);
+            this.tbRun.Location = new System.Drawing.Point(12, 53);
+            this.tbRun.Name = "tbRun";
+            this.tbRun.Size = new System.Drawing.Size(884, 20);
+            this.tbRun.TabIndex = 0;
+            this.tbRun.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RunTextbox_KeyPress);
             // 
             // menuStrip1
             // 
@@ -239,44 +239,45 @@
             this.loadButton.Size = new System.Drawing.Size(23, 22);
             this.loadButton.Text = "Load";
             // 
-            // richTextBox1
+            // tbConsole
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 346);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(884, 137);
-            this.richTextBox1.TabIndex = 10;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.tbConsole.Location = new System.Drawing.Point(12, 346);
+            this.tbConsole.Name = "tbConsole";
+            this.tbConsole.Size = new System.Drawing.Size(884, 137);
+            this.tbConsole.TabIndex = 10;
+            this.tbConsole.Text = "";
+            this.tbConsole.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
-            // LoadTextbox
+            // tbEditor
             // 
-            this.LoadTextbox.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.LoadTextbox.BackBrush = null;
-            this.LoadTextbox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.LoadTextbox.CharHeight = 14;
-            this.LoadTextbox.CharWidth = 8;
-            this.LoadTextbox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.LoadTextbox.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.LoadTextbox.IsReplaceMode = false;
-            this.LoadTextbox.Location = new System.Drawing.Point(12, 79);
-            this.LoadTextbox.Name = "LoadTextbox";
-            this.LoadTextbox.Paddings = new System.Windows.Forms.Padding(0);
-            this.LoadTextbox.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.LoadTextbox.Size = new System.Drawing.Size(884, 261);
-            this.LoadTextbox.TabIndex = 5;
-            this.LoadTextbox.Zoom = 100;
-            this.LoadTextbox.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.LoadTextbox_TextChanged);
-            this.LoadTextbox.AutoIndentNeeded += new System.EventHandler<FastColoredTextBoxNS.AutoIndentEventArgs>(this.LoadTextbox_AutoIndentNeeded);
-            this.LoadTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoadTextbox_KeyDown);
+            this.tbEditor.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.tbEditor.BackBrush = null;
+            this.tbEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tbEditor.CharHeight = 14;
+            this.tbEditor.CharWidth = 8;
+            this.tbEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.tbEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.tbEditor.IsReplaceMode = false;
+            this.tbEditor.Location = new System.Drawing.Point(12, 79);
+            this.tbEditor.Name = "tbEditor";
+            this.tbEditor.Paddings = new System.Windows.Forms.Padding(0);
+            this.tbEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.tbEditor.Size = new System.Drawing.Size(884, 261);
+            this.tbEditor.TabIndex = 5;
+            this.tbEditor.Zoom = 100;
+            this.tbEditor.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.LoadTextbox_TextChanged);
+            this.tbEditor.AutoIndentNeeded += new System.EventHandler<FastColoredTextBoxNS.AutoIndentEventArgs>(this.LoadTextbox_AutoIndentNeeded);
+            this.tbEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoadTextbox_KeyDown);
             // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(912, 515);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.tbConsole);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.LoadTextbox);
-            this.Controls.Add(this.RunTextbox);
+            this.Controls.Add(this.tbEditor);
+            this.Controls.Add(this.tbRun);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -286,7 +287,7 @@
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LoadTextbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbEditor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,8 +295,8 @@
 
         #endregion
 
-        public System.Windows.Forms.TextBox RunTextbox;
-        public FastColoredTextBoxNS.FastColoredTextBox LoadTextbox;
+        public System.Windows.Forms.TextBox tbRun;
+        public FastColoredTextBoxNS.FastColoredTextBox tbEditor;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fILEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eDITToolStripMenuItem;
@@ -306,7 +307,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton runButton;
         private System.Windows.Forms.ToolStripButton loadButton;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox tbConsole;
         private System.Windows.Forms.ToolStripMenuItem newFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveFileToolStripMenuItem;

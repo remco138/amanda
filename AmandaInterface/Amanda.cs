@@ -31,7 +31,7 @@ namespace AmandaInterface
         public static extern void CreateInterpreter();
 
         [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void Interpret(char[] expr);
+        public static extern void Interpret([MarshalAs(UnmanagedType.LPStr)] String expr);
 
         [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr gethashtable([MarshalAs(UnmanagedType.LPStr)] string search); //char**
@@ -71,7 +71,7 @@ namespace AmandaInterface
         //Run a single expression
         public bool Interpret(string expression)
         {
-            AmandaHook.Interpret(expression.ToCharArray());
+            AmandaHook.Interpret(expression);
             return true;
         }
 

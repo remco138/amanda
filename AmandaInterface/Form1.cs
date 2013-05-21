@@ -30,17 +30,17 @@ namespace AmandaInterface
             AmandaHook.SetOutputCallback(outputCallback);
           
             AmandaObj = new Amanda();
-            richTextBox1.AppendText(tempOutput);
+            tbConsole.AppendText(tempOutput);
             tempOutput = "";
 
-            autocomplete = new AutocompleteMenu(LoadTextbox);
+            autocomplete = new AutocompleteMenu(tbEditor);
             autocomplete.MinFragmentLength = 1;
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
             autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
 
             runButton.Click += (sender, e) => RunCode();
-            loadButton.Click += (sender,e) => AmandaObj.Load(LoadTextbox.Text);
+            loadButton.Click += (sender,e) => AmandaObj.Load(tbEditor.Text);
             
             StatusLabel.Text = "Idle";
             //ProgressBar.Value = 0;
@@ -48,10 +48,10 @@ namespace AmandaInterface
 
         private void RunCode()
         {
-            AmandaObj.Interpret(RunTextbox.Text);
-            richTextBox1.AppendText(tempOutput);
+            AmandaObj.Interpret(tbRun.Text);
+            tbConsole.AppendText(tempOutput);
             tempOutput = "";
-            richTextBox1.ScrollToCaret();
+            tbConsole.ScrollToCaret();
         }
 
         private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
@@ -63,11 +63,11 @@ namespace AmandaInterface
         private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
         {
             string allowedChars = "([{}]);,. ";
-            int currentLine = LoadTextbox.Selection.Bounds.iStartLine;
-            string textTillCursor = LoadTextbox.GetLineText(currentLine).Substring(0, LoadTextbox.Selection.Bounds.iStartChar);
+            int currentLine = tbEditor.Selection.Bounds.iStartLine;
+            string textTillCursor = tbEditor.GetLineText(currentLine).Substring(0, tbEditor.Selection.Bounds.iStartChar);
             //string textAfterCursor = LoadTextbox.GetLineText(currentLine);
-            char charBeforeCursor = LoadTextbox.Selection.CharBeforeStart;
-            char charAfterCursor = LoadTextbox.Selection.CharAfterStart;
+            char charBeforeCursor = tbEditor.Selection.CharBeforeStart;
+            char charAfterCursor = tbEditor.Selection.CharAfterStart;
             if (e.KeyData == (Keys.K | Keys.Control))
             {
                 //forced show (MinFragmentLength will be ignored)
