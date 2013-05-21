@@ -154,12 +154,22 @@ namespace AmandaInterface
 
         }
 
-        private void RunTextbox_KeyPress(object sender, KeyPressEventArgs e)
+        private void tbRun_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
                 RunCode();
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eDITToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
