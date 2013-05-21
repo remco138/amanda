@@ -49,6 +49,7 @@ namespace AmandaInterface
         private void RunCode()
         {
             AmandaObj.Interpret(tbRun.Text);
+            tbConsole.AppendText("> " + tbRun.Text + "\r\n");
             tbConsole.AppendText(tempOutput);
             tempOutput = "";
             tbConsole.ScrollToCaret();
@@ -60,12 +61,12 @@ namespace AmandaInterface
             tempOutput += output;
         }
 
-        private void LoadTextbox_KeyDown(object sender, KeyEventArgs e)
+        private void tbEditor_KeyDown(object sender, KeyEventArgs e)
         {
             string allowedChars = "([{}]);,. ";
             int currentLine = tbEditor.Selection.Bounds.iStartLine;
             string textTillCursor = tbEditor.GetLineText(currentLine).Substring(0, tbEditor.Selection.Bounds.iStartChar);
-            //string textAfterCursor = LoadTextbox.GetLineText(currentLine);
+            //string textAfterCursor = tbEditor.GetLineText(currentLine);
             char charBeforeCursor = tbEditor.Selection.CharBeforeStart;
             char charAfterCursor = tbEditor.Selection.CharAfterStart;
             if (e.KeyData == (Keys.K | Keys.Control))
@@ -88,7 +89,7 @@ namespace AmandaInterface
             }
         }
 
-        private void LoadTextbox_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
+        private void tbEditor_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
         {
             Match isIfRegex = Regex.Match(e.LineText.Trim(), ",* if");
             Match isOtherwiseRegex = Regex.Match(e.LineText.Trim(), ",* otherwise");
@@ -133,7 +134,7 @@ namespace AmandaInterface
         Style CommentStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
         Style ConstantStyle = new TextStyle(Brushes.Firebrick, null, FontStyle.Regular);
 
-        private void LoadTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbEditor_TextChanged(object sender, TextChangedEventArgs e)
         {
             e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle);
 
@@ -142,16 +143,6 @@ namespace AmandaInterface
             e.ChangedRange.SetStyle(ConstantStyle, @"(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
             e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            //
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void tbRun_KeyPress(object sender, KeyPressEventArgs e)
