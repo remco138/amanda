@@ -314,18 +314,18 @@
             // amandaDocsToolStripMenuItem
             // 
             this.amandaDocsToolStripMenuItem.Name = "amandaDocsToolStripMenuItem";
-            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.amandaDocsToolStripMenuItem.Text = "Amanda Docs";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(145, 6);
             // 
             // aboutAmandaToolStripMenuItem
             // 
             this.aboutAmandaToolStripMenuItem.Name = "aboutAmandaToolStripMenuItem";
-            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.aboutAmandaToolStripMenuItem.Text = "About";
             // 
             // toolStrip1
@@ -452,6 +452,7 @@
             this.tbEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbEditor.IsReplaceMode = false;
             this.tbEditor.Location = new System.Drawing.Point(0, 0);
             this.tbEditor.Name = "tbEditor";
