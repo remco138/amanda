@@ -18,6 +18,9 @@ namespace AmandaInterface
     {
         Amanda AmandaObj;
         AutocompleteMenu autocomplete;
+        FindForm findform;
+        ReplaceForm replaceform;
+        GoToForm gotoform;
         OutputCallback outputCallback;
         string tempOutput = "";
         System.Windows.Forms.Timer runTimer = new System.Windows.Forms.Timer();
@@ -41,6 +44,10 @@ namespace AmandaInterface
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
             autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
+
+            findform = new FindForm(tbEditor);
+            replaceform = new ReplaceForm(tbEditor);
+            gotoform = new GoToForm();
 
             runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender,e) => AmandaObj.Load(tbEditor.Text);
@@ -214,6 +221,71 @@ namespace AmandaInterface
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             tbConsole.Clear();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbEditor.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbEditor.Redo();
+        }
+
+        private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tbEditor.Cut();
+        }
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tbEditor.Copy();
+        }
+
+        private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            tbEditor.Paste();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int SelectionIndex = tbEditor.SelectionStart;
+            int SelectionCount = tbEditor.SelectionLength;
+            tbEditor.Text = tbEditor.Text.Remove(SelectionIndex, SelectionCount);
+            tbEditor.SelectionStart = SelectionIndex;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbEditor.SelectAll();
+        }
+
+        private void timeDateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tbEditor.InsertText(String.Format("{0:HH:mm dd-MM-yyyy}", DateTime.Now));
+        }
+
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            findform.Show();
+        }
+
+        private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            findform.FindNext(findform.tbFind.Text);
+        }
+
+        private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            replaceform.Show();
+        }
+
+        private void gotoLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gotoform.SelectedLineNumber = 1;
+            gotoform.TotalLineCount = tbEditor.LinesCount;
+            gotoform.ShowDialog();
         }
     }
 
