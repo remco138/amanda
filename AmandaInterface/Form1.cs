@@ -240,23 +240,36 @@ namespace AmandaInterface
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbEditor.Undo();
+            if (ActiveControl.Name == "tbRun")
+                tbRun.Undo();
+            else
+                tbEditor.Undo();
         }
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // tbRun has no builtin redo function;
             tbEditor.Redo();
         }
         private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            tbEditor.Cut();
+            if (ActiveControl.Name == "tbRun")
+                tbRun.Cut();
+            else
+                tbEditor.Cut();
         }
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            tbEditor.Copy();
+            if (ActiveControl.Name == "tbRun")
+                tbRun.Copy();
+            else
+                tbEditor.Copy();
         }
         private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            tbEditor.Paste();
+            if (ActiveControl.Name == "tbRun")
+                tbRun.Paste();
+            else
+                tbEditor.Paste();
         }
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -267,7 +280,10 @@ namespace AmandaInterface
         }
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbEditor.SelectAll();
+            if (ActiveControl.Name == "tbRun")
+                tbRun.SelectAll();
+            else
+                tbEditor.SelectAll();
         }
 
         private void timeDateToolStripMenuItem_Click(object sender, EventArgs e)
