@@ -24,6 +24,7 @@ namespace AmandaInterface
         double runTimerOutput = 0;
         bool isRunning = false;
 
+        BackgroundWorker rcBw = new BackgroundWorker();
         public mainForm()
         {
             InitializeComponent();
@@ -43,9 +44,14 @@ namespace AmandaInterface
 
             runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender,e) => AmandaObj.Load(tbEditor.Text);
+
+            runTimer.Tick += new EventHandler(runTimer_Tick);
+            rcBw.WorkerSupportsCancellation = true;
+            rcBw.WorkerReportsProgress = false;
+            rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
+            rcBw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
         }
 
-        BackgroundWorker rcBw = new BackgroundWorker();
         private void RunCode()
         {
             // show expression
@@ -59,14 +65,9 @@ namespace AmandaInterface
             loadButton.Enabled = false;
             clearButton.Enabled = false;
             runTimerOutput = 0;
-            runTimer.Tick += new EventHandler(runTimer_Tick);
             runTimer.Interval = 100; // 0.1 seconde
             runTimer.Enabled = true;
             runTimer.Start();
-            rcBw.WorkerSupportsCancellation = true;
-            rcBw.WorkerReportsProgress = false;
-            rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
-            rcBw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
             if (rcBw.IsBusy != true)
             {
                 rcBw.RunWorkerAsync();
@@ -88,18 +89,17 @@ namespace AmandaInterface
 
         private void rcBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            runTimer.Stop();
-            runTimer.Enabled = false;
             tbConsole.AppendText(tempOutput);
             tempOutput = "";
             tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.ScrollToCaret();
-            statusBar.BackColor = Color.LightSkyBlue;
-            lblStatus.Text = "Ready (Completed in: " + (runTimerOutput / 1000).ToString() + " seconds)";
             runButton.Enabled = true;
             loadButton.Enabled = true;
             clearButton.Enabled = true;
             isRunning = false;
+            statusBar.BackColor = Color.LightSkyBlue;
+            runTimer.Stop();
+            lblStatus.Text = "Ready (Completed in: " + (runTimerOutput / 1000).ToString() + " seconds)";
         }
 
         private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
