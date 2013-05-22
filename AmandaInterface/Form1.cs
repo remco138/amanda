@@ -294,8 +294,15 @@ namespace AmandaInterface
         {
             if (!isEdited) return;
 
-            File.WriteAllText(currentFileLocation, tbEditor.Text);
-            isEdited = false;
+            if (currentFileLocation == String.Empty)
+            {
+                SaveAs();
+            }
+            else
+            {
+                File.WriteAllText(currentFileLocation, tbEditor.Text);
+                isEdited = false;
+            }
         }
 
         private void SaveAs()
@@ -328,10 +335,7 @@ namespace AmandaInterface
 
             if (result == DialogResult.Yes)
             {
-                if (currentFileLocation == String.Empty)
-                    SaveAs();
-                else
-                    Save();
+                Save();
             }
         }
 
