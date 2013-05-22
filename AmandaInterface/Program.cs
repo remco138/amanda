@@ -14,7 +14,7 @@ namespace AmandaInterface
 {
     static class Program
     {
-        private static Form1 window;
+        private static mainForm window;
         
 
         /// The main entry point for the application.
@@ -24,7 +24,7 @@ namespace AmandaInterface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new mainForm());
         }
     }
 }

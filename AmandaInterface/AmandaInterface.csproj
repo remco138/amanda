@@ -130,8 +130,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\clear.png" />
     <Content Include="Images\load.gif" />
+    <Content Include="Images\load.png" />
     <Content Include="Images\run.gif" />
+    <Content Include="Images\run.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />

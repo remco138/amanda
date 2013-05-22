@@ -14,15 +14,15 @@ using System.Threading;
 
 namespace AmandaInterface
 {
-    public partial class Form1 : Form
+    public partial class mainForm : Form
     {
         Amanda AmandaObj;
         AutocompleteMenu autocomplete;
         OutputCallback outputCallback;
-
         string tempOutput = "";
+        bool isRunning = false;
 
-        public Form1()
+        public mainForm()
         {
             InitializeComponent();
 
@@ -41,18 +41,52 @@ namespace AmandaInterface
 
             runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender,e) => AmandaObj.Load(tbEditor.Text);
-            
-            StatusLabel.Text = "Idle";
-            //ProgressBar.Value = 0;
         }
 
+        BackgroundWorker rcBw = new BackgroundWorker();
         private void RunCode()
         {
+            // show expression
+            tbConsole.SelectionStart = tbConsole.TextLength;
+            tbConsole.SelectionBackColor = Color.Yellow;
+            string expr = "> " + tbRun.Text + "\r\n";
+            tbConsole.AppendText(expr);
+            // show output
+            isRunning = true;
+            runButton.Enabled = false;
+            loadButton.Enabled = false;
+            clearButton.Enabled = false;
+            rcBw.WorkerSupportsCancellation = true;
+            rcBw.WorkerReportsProgress = false;
+            rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
+            rcBw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
+            if (rcBw.IsBusy != true)
+            {
+                rcBw.RunWorkerAsync();
+            }
+        }
+
+        private void rcBw_doWork(object sender, DoWorkEventArgs e)
+        {
+            //BackgroundWorker worker = sender as BackgroundWorker; niet nodig
+            statusBar.BackColor = Color.Orange;
+            lblStatus.Text = "Running...";
+            tempOutput = "";
             AmandaObj.Interpret(tbRun.Text);
-            tbConsole.AppendText("> " + tbRun.Text + "\r\n");
+        }
+
+        private void rcBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
             tbConsole.AppendText(tempOutput);
             tempOutput = "";
+            tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.ScrollToCaret();
+            statusBar.BackColor = Color.LightSkyBlue;
+            lblStatus.Text = "Ready";
+            runButton.Enabled = true;
+            loadButton.Enabled = true;
+            clearButton.Enabled = true;
+            isRunning = false;
         }
 
         private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
@@ -147,9 +181,10 @@ namespace AmandaInterface
 
         private void tbRun_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13)
+            if (e.KeyChar == (char)13 && !isRunning)
             {
                 RunCode();
+                e.Handled = true;
             }
         }
 
@@ -161,6 +196,11 @@ namespace AmandaInterface
         private void eDITToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            tbConsole.Clear();
         }
     }
 
