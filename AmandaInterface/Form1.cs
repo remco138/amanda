@@ -19,9 +19,7 @@ namespace AmandaInterface
     {
         Amanda AmandaObj;
         AutocompleteMenu autocomplete;
-        FindForm findform;
-        ReplaceForm replaceform;
-        GoToForm gotoform;
+        
         OutputCallback outputCallback;
         string tempOutput = "";
         System.Windows.Forms.Timer runTimer = new System.Windows.Forms.Timer();
@@ -52,10 +50,6 @@ namespace AmandaInterface
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
             autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
-
-            findform = new FindForm(tbEditor);
-            replaceform = new ReplaceForm(tbEditor);
-            gotoform = new GoToForm();
 
             runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender,e) => AmandaObj.Load(tbEditor.Text);
@@ -270,24 +264,23 @@ namespace AmandaInterface
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            findform.Show();
+            tbEditor.ShowFindDialog();
         }
 
         private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            findform.FindNext(findform.tbFind.Text);
+            var findForm = tbEditor.findForm;
+            findForm.FindNext(findForm.tbFind.Text);
         }
 
         private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            replaceform.Show();
+            tbEditor.ShowReplaceDialog();
         }
 
         private void gotoLineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            gotoform.SelectedLineNumber = 1;
-            gotoform.TotalLineCount = tbEditor.LinesCount;
-            gotoform.ShowDialog();
+            tbEditor.ShowGoToDialog();
         }
 
         private void Save()
@@ -379,6 +372,11 @@ namespace AmandaInterface
                 AskToSaveFile();
 
             tbEditor.Text = "";
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

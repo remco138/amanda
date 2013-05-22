@@ -309,6 +309,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // amandaDocsToolStripMenuItem
             // 
@@ -451,7 +452,6 @@
             this.tbEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbEditor.IsReplaceMode = false;
             this.tbEditor.Location = new System.Drawing.Point(0, 0);
             this.tbEditor.Name = "tbEditor";
