@@ -20,6 +20,8 @@ namespace AmandaInterface
         AutocompleteMenu autocomplete;
         OutputCallback outputCallback;
         string tempOutput = "";
+        System.Windows.Forms.Timer runTimer = new System.Windows.Forms.Timer();
+        double runTimerOutput = 0;
         bool isRunning = false;
 
         public mainForm()
@@ -56,6 +58,11 @@ namespace AmandaInterface
             runButton.Enabled = false;
             loadButton.Enabled = false;
             clearButton.Enabled = false;
+            runTimerOutput = 0;
+            runTimer.Tick += new EventHandler(runTimer_Tick);
+            runTimer.Interval = 100; // 0.1 seconde
+            runTimer.Enabled = true;
+            runTimer.Start();
             rcBw.WorkerSupportsCancellation = true;
             rcBw.WorkerReportsProgress = false;
             rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
@@ -64,6 +71,10 @@ namespace AmandaInterface
             {
                 rcBw.RunWorkerAsync();
             }
+        }
+
+        private void runTimer_Tick(object sender, EventArgs e) {
+            runTimerOutput += 100;
         }
 
         private void rcBw_doWork(object sender, DoWorkEventArgs e)
@@ -77,12 +88,14 @@ namespace AmandaInterface
 
         private void rcBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            runTimer.Stop();
+            runTimer.Enabled = false;
             tbConsole.AppendText(tempOutput);
             tempOutput = "";
             tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.ScrollToCaret();
             statusBar.BackColor = Color.LightSkyBlue;
-            lblStatus.Text = "Ready";
+            lblStatus.Text = "Ready (Completed in: " + (runTimerOutput / 1000).ToString() + " seconds)";
             runButton.Enabled = true;
             loadButton.Enabled = true;
             clearButton.Enabled = true;
