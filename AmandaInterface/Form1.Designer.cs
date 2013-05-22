@@ -117,6 +117,7 @@
             this.newFileToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newFileToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
             this.newFileToolStripMenuItem1.Text = "New";
+            this.newFileToolStripMenuItem1.Click += new System.EventHandler(this.newFileToolStripMenuItem1_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -124,6 +125,7 @@
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.openToolStripMenuItem.Text = "Open...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -131,12 +133,14 @@
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.saveAsToolStripMenuItem.Text = "Save as...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -184,7 +188,6 @@
             this.editToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
             this.editToolStripMenuItem1.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem1.Text = "Edit";
-            this.editToolStripMenuItem1.Click += new System.EventHandler(this.eDITToolStripMenuItem1_Click);
             // 
             // undoToolStripMenuItem
             // 
@@ -310,18 +313,18 @@
             // amandaDocsToolStripMenuItem
             // 
             this.amandaDocsToolStripMenuItem.Name = "amandaDocsToolStripMenuItem";
-            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.amandaDocsToolStripMenuItem.Text = "Amanda Docs";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
             // 
             // aboutAmandaToolStripMenuItem
             // 
             this.aboutAmandaToolStripMenuItem.Name = "aboutAmandaToolStripMenuItem";
-            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutAmandaToolStripMenuItem.Text = "About";
             // 
             // toolStrip1
@@ -448,6 +451,7 @@
             this.tbEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.tbEditor.IsReplaceMode = false;
             this.tbEditor.Location = new System.Drawing.Point(0, 0);
             this.tbEditor.Name = "tbEditor";
@@ -483,7 +487,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "mainForm";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

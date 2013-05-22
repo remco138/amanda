@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using FastColoredTextBoxNS;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.IO;
 
 namespace AmandaInterface
 {
@@ -27,7 +28,14 @@ namespace AmandaInterface
         double runTimerOutput = 0;
         bool isRunning = false;
 
+        SaveFileDialog saveDialog = new SaveFileDialog();
+        OpenFileDialog openDialog = new OpenFileDialog();
+        string currentFileLocation = String.Empty;
+        bool isEdited = false;
+
+
         BackgroundWorker rcBw = new BackgroundWorker();
+
         public mainForm()
         {
             InitializeComponent();
@@ -57,6 +65,12 @@ namespace AmandaInterface
             rcBw.WorkerReportsProgress = false;
             rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
             rcBw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
+
+
+            saveDialog.Filter = "Amanda File|*.ama";
+            openDialog.Filter = "Amanda File|*.ama";
+
+            isEdited = false;
         }
 
         private void RunCode()
@@ -190,6 +204,10 @@ namespace AmandaInterface
 
         private void tbEditor_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // Set isEdited to true so the we can ask the user to save the file when he closes the program.
+            //
+            if (!isEdited) isEdited = true;
+
             e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle);
 
             e.ChangedRange.SetStyle(KeywordStyle,  @"\b(where|if|else|True|False|otherwise)\b");
@@ -208,16 +226,6 @@ namespace AmandaInterface
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void eDITToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             tbConsole.Clear();
@@ -227,27 +235,22 @@ namespace AmandaInterface
         {
             tbEditor.Undo();
         }
-
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tbEditor.Redo();
         }
-
         private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             tbEditor.Cut();
         }
-
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             tbEditor.Copy();
         }
-
         private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             tbEditor.Paste();
         }
-
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int SelectionIndex = tbEditor.SelectionStart;
@@ -255,7 +258,6 @@ namespace AmandaInterface
             tbEditor.Text = tbEditor.Text.Remove(SelectionIndex, SelectionCount);
             tbEditor.SelectionStart = SelectionIndex;
         }
-
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tbEditor.SelectAll();
@@ -286,6 +288,93 @@ namespace AmandaInterface
             gotoform.SelectedLineNumber = 1;
             gotoform.TotalLineCount = tbEditor.LinesCount;
             gotoform.ShowDialog();
+        }
+
+        private void Save()
+        {
+            if (!isEdited) return;
+
+            File.WriteAllText(currentFileLocation, tbEditor.Text);
+            isEdited = false;
+        }
+
+        private void SaveAs()
+        {
+            DialogResult result = saveDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    File.WriteAllText(saveDialog.FileName, tbEditor.Text);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to write to file: {0}", ex.Message);
+                }
+
+                currentFileLocation = saveDialog.FileName;
+                isEdited = false;
+            }
+        }
+
+        private void AskToSaveFile()
+        {
+            String file = (currentFileLocation == String.Empty) ? "Untitled" : currentFileLocation;
+
+            DialogResult result = MessageBox.Show("Save File " + file + "?",
+                                                    "Save File",
+                                                    MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                if (currentFileLocation == String.Empty)
+                    SaveAs();
+                else
+                    Save();
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveAs();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isEdited)
+            {
+                AskToSaveFile();
+            }
+
+            DialogResult result = openDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    tbEditor.Text = File.ReadAllText(openDialog.FileName);
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("Unable to open file: {0}", ex.Message);
+                }
+                currentFileLocation = openDialog.FileName;
+                isEdited = false;
+            }
+        }
+
+        private void newFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (isEdited) 
+                AskToSaveFile();
+
+            tbEditor.Text = "";
         }
     }
 
