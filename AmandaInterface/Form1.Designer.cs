@@ -92,7 +92,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(929, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(792, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -314,18 +314,18 @@
             // amandaDocsToolStripMenuItem
             // 
             this.amandaDocsToolStripMenuItem.Name = "amandaDocsToolStripMenuItem";
-            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.amandaDocsToolStripMenuItem.Text = "Amanda Docs";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(145, 6);
             // 
             // aboutAmandaToolStripMenuItem
             // 
             this.aboutAmandaToolStripMenuItem.Name = "aboutAmandaToolStripMenuItem";
-            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.aboutAmandaToolStripMenuItem.Text = "About";
             // 
             // toolStrip1
@@ -341,7 +341,7 @@
             this.toolStrip1.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(929, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(792, 39);
             this.toolStrip1.TabIndex = 9;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -389,11 +389,11 @@
             this.statusBar.BackColor = System.Drawing.Color.LightSkyBlue;
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusBar.Location = new System.Drawing.Point(0, 449);
+            this.statusBar.Location = new System.Drawing.Point(0, 547);
             this.statusBar.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.statusBar.Name = "statusBar";
             this.statusBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusBar.Size = new System.Drawing.Size(929, 22);
+            this.statusBar.Size = new System.Drawing.Size(792, 22);
             this.statusBar.TabIndex = 8;
             this.statusBar.Text = "statusStrip1";
             // 
@@ -411,7 +411,7 @@
             this.tbRun.ForeColor = System.Drawing.Color.Chartreuse;
             this.tbRun.Location = new System.Drawing.Point(0, 63);
             this.tbRun.Name = "tbRun";
-            this.tbRun.Size = new System.Drawing.Size(929, 22);
+            this.tbRun.Size = new System.Drawing.Size(792, 22);
             this.tbRun.TabIndex = 12;
             this.tbRun.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbRun_KeyPress);
             // 
@@ -421,7 +421,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 85);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(929, 364);
+            this.panel1.Size = new System.Drawing.Size(792, 462);
             this.panel1.TabIndex = 13;
             // 
             // splitContainer1
@@ -438,8 +438,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tbConsole);
-            this.splitContainer1.Size = new System.Drawing.Size(929, 364);
-            this.splitContainer1.SplitterDistance = 254;
+            this.splitContainer1.Size = new System.Drawing.Size(792, 462);
+            this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
             // tbEditor
@@ -457,7 +457,7 @@
             this.tbEditor.Name = "tbEditor";
             this.tbEditor.Paddings = new System.Windows.Forms.Padding(0);
             this.tbEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.tbEditor.Size = new System.Drawing.Size(929, 254);
+            this.tbEditor.Size = new System.Drawing.Size(792, 232);
             this.tbEditor.TabIndex = 0;
             this.tbEditor.Zoom = 100;
             this.tbEditor.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.tbEditor_TextChanged);
@@ -470,15 +470,16 @@
             this.tbConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbConsole.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbConsole.Location = new System.Drawing.Point(0, 0);
+            this.tbConsole.MaxLength = 500;
             this.tbConsole.Name = "tbConsole";
             this.tbConsole.ReadOnly = true;
-            this.tbConsole.Size = new System.Drawing.Size(929, 106);
+            this.tbConsole.Size = new System.Drawing.Size(792, 226);
             this.tbConsole.TabIndex = 0;
             this.tbConsole.Text = "";
             // 
             // mainForm
             // 
-            this.ClientSize = new System.Drawing.Size(929, 471);
+            this.ClientSize = new System.Drawing.Size(792, 569);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbRun);
             this.Controls.Add(this.toolStrip1);
