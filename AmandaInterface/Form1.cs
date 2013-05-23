@@ -21,7 +21,8 @@ namespace AmandaInterface
         AutocompleteMenu autocomplete;
         
         OutputCallback outputCallback;
-        string tempOutput = "";
+        StringBuilder tempOutput = new StringBuilder();
+        
         System.Windows.Forms.Timer runTimer = new System.Windows.Forms.Timer();
         System.Timers.Timer runTTimer = new System.Timers.Timer();
         bool isRunning = false;
@@ -42,9 +43,7 @@ namespace AmandaInterface
             AmandaHook.SetOutputCallback(outputCallback);
           
             AmandaObj = new Amanda();
-            tbConsole.AppendText(tempOutput);
-            
-            tempOutput = "";
+            tbConsole.AppendText(tempOutput.ToString());
 
             autocomplete = new AutocompleteMenu(tbEditor);
             autocomplete.MinFragmentLength = 1;
@@ -56,7 +55,7 @@ namespace AmandaInterface
             loadButton.Click += (sender,e) => AmandaObj.Load(tbEditor.Text);
 
             runTimer.Tick += new EventHandler(runTimer_Tick);
-            runTimer.Interval = 10;
+            runTimer.Interval = 20;
             
             rcBw.WorkerSupportsCancellation = true;
             rcBw.WorkerReportsProgress = false;
@@ -93,47 +92,65 @@ namespace AmandaInterface
 
         private void runTimer_Tick(object sender, EventArgs e)
         {           
-            // Append text & Scroll to the bottom
-            tbConsole.AppendText(tempOutput);
-            tempOutput = "";
+            // Make sure the console isn't getting too full
+            //
+            if (tbConsole.TextLength > 40000)
+            {
+                Console.WriteLine("Resetting Console Content");
+                tbConsole.Text = tbConsole.Text.Substring(35000);
+            }
+
+            // StringBuilder isn't threadsafe, so we use a lock here to prevent Exceptions
+            //
+            lock (tempOutput)
+            {
+                tbConsole.AppendText(tempOutput.ToString());
+                tempOutput.Clear();
+            }
+
+            // Scroll to the end of the textbox
+            //
             tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.ScrollToCaret();
         }
 
         private void rcBw_doWork(object sender, DoWorkEventArgs e)
         {
+            // Start the Amanda Interpereter & active the statusbar
+            //
             statusBar.BackColor = Color.Orange;
             lblStatus.Text = "Running...";
-            tempOutput = "";
+            tempOutput.Clear();
             stopWatch.Start();
             AmandaObj.Interpret(tbRun.Text);        
         }
 
         private void rcBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            tbConsole.AppendText(tempOutput); // Voeg het laatste stukje text ook toe.
-            tempOutput = "";
-            tbConsole.SelectionStart = tbConsole.TextLength;
-            tbConsole.ScrollToCaret();
-
-            runButton.Enabled = true;
-            loadButton.Enabled = true;
-            clearButton.Enabled = true;
-            isRunning = false;
-            statusBar.BackColor = Color.LightSkyBlue;
-
             stopWatch.Stop();
             runTimer.Stop();
 
+            runButton.Enabled = true;
+            loadButton.Enabled = true;
+            clearButton.Enabled = true;      
+            statusBar.BackColor = Color.LightSkyBlue;
             lblStatus.Text = "Ready (Completed in: " + stopWatch.ElapsedMilliseconds + " Milliseconds) ";
 
+            tbConsole.AppendText(tempOutput.ToString()); // Voeg het laatste stukje text ook toe.
+            tempOutput.Clear();
+            tbConsole.SelectionStart = tbConsole.TextLength;
+            tbConsole.ScrollToCaret();
+
             stopWatch.Reset();
+            isRunning = false;
         }
 
-        private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() uitgevoerd //
+        private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() (in de amanda DLL) uitgevoerd.
         {
-            //Console.WriteLine("Dit is niet zomaar output: " + output); // TRAAG !!
-            tempOutput += output;
+            lock (tempOutput)
+            {
+                tempOutput.Append(output);
+            }
         }
 
         private void tbEditor_KeyDown(object sender, KeyEventArgs e)
