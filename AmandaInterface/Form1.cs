@@ -187,6 +187,10 @@ namespace AmandaInterface
             Match isOtherwiseRegex = Regex.Match(e.LineText.Trim(), ",* otherwise");
             Match isWhereRegex = Regex.Match(e.LineText, "where");
             int currentIndent = e.LineText.TakeWhile(q => q == ' ').Count();    //shouldn't be too inefficient
+            int at = e.LineText.IndexOf('=');
+
+            AmandaTagParser tagParser = new AmandaTagParser();
+            tagParser.parse(tbEditor.Text);
 
             /*
              *              All these todo's might not be neccessary, it's pretty good right now
@@ -196,26 +200,22 @@ namespace AmandaInterface
                 e.ShiftNextLines = e.TabLength;
             }
 
-             if (isIfRegex.Success == true)
+             else if (isIfRegex.Success == true)
              {
-                 int at = e.LineText.IndexOf('=');
                  e.ShiftNextLines = at - currentIndent;
-            }
-             if (isOtherwiseRegex.Success)
-                 //(CurrentFunctionContainsPatternMatching() && !previousLineIsCondition)
-             {
-                 //go back to the function's original indent-level, instead of matching the '='
              }
 
-            if (e.LineText.Trim() == "" || isOtherwiseRegex.Success == true)
+            else if (e.LineText.Trim() == "" || e.PrevLineText.Trim().Count() == 0 || isOtherwiseRegex.Success == true)
             {
-                if (false)
-                    //|| PreviousLineIsCondition
+                AmandaTag tag = tagParser.GetTag(e.iLine);
+                if (tag != null)
                 {
-                 //go back to the function's original indent-level, instead of matching the '='
+                    e.ShiftNextLines = tag.BeginLocation.X - at;
                 }
-
-                e.ShiftNextLines = -e.TabLength;
+                else
+                {
+                    e.ShiftNextLines = -e.TabLength;
+                }
                 return;
             }
         }
@@ -428,37 +428,5 @@ namespace AmandaInterface
 
 
 
-
-    //Will do simple parsing of amanda code, fetches stuff about functions and other tags
-    //will also be of use for smart indenting and make life easier coding (basic)error detection
-    class AmandaTagParser
-    {
-        public List<AmandaTag> AmandaTags;
-
-        public AmandaTagParser()
-        {
-            AmandaTags = new List<AmandaTag>();
-        }
-
-        //generates the tags (function names, variables, etc)
-        public void parse(string code) { }
-
-        //Loads a database file which contains summaries for (hardcoded) amanda functions
-        public void LoadDB(string file) { }
-
-    }
-
-    class AmandaTag
-    {
-        //TagType tagType; //function, weird OOP structure (::=) and possibly more?
-
-        string Name;            //function name, like "increase"
-        List<string> Arguments; //Arguments like: x y (z:xs)
-        string Definition;      //code after the '='
-        string Summary;         //Description of the function, this should be fetched from some DB file (minardus?)
-        Point BeginLocation;    //as in line (x, y) 
-        Point EndLocation;
- 
-    }
 
 }
