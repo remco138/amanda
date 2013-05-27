@@ -18,19 +18,13 @@ namespace AmandaInterface
     public partial class mainForm : Form
     {
         Amanda AmandaObj;
-        AutocompleteMenu autocomplete;
-        
+               
         OutputCallback outputCallback;
         StringBuilder tempOutput = new StringBuilder();
         
         System.Windows.Forms.Timer runTimer = new System.Windows.Forms.Timer();
         System.Timers.Timer runTTimer = new System.Timers.Timer();
         bool isRunning = false;
-
-        SaveFileDialog saveDialog = new SaveFileDialog();
-        OpenFileDialog openDialog = new OpenFileDialog();
-        string currentFileLocation = String.Empty;
-        bool isEdited = false;
 
         System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
         BackgroundWorker rcBw = new BackgroundWorker();
@@ -45,26 +39,17 @@ namespace AmandaInterface
             AmandaObj = new Amanda();
             tbConsole.AppendText(tempOutput.ToString());
 
-            autocomplete = new AutocompleteMenu(tbEditor);
-            autocomplete.MinFragmentLength = 1;
-            autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
-            autocomplete.Items.Width = 400;
-            autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers());
 
             runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender, e) =>
                 {
-                    if (tbEditor.Text == "") return;
+                   // if (tbEditor.Text == "") return;
 
-                    if (AmandaObj.Load(tbEditor.Text) == true)
+                    if (AmandaObj.Load(fileManager.SelectedTabTextBox.Text) == true)
                     {
                         MessageBox.Show("File Loaded");
                     }
                 };
-
-            tbEditor.AllowDrop = true;
-            tbEditor.DragEnter += tbEditor_DragEnter;
-            tbEditor.DragDrop += tbEditor_DragDrop;
 
             runTimer.Tick += new EventHandler(runTimer_Tick);
             runTimer.Interval = 20;
@@ -73,11 +58,6 @@ namespace AmandaInterface
             rcBw.WorkerReportsProgress = false;
             rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
             rcBw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
-
-            saveDialog.Filter = "Amanda File|*.ama";
-            openDialog.Filter = "Amanda File|*.ama";
-
-            isEdited = false;
         }
 
         private void RunCode()
@@ -165,115 +145,7 @@ namespace AmandaInterface
             }
         }
 
-        private void tbEditor_KeyDown(object sender, KeyEventArgs e)
-        {
-            string allowedChars = "([{}]);,. ";
-            int currentLine = tbEditor.Selection.Bounds.iStartLine;
-            string textTillCursor = tbEditor.GetLineText(currentLine).Substring(0, tbEditor.Selection.Bounds.iStartChar);
-            //string textAfterCursor = tbEditor.GetLineText(currentLine);
-            char charBeforeCursor = tbEditor.Selection.CharBeforeStart;
-            char charAfterCursor = tbEditor.Selection.CharAfterStart;
-            if (e.KeyData == (Keys.K | Keys.Control))
-            {
-                //forced show (MinFragmentLength will be ignored)
-                autocomplete.Show(true);
-                //e.Handled = true;
-            }
-            if (System.Char.IsLetter((char)e.KeyValue) //warning, lisp programmer at work
-                && textTillCursor.Count() > 0
-                && allowedChars.Contains(charBeforeCursor)
-                && allowedChars.Contains(charAfterCursor))
 
-                /*&&  cursorIsNotInsideFunctionName
-                  &&  cursorIsCorrectlyIndented?? perhaps difficult with regex since parsing a language ain't easy
-                 */
-            {
-                autocomplete.Show(true);
-
-            }
-        }
-
-        private void tbEditor_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
-        {
-            Match isIfRegex = Regex.Match(e.LineText.Trim(), ",* if");
-            Match isOtherwiseRegex = Regex.Match(e.LineText.Trim(), ",* otherwise");
-            Match isWhereRegex = Regex.Match(e.LineText, "where");
-            int currentIndent = e.LineText.TakeWhile(q => q == ' ').Count();    //shouldn't be too inefficient
-            int at = e.LineText.IndexOf('=');
-
-            AmandaTagParser tagParser = new AmandaTagParser();
-            tagParser.parse(tbEditor.Text);
-
-            /*
-             *              All these todo's might not be neccessary, it's pretty good right now
-             */
-            if (isWhereRegex.Success)
-            {
-                e.ShiftNextLines = e.TabLength;
-            }
-
-             else if (isIfRegex.Success == true)
-             {
-                 e.ShiftNextLines = at - currentIndent;
-             }
-
-            else if (e.LineText.Trim() == "" || e.PrevLineText.Trim().Count() == 0 || isOtherwiseRegex.Success == true)
-            {
-                AmandaTag tag = tagParser.GetTag(e.iLine);
-                if (tag != null)
-                {
-                    e.ShiftNextLines = tag.BeginLocation.X - at;
-                }
-                else
-                {
-                    e.ShiftNextLines = -e.TabLength;
-                }
-                return;
-            }
-        }
-
-
-        Style DefaultStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
-        Style KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
-        Style CommentStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
-        Style ConstantStyle = new TextStyle(Brushes.Firebrick, null, FontStyle.Regular);
-
-        private void tbEditor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Set isEdited to true so the we can ask the user to save the file when he closes the program.
-            //
-            if (!isEdited) isEdited = true;
-
-            e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle);
-
-            e.ChangedRange.SetStyle(KeywordStyle,  @"\b(where|if|else|True|False|otherwise)\b");
-            e.ChangedRange.SetStyle(CommentStyle,  @"\|\|.*");                          //comments ||...
-            e.ChangedRange.SetStyle(ConstantStyle, @"(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
-            e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
-            e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
-        }
-
-        private void tbEditor_DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // if the dropped file is a text file
-            {
-                string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                if (isEdited)
-                {
-                    AskToSaveFile();
-                }
-
-                // TODO: open multiple files in different tabs
-                //
-                OpenFile(filePaths[0]);
-            }
-        }
-
-        private void tbEditor_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
-        }
 
         private void tbRun_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -294,196 +166,111 @@ namespace AmandaInterface
             if (ActiveControl.Name == "tbRun")
                 tbRun.Undo();
             else
-                tbEditor.Undo();
+                fileManager.SelectedTabTextBox.Undo();
         }
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // tbRun has no builtin redo function;
-            tbEditor.Redo();
+            fileManager.SelectedTabTextBox.Redo();
         }
         private void cutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (ActiveControl.Name == "tbRun")
                 tbRun.Cut();
             else
-                tbEditor.Cut();
+                fileManager.SelectedTabTextBox.Cut();
         }
         private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (ActiveControl.Name == "tbRun")
                 tbRun.Copy();
             else
-                tbEditor.Copy();
+                fileManager.SelectedTabTextBox.Copy();
         }
         private void pasteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (ActiveControl.Name == "tbRun")
                 tbRun.Paste();
             else
-                tbEditor.Paste();
+                fileManager.SelectedTabTextBox.Paste();
         }
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int SelectionIndex = tbEditor.SelectionStart;
-            int SelectionCount = tbEditor.SelectionLength;
-            tbEditor.Text = tbEditor.Text.Remove(SelectionIndex, SelectionCount);
-            tbEditor.SelectionStart = SelectionIndex;
+            int SelectionIndex = fileManager.SelectedTabTextBox.SelectionStart;
+            int SelectionCount = fileManager.SelectedTabTextBox.SelectionLength;
+            fileManager.SelectedTabTextBox.Text = fileManager.SelectedTabTextBox.Text.Remove(SelectionIndex, SelectionCount);
+            fileManager.SelectedTabTextBox.SelectionStart = SelectionIndex;
         }
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveControl.Name == "tbRun")
                 tbRun.SelectAll();
             else
-                tbEditor.SelectAll();
+                fileManager.SelectedTabTextBox.SelectAll();
         }
 
         private void timeDateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbEditor.InsertText(String.Format("{0:HH:mm dd-MM-yyyy}", DateTime.Now));
+            fileManager.SelectedTabTextBox.InsertText(String.Format("{0:HH:mm dd-MM-yyyy}", DateTime.Now));
         }
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbEditor.ShowFindDialog();
+            fileManager.SelectedTabTextBox.ShowFindDialog();
         }
 
         private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var findForm = tbEditor.findForm;
+            var findForm = fileManager.SelectedTabTextBox.findForm;
             findForm.FindNext(findForm.tbFind.Text);
         }
 
         private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbEditor.ShowReplaceDialog();
+            fileManager.SelectedTabTextBox.ShowReplaceDialog();
         }
 
         private void gotoLineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tbEditor.ShowGoToDialog();
+            fileManager.SelectedTabTextBox.ShowGoToDialog();
         }
 
-        private void NewFile()
-        {
-            tbEditor.Text = "";
-            currentFileLocation = "";
-            isEdited = false;
-        }
 
-        private void OpenFile(string pathToFile)
-        {
-            try
-            {
-                tbEditor.Text = File.ReadAllText(pathToFile);
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine("Unable to open file: {0}", ex.Message);
-            }
-            currentFileLocation = pathToFile;
-            isEdited = false;
-        }
 
-        private void Save()
-        {
-            if (!isEdited) return;
 
-            if (currentFileLocation == String.Empty)
-            {
-                SaveAs();
-            }
-            else
-            {
-                File.WriteAllText(currentFileLocation, tbEditor.Text);
-                isEdited = false;
-            }
-        }
 
-        private void SaveAs()
-        {
-            DialogResult result = saveDialog.ShowDialog();
 
-            if (result == DialogResult.OK)
-            {
-                try
-                {
-                    File.WriteAllText(saveDialog.FileName, tbEditor.Text);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Unable to write to file: {0}", ex.Message);
-                }
 
-                currentFileLocation = saveDialog.FileName;
-                isEdited = false;
-            }
-        }
-
-        private void AskToSaveFile()
-        {
-            String file = (currentFileLocation == String.Empty) ? "Untitled" : currentFileLocation;
-
-            DialogResult result = MessageBox.Show("Save File " + file + "?",
-                                                    "Save File",
-                                                    MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.Yes)
-            {
-                Save();
-            }
-        }
-
-        private DialogResult AskToSaveFileCancelleable()
-        {
-            String file = (currentFileLocation == String.Empty) ? "Untitled" : currentFileLocation;
-
-            DialogResult result = MessageBox.Show("Save File " + file + "?",
-                                                    "Save File",
-                                                    MessageBoxButtons.YesNoCancel);
-
-            if (result == DialogResult.Yes)
-            {
-                Save();
-            }
-
-            return result;
-        }
 
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveAs();
+            fileManager.SelectedFileTab.SaveAs();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Save();
+            fileManager.SelectedFileTab.Save();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (isEdited)
-            {
-                AskToSaveFile();
-            }
+            fileManager.SelectedFileTab.AskToSaveFile();
 
-            if (openDialog.ShowDialog() == DialogResult.OK)
-            {
-                OpenFile(openDialog.FileName);  
-            }
+            fileManager.OpenFile();
         }
 
         private void newFileToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (isEdited)
-            {
-                AskToSaveFile();
-            }
-
-            NewFile();
+            fileManager.AddNewFile();
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
         {
 
         }

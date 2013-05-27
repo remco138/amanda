@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +69,7 @@
             this.tbRun = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tbEditor = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -80,7 +79,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbEditor)).BeginInit();
+            this.fileManager.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -433,7 +432,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tbEditor);
+            this.splitContainer1.Panel1.Controls.Add(this.fileManager);
             // 
             // splitContainer1.Panel2
             // 
@@ -442,28 +441,14 @@
             this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
-            // tbEditor
+            // fileManagerTabControl1
             // 
-            this.tbEditor.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.tbEditor.BackBrush = null;
-            this.tbEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tbEditor.CharHeight = 14;
-            this.tbEditor.CharWidth = 8;
-            this.tbEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.tbEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.tbEditor.IsReplaceMode = false;
-            this.tbEditor.Location = new System.Drawing.Point(0, 0);
-            this.tbEditor.Name = "tbEditor";
-            this.tbEditor.Paddings = new System.Windows.Forms.Padding(0);
-            this.tbEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.tbEditor.Size = new System.Drawing.Size(792, 232);
-            this.tbEditor.TabIndex = 0;
-            this.tbEditor.Zoom = 100;
-            this.tbEditor.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.tbEditor_TextChanged);
-            this.tbEditor.AutoIndentNeeded += new System.EventHandler<FastColoredTextBoxNS.AutoIndentEventArgs>(this.tbEditor_AutoIndentNeeded);
-            this.tbEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbEditor_KeyDown);
+            this.fileManager.AllowDrop = true;
+            this.fileManager.Location = new System.Drawing.Point(205, 35);
+            this.fileManager.Name = "fileManagerTabControl1";
+            this.fileManager.SelectedIndex = 0;
+            this.fileManager.Size = new System.Drawing.Size(200, 100);
+            this.fileManager.TabIndex = 0;
             // 
             // tbConsole
             // 
@@ -500,7 +485,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tbEditor)).EndInit();
+            this.fileManager.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -515,7 +500,6 @@
         private System.Windows.Forms.TextBox tbRun;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private FastColoredTextBoxNS.FastColoredTextBox tbEditor;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton runButton;
@@ -550,7 +534,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem aboutAmandaToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton clearButton;
-
+        private FileManagerTabControl fileManager;
     }
 }
 

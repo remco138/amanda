@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Amanda.cs" />
+    <Compile Include="FileManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tags.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
