@@ -69,8 +69,9 @@
             this.tbRun = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.tbConsole = new System.Windows.Forms.RichTextBox();
+            this.fileManager = new AmandaInterface.FileManagerTabControl();
+            this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -441,15 +442,6 @@
             this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
-            // fileManagerTabControl1
-            // 
-            this.fileManager.AllowDrop = true;
-            this.fileManager.Location = new System.Drawing.Point(205, 35);
-            this.fileManager.Name = "fileManagerTabControl1";
-            this.fileManager.SelectedIndex = 0;
-            this.fileManager.Size = new System.Drawing.Size(200, 100);
-            this.fileManager.TabIndex = 0;
-            // 
             // tbConsole
             // 
             this.tbConsole.BackColor = System.Drawing.Color.White;
@@ -462,6 +454,16 @@
             this.tbConsole.Size = new System.Drawing.Size(792, 226);
             this.tbConsole.TabIndex = 0;
             this.tbConsole.Text = "";
+            // 
+            // fileManager
+            // 
+            this.fileManager.AllowDrop = true;
+            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileManager.Location = new System.Drawing.Point(0, 0);
+            this.fileManager.Name = "fileManager";
+            this.fileManager.SelectedIndex = 0;
+            this.fileManager.Size = new System.Drawing.Size(792, 232);
+            this.fileManager.TabIndex = 0;
             // 
             // mainForm
             // 
@@ -535,6 +537,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutAmandaToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton clearButton;
         private FileManagerTabControl fileManager;
+        private FileEditorTab fileEditorTab1;
     }
 }
 

@@ -23,17 +23,18 @@ namespace AmandaInterface
 
             openDialog.Filter = "Amanda File|*.ama";
 
+            this.MouseClick += _MouseClick;
+
             AddNewFile();
         }
 
-        
         public void AddNewFile()
         {
             // Add a new TabPage and place a FastColoredTextBox inside it.
 
-            FileEditorPage newPage = new FileEditorPage();     
+            FileEditorTab newPage = new FileEditorTab();     
             newPage.Padding = new System.Windows.Forms.Padding(3);
-            newPage.Text = "tabPage1";
+            newPage.Text = "Untitled";
 
             this.TabPages.Add(newPage);
         }
@@ -50,9 +51,9 @@ namespace AmandaInterface
         {
             // Is this file already open?
             //
-            foreach (FileEditorPage page in TabPages)
+            foreach (FileEditorTab page in TabPages)
             {
-                if (page.fileLocation == pathToFile)
+                if (page.FileLocation == pathToFile)
                     return;
             }
 
@@ -62,8 +63,8 @@ namespace AmandaInterface
             {
                 String txt = File.ReadAllText(pathToFile);
 
-                FileEditorPage newPage = new FileEditorPage();
-                newPage.fileLocation = pathToFile;
+                FileEditorTab newPage = new FileEditorTab();
+                newPage.FileLocation = pathToFile;
                 newPage.Text = pathToFile; // TODO: Only show the file name and not the whole path
 
                 this.TabPages.Add(newPage);
@@ -74,24 +75,42 @@ namespace AmandaInterface
             }
         }
 
-        public void CloseFile()
+        public void CloseFile(FileEditorTab fileTab)
         {
-            // TODO: Ask to save file
-            TabPages.Remove(SelectedFileTab);
+            // TODO: Make AskToSaveFile so that it also has a CANCEL button
+            //
+            fileTab.AskToSaveFile();
+            TabPages.Remove(fileTab);
         }
 
         /// <summary>
-        /// The original SelectedTab returns a TabPage. This one returns a FileEditorPage (our own)
+        /// The original SelectedTab returns a TabPage. This one returns a FileEditorPage
         /// </summary>
-        public FileEditorPage SelectedFileTab
+        public FileEditorTab SelectedFileTab
         {
-            get { return ((FileEditorPage)this.SelectedTab); }
+            get { return ((FileEditorTab)this.SelectedTab); }
         }
         public FastColoredTextBox SelectedTabTextBox
         {
-            get { return ((FileEditorPage)this.SelectedFileTab).textBox; }
+            get { return ((FileEditorTab)this.SelectedFileTab).textBox; }
         }
 
+
+        private void _MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                // Find out which tab has been clicked & close that file.
+                //
+                for (int i = 0; i < TabCount; i++)
+                {
+                    if (GetTabRect(i).Contains(e.X, e.Y))
+                    {
+                        CloseFile((FileEditorTab)TabPages[i]);
+                    }
+                }
+            }
+        }
 
         private void _DragDrop(object sender, DragEventArgs e)
         {
@@ -113,10 +132,10 @@ namespace AmandaInterface
     }
 
 
-    class FileEditorPage : TabPage
+    class FileEditorTab : TabPage
     {
-        private string _fileLocation;
-        public string fileLocation
+        private string _fileLocation = "";
+        public string FileLocation
         {
             get { return _fileLocation; }
             set { _fileLocation = value; }
@@ -138,24 +157,24 @@ namespace AmandaInterface
 
         SaveFileDialog saveDialog = new SaveFileDialog();
 
-        public FileEditorPage()
-        { 
+        public FileEditorTab()
+        {
             UseVisualStyleBackColor = true;
 
             textBox = new FastColoredTextBox();
             textBox.AllowDrop = true;
             textBox.KeyDown += _KeyDown;
             textBox.TextChanged += _TextChanged;
+            textBox.AutoIndentNeeded += _AutoIndentNeeded;
             textBox.Dock = DockStyle.Fill;
 
             autocomplete = new AutocompleteMenu(textBox);
             autocomplete.MinFragmentLength = 1;
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
-            // autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIX K
+            // autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIXXEN
 
             saveDialog.Filter = "Amanda File|*.ama";
-
 
             Controls.Add(textBox); 
         }
@@ -164,13 +183,13 @@ namespace AmandaInterface
         {
             if (!isEdited) return;
 
-            if (fileLocation == String.Empty)
+            if (FileLocation == String.Empty)
             {
                 SaveAs();
             }
             else
             {
-                File.WriteAllText(fileLocation, textBox.Text);
+                File.WriteAllText(FileLocation, textBox.Text);
                 isEdited = false;
             }
         }
@@ -190,7 +209,7 @@ namespace AmandaInterface
                     Console.WriteLine("Unable to write to file: {0}", ex.Message);
                 }
 
-                fileLocation = saveDialog.FileName;
+                FileLocation = saveDialog.FileName;
                 isEdited = false;
             }
         }
@@ -199,7 +218,7 @@ namespace AmandaInterface
         {
             if (!isEdited) return;
 
-            String file = (fileLocation == String.Empty) ? "Untitled" : fileLocation;
+            String file = (FileLocation == "") ? "Untitled" : FileLocation;
 
             DialogResult result = MessageBox.Show("Save File " + file + "?",
                                                     "Save File",
@@ -255,7 +274,7 @@ namespace AmandaInterface
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
         }
 
-        private void tbEditor_AutoIndentNeeded(object sender, AutoIndentEventArgs e)
+        private void _AutoIndentNeeded(object sender, AutoIndentEventArgs e)
         {
             Match isIfRegex = Regex.Match(e.LineText.Trim(), ",* if");
             Match isOtherwiseRegex = Regex.Match(e.LineText.Trim(), ",* otherwise");

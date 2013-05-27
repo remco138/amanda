@@ -43,7 +43,7 @@ namespace AmandaInterface
             runButton.Click += (sender, e) => RunCode();
             loadButton.Click += (sender, e) =>
                 {
-                   // if (tbEditor.Text == "") return;
+                    if (fileManager.SelectedTabTextBox.Text == "") return;
 
                     if (AmandaObj.Load(fileManager.SelectedTabTextBox.Text) == true)
                     {
@@ -145,8 +145,6 @@ namespace AmandaInterface
             }
         }
 
-
-
         private void tbRun_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13 && !isRunning)
@@ -235,14 +233,6 @@ namespace AmandaInterface
             fileManager.SelectedTabTextBox.ShowGoToDialog();
         }
 
-
-
-
-
-
-
-
-
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fileManager.SelectedFileTab.SaveAs();
@@ -256,7 +246,6 @@ namespace AmandaInterface
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fileManager.SelectedFileTab.AskToSaveFile();
-
             fileManager.OpenFile();
         }
 
