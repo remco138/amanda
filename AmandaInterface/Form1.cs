@@ -67,7 +67,7 @@ namespace AmandaInterface
             tbConsole.SelectionBackColor = Color.Yellow;
             string expr = "> " + tbRun.Text + "\r\n";
             tbConsole.AppendText(expr);
-
+            tbConsole.SelectionBackColor = Color.Transparent;
             // show output
             isRunning = true;
             runButton.Enabled = false;
