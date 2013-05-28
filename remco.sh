@@ -1,5 +1,3 @@
 make
-cd debug
-export DYLD_LIBRARY_PATH=PREFIX/lib/APPLICATION:$DYLD_LIBRARY_PATH
-export LD_LIBRARY_PATH=PREFIX/lib/APPLICATION:$LD_LIBRARY_PATH
+cd Debug
 mono AmandaInterface.exe "$@"
