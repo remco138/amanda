@@ -80,7 +80,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.fileManager.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -465,6 +464,15 @@
             this.fileManager.Size = new System.Drawing.Size(792, 232);
             this.fileManager.TabIndex = 0;
             // 
+            // fileEditorTab1
+            // 
+            this.fileEditorTab1.FileLocation = "";
+            this.fileEditorTab1.Location = new System.Drawing.Point(0, 0);
+            this.fileEditorTab1.Name = "fileEditorTab1";
+            this.fileEditorTab1.Size = new System.Drawing.Size(200, 100);
+            this.fileEditorTab1.TabIndex = 0;
+            this.fileEditorTab1.UseVisualStyleBackColor = true;
+            // 
             // mainForm
             // 
             this.ClientSize = new System.Drawing.Size(792, 569);
@@ -487,7 +495,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.fileManager.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

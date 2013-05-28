@@ -182,6 +182,8 @@ namespace AmandaInterface
         {
             if (ActiveControl.Name == "tbRun")
                 tbRun.Copy();
+            else if (splitContainer1.ActiveControl.Name == "tbConsole")
+                tbConsole.Copy();
             else
                 fileManager.SelectedTabTextBox.Copy();
         }
@@ -194,10 +196,20 @@ namespace AmandaInterface
         }
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int SelectionIndex = fileManager.SelectedTabTextBox.SelectionStart;
-            int SelectionCount = fileManager.SelectedTabTextBox.SelectionLength;
-            fileManager.SelectedTabTextBox.Text = fileManager.SelectedTabTextBox.Text.Remove(SelectionIndex, SelectionCount);
-            fileManager.SelectedTabTextBox.SelectionStart = SelectionIndex;
+            if (ActiveControl.Name == "tbRun")
+            {
+                int SelectionIndex = tbRun.SelectionStart;
+                int SelectionCount = tbRun.SelectionLength;
+                tbRun.Text = tbRun.Text.Remove(SelectionIndex, SelectionCount);
+                tbRun.SelectionStart = SelectionIndex;
+            }
+            else
+            {
+                int SelectionIndex = fileManager.SelectedTabTextBox.SelectionStart;
+                int SelectionCount = fileManager.SelectedTabTextBox.SelectionLength;
+                fileManager.SelectedTabTextBox.Text = fileManager.SelectedTabTextBox.Text.Remove(SelectionIndex, SelectionCount);
+                fileManager.SelectedTabTextBox.SelectionStart = SelectionIndex;
+            }
         }
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
