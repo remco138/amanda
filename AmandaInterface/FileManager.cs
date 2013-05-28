@@ -159,8 +159,8 @@ namespace AmandaInterface
 
         public FileEditorTab()
         {
+            Amanda AmandaObj = new Amanda();
             UseVisualStyleBackColor = true;
-
             textBox = new FastColoredTextBox();
             textBox.AllowDrop = true;
             textBox.KeyDown += _KeyDown;
@@ -172,7 +172,7 @@ namespace AmandaInterface
             autocomplete.MinFragmentLength = 1;
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
-            // autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIXXEN
+            autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIXXEN
 
             saveDialog.Filter = "Amanda File|*.ama";
 

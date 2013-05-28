@@ -44,7 +44,7 @@ namespace AmandaInterface
     }
 
 
-    class Amanda
+    public class Amanda
     {
         public Amanda(string autorun = null)
         {

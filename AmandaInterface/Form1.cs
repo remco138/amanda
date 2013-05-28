@@ -277,7 +277,4 @@ namespace AmandaInterface
         }
     }
 
-
-
-
 }
