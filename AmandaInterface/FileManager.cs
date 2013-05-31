@@ -8,34 +8,210 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
 
 namespace AmandaInterface
 {
+   // [System.ComponentModel.DesignerCategory("Code")]
     class FileManagerTabControl : TabControl
     {
         OpenFileDialog openDialog = new OpenFileDialog();
 
         public FileManagerTabControl()
         {
+            
+            this.ImageList = new ImageList();
+            this.ImageList.Images.Add(Properties.Resources.tab_close);
+            this.ImageList.Images.Add(Properties.Resources.tab_close___Copy);
+           
+            this.SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.DoubleBuffer, true);
+            this.MouseMove += _MouseMove;
+            this.MouseLeave += _MouseLeave;
+            
             this.AllowDrop = true;
             this.DragEnter += _DragEnter;
             this.DragDrop += _DragDrop;
 
             openDialog.Filter = "Amanda File|*.ama";
-
+            
             this.MouseClick += _MouseClick;
 
-            AddNewFile();
+            AddNewFile();   
         }
+
+        #region events
+
+        void _MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                // Find out which tab has been clicked & close that file.
+                //
+                for (int i = 0; i < TabCount; i++)
+                {
+                    if (GetTabRect(i).Contains(e.X, e.Y))
+                    {
+                        CloseFile((FileEditorTab)TabPages[i]);
+                    }
+                }
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                // Left click already sets the target tab to selected so no need to do the stuff we do for the middle mouse button (looping through all the tabs) 
+                //
+                int tabIndex = TabPages.IndexOf(SelectedTab);
+                Rectangle r = ConvertRectangleBounds(GetTabRect(tabIndex));
+
+                if (r.Contains(e.Location))
+                {
+                    CloseFile(this.SelectedFileTab);
+                    SelectedIndex = tabIndex;
+                }
+            }
+
+            
+        }
+
+        void _MouseMove(object sender, MouseEventArgs e)
+        {
+            Rectangle r;
+
+            for (int i = 0; i < TabCount; i++)
+            {
+                r = ConvertRectangleBounds(GetTabRect(i));
+
+                if (r.Contains(e.Location))
+                {
+                    // Cursor is on the close button
+                    TabPages[i].ImageIndex = 1;                  
+                }
+                else
+                {
+                    // Cursor is NOT on the close button
+                    TabPages[i].ImageIndex = 0;
+                }
+            }
+        }
+
+        void _MouseLeave(object sender, EventArgs e)
+        {
+            for (int i = 0; i < TabCount; i++)
+            {
+                TabPages[i].ImageIndex = 0;
+            }
+        }
+
+        /// <summary>
+        /// Converts a Tab Rectangle to the bounding rectangle of the close button
+        /// </summary>
+        Rectangle ConvertRectangleBounds(Rectangle r)
+        {
+            return r = new Rectangle(r.X + r.Width - 13, r.Y + 7, 7, 9);
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            //
+            // Draw the whole fucking tab control !
+            //
+            Graphics g = pevent.Graphics;
+            Pen borderGray = new Pen(Color.FromArgb(172, 172, 172));
+
+            // Draw the Tab Control background stuff
+            //
+            g.FillRectangle(Brushes.White, 0, 0, this.Size.Width, this.Size.Height);
+            g.FillRectangle(SystemBrushes.Control, 0, 0, this.Size.Width, 25);
+            g.DrawLine(borderGray, new Point(0, 0), new Point(0, this.Height));
+            g.DrawLine(borderGray, new Point(5, 25), new Point(this.Width, 25));
+
+            // Loop through all the tabs & paint them
+            //
+            TabPage currTab;
+            Rectangle TabBoundary, origTabBoundary; 
+            RectangleF TabTextBoundary;
+            StringFormat format = new StringFormat();
+            Bitmap image;
+            
+            for (int i = 0; i < TabPages.Count; i++)
+            {
+                currTab = TabPages[i];
+                TabBoundary = this.GetTabRect(i);
+                origTabBoundary = TabBoundary;
+                TabTextBoundary = new RectangleF(TabBoundary.X + 12, TabBoundary.Y + 3, TabBoundary.Width, TabBoundary.Height);
+
+                if (currTab == SelectedTab)
+                {
+                    // Fill Background
+                    TabBoundary = new Rectangle(TabBoundary.X - 2, TabBoundary.Y - 2, TabBoundary.Width + 2, TabBoundary.Height + 4);
+                    g.FillRectangle(new SolidBrush(Color.White), TabBoundary);
+
+                    // Draw Border
+                    g.DrawLine(borderGray, TabBoundary.Location, new Point(TabBoundary.X, TabBoundary.Height));
+                    g.DrawLine(borderGray, TabBoundary.Location, new Point(TabBoundary.Right, TabBoundary.Y));
+                    g.DrawLine(borderGray, new Point(TabBoundary.Right, TabBoundary.Y), new Point(TabBoundary.Right, TabBoundary.Bottom));
+                }
+                else
+                {
+                    // Fill Background
+                    TabBoundary = new Rectangle(TabBoundary.X + 2, TabBoundary.Y + 2, TabBoundary.Width, TabBoundary.Height);
+                    g.FillRectangle(new LinearGradientBrush(TabBoundary, SystemColors.Control, SystemColors.ControlLight, 90.0f), TabBoundary);
+
+                    // Draw Border
+                    TabBoundary = new Rectangle(TabBoundary.X - 1, TabBoundary.Y - 1, TabBoundary.Width - 1, TabBoundary.Height);
+                    g.DrawRectangle(borderGray, TabBoundary);
+                }
+
+                // Draw Tab Title
+                //
+                Font f = new System.Drawing.Font("Segoe UI", 10.0f);
+                g.DrawString(currTab.Text, f, new SolidBrush(Color.Black), TabTextBoundary, format);
+
+                // Draw Tab Close Button 
+                //
+                if (ImageList.Images.Count > 0) 
+                {
+                    if (currTab.ImageIndex == -1) currTab.ImageIndex = 0;// Sometimes ImageIndex is not set yet
+                    // Zet de kleur wit om naar transparency
+                    //
+                    image = (Bitmap)ImageList.Images[currTab.ImageIndex];
+                    image.MakeTransparent();
+                    g.DrawImage(image, origTabBoundary.Right - 15, origTabBoundary.Top + 5, image.Width, image.Height);
+                }
+
+            }
+        }
+
+        private void _DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // if the dropped file is a text file
+            {
+                string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                foreach (string file in filePaths)
+                {
+                    OpenExistingFile(file);
+                }
+            }
+        }
+
+        private void _DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        #endregion
+
 
         public void AddNewFile()
         {
-            // Add a new TabPage and place a FastColoredTextBox inside it.
+            // Add a new FileEditorTab (which has a FastColoredTextbox inside it)
 
             FileEditorTab newPage = new FileEditorTab();     
             newPage.Padding = new System.Windows.Forms.Padding(3);
-            newPage.Text = "Untitled";
-
+            
             this.TabPages.Add(newPage);
         }
 
@@ -65,7 +241,6 @@ namespace AmandaInterface
 
                 FileEditorTab newPage = new FileEditorTab();
                 newPage.FileLocation = pathToFile;
-                newPage.Text = pathToFile; // TODO: Only show the file name and not the whole path
 
                 this.TabPages.Add(newPage);
             }
@@ -94,41 +269,6 @@ namespace AmandaInterface
         {
             get { return ((FileEditorTab)this.SelectedFileTab).textBox; }
         }
-
-
-        private void _MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Middle)
-            {
-                // Find out which tab has been clicked & close that file.
-                //
-                for (int i = 0; i < TabCount; i++)
-                {
-                    if (GetTabRect(i).Contains(e.X, e.Y))
-                    {
-                        CloseFile((FileEditorTab)TabPages[i]);
-                    }
-                }
-            }
-        }
-
-        private void _DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // if the dropped file is a text file
-            {
-                string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                foreach (string file in filePaths)
-                {
-                    OpenExistingFile(file);
-                }
-            }
-        }
-
-        private void _DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
-        }
     }
 
 
@@ -138,7 +278,11 @@ namespace AmandaInterface
         public string FileLocation
         {
             get { return _fileLocation; }
-            set { _fileLocation = value; }
+            set
+            {
+                this.Text = Path.GetFileName(value);
+                _fileLocation = value;
+            }
         }
         bool isEdited;
         public FastColoredTextBox textBox;
@@ -150,16 +294,19 @@ namespace AmandaInterface
         public void Copy() { textBox.Copy(); }
         public void Paste() { textBox.Paste(); }
 
-        Style DefaultStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
-        Style KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
-        Style CommentStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
-        Style ConstantStyle = new TextStyle(Brushes.Firebrick, null, FontStyle.Regular);
+        static Style DefaultStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
+        static Style KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
+        static Style CommentStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
+        static Style ConstantStyle = new TextStyle(Brushes.Firebrick, null, FontStyle.Regular);
 
-        SaveFileDialog saveDialog = new SaveFileDialog();
+        static SaveFileDialog saveDialog = new SaveFileDialog();
 
-        public FileEditorTab()
+
+        public FileEditorTab() : this("") { }
+        public FileEditorTab(string content)
         {
-            Amanda AmandaObj = new Amanda();
+            Text = "Untitled";
+           
             UseVisualStyleBackColor = true;
             textBox = new FastColoredTextBox();
             textBox.AllowDrop = true;
@@ -167,12 +314,15 @@ namespace AmandaInterface
             textBox.TextChanged += _TextChanged;
             textBox.AutoIndentNeeded += _AutoIndentNeeded;
             textBox.Dock = DockStyle.Fill;
+            textBox.Text = content;
 
             autocomplete = new AutocompleteMenu(textBox);
             autocomplete.MinFragmentLength = 1;
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
-            autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIXXEN
+
+           // Amanda AmandaObj = new Amanda();
+           // autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIXXEN
 
             saveDialog.Filter = "Amanda File|*.ama";
 
