@@ -1,0 +1,11 @@
+;; Object amanda
+;; EDE Project Files are auto generated: Do Not Edit
+(ede-proj-project "amanda"
+  :file "Project.ede"
+  :name "amanda"
+  :targets
+  (list
+    (ede-proj-target-makefile-program "ama"
+      :name "ama"
+      :path ""
+      :source '("amcon.c"))))

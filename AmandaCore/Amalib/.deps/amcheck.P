@@ -1,0 +1,12 @@
+amcheck.o: amcheck.c /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/stdc-predef.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-64.h \
+ /usr/lib64/gcc/x86_64-suse-linux/4.7/include/stddef.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib64/gcc/x86_64-suse-linux/4.7/include/stdarg.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/string.h /usr/include/xlocale.h amtable.h amtypes.h bool.h \
+ ammem.h amerror.h /usr/include/setjmp.h /usr/include/bits/setjmp.h \
+ /usr/include/bits/sigset.h amlex.h amprint.h
