@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,7 +37,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,8 +70,8 @@
             this.tbRun = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.fileManager = new AmandaInterface.FileManagerTabControl();
+            this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -103,7 +104,7 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator1,
-            this.exitToolStripMenuItem,
+            this.printToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem1});
             this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
@@ -146,12 +147,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
             // 
-            // exitToolStripMenuItem
+            // printToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.exitToolStripMenuItem.Text = "Print";
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.printToolStripMenuItem.Text = "Print";
+            this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -441,6 +443,16 @@
             this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
+            // fileManager
+            // 
+            this.fileManager.AllowDrop = true;
+            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileManager.Location = new System.Drawing.Point(0, 0);
+            this.fileManager.Name = "fileManager";
+            this.fileManager.SelectedIndex = 0;
+            this.fileManager.Size = new System.Drawing.Size(792, 232);
+            this.fileManager.TabIndex = 0;
+            // 
             // tbConsole
             // 
             this.tbConsole.BackColor = System.Drawing.Color.White;
@@ -453,16 +465,6 @@
             this.tbConsole.Size = new System.Drawing.Size(792, 226);
             this.tbConsole.TabIndex = 0;
             this.tbConsole.Text = "";
-            // 
-            // fileManager
-            // 
-            this.fileManager.AllowDrop = true;
-            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileManager.Location = new System.Drawing.Point(0, 0);
-            this.fileManager.Name = "fileManager";
-            this.fileManager.SelectedIndex = 0;
-            this.fileManager.Size = new System.Drawing.Size(792, 232);
-            this.fileManager.TabIndex = 0;
             // 
             // fileEditorTab1
             // 
@@ -519,7 +521,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
