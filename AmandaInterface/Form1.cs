@@ -279,48 +279,12 @@ namespace AmandaInterface
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PrintDialog pd = new PrintDialog();
-            PrintDocument doc = new PrintDocument();
-            pd.Document = doc;
-
-            if (pd.ShowDialog() == DialogResult.OK)
-            {
-                StringReader reader = new StringReader(fileManager.SelectedFileTab.textBox.Text);
-                doc.PrintPage += new PrintPageEventHandler(DocumentToPrint_PrintPage);
-                doc.Print();
-            }
-        }
-
-        private void DocumentToPrint_PrintPage(object sender,PrintPageEventArgs e)
-        {
-            StringReader reader = new StringReader(fileManager.SelectedFileTab.textBox.Text); //new StringReader(eintragRichTextBox.Text);
-            float LinesPerPage = 0;
-            float YPosition = 0;
-            int Count = 0;
-            float LeftMargin = e.MarginBounds.Left;
-            float TopMargin = e.MarginBounds.Top;
-            string Line = null;
-            Font PrintFont = fileManager.SelectedFileTab.textBox.Font;
-            SolidBrush PrintBrush = new SolidBrush(Color.Black);
-
-            LinesPerPage = e.MarginBounds.Height / PrintFont.GetHeight(e.Graphics);
-
-            while (Count < LinesPerPage && ((Line = reader.ReadLine()) != null))
-            {
-                YPosition = TopMargin + (Count * PrintFont.GetHeight(e.Graphics));
-                e.Graphics.DrawString(Line, PrintFont, PrintBrush, LeftMargin, YPosition, new StringFormat());
-                Count++;
-            }
-
-            if (Line != null)
-            {
-                e.HasMorePages = true;
-            }
-            else
-            {
-                e.HasMorePages = false;
-            }
-            PrintBrush.Dispose();
+            PrintDialogSettings pds = new PrintDialogSettings();
+            pds.ShowPrintDialog = true;
+            pds.ShowPrintPreviewDialog = false;
+            pds.IncludeLineNumbers = true;
+            fileManager.SelectedFileTab.textBox.Margin = new Padding(10);
+            fileManager.SelectedFileTab.textBox.Print(pds);
         }
     }
 
