@@ -379,9 +379,7 @@ namespace AmandaInterface
 
         private void _AutoIndentNeeded(object sender, AutoIndentEventArgs e)
         {
-            Match isIfRegex = Regex.Match(e.LineText.Trim(), ",* if");
             Match isOtherwiseRegex = Regex.Match(e.LineText.Trim(), ",* otherwise");
-            Match isWhereRegex = Regex.Match(e.LineText, "where");
             int currentIndent = e.LineText.TakeWhile(q => q == ' ').Count();    //shouldn't be too inefficient
             int at = e.LineText.IndexOf('=');
 
@@ -391,33 +389,37 @@ namespace AmandaInterface
             /*
              *              All these todo's might not be neccessary, it's pretty good right now
              */
-            if (isWhereRegex.Success)
+            //If the line contains a where, we want the next lines to be indented by a tab
+            if (Regex.IsMatch(e.LineText, "where"))
             {
                 e.ShiftNextLines = e.TabLength;
             }
 
-            else if (isIfRegex.Success == true)
+            //if the line is a condition, we want to find the '=' and indent to there, that's how youre supposed to do conditions in amanda
+            else if (Regex.IsMatch(e.LineText.Trim(), ",* if"))
             {
                 e.ShiftNextLines = at - currentIndent;
             }
-
-            else if (e.LineText.Trim() == "" || e.PrevLineText.Trim().Count() == 0 || isOtherwiseRegex.Success == true)
+                
+            //If line is empty | prev line is empty | contains otherwise (which indicates the end of an if/else statement)
+            else if (e.LineText.Trim() == "" || e.PrevLineText.Trim().Count() == 0 || Regex.IsMatch(e.LineText.Trim(), ",* otherwise") == true)
             {
+                //Get the tag based on our current line, if we are at line 3, and there is a big function going from line 1-5, it will return that.
                 AmandaTag tag = tagParser.GetTag(e.iLine);
                 if (tag != null)
                 {
                     e.ShiftNextLines = tag.BeginLocation.X - at;
                 }
+
+                //No function found? No problem, resort to a tab
                 else
                 {
                     e.ShiftNextLines = -e.TabLength;
                 }
-                return;
             }
         }
 
 
-        ICollection<string> PrevIdentifierList;
         public void UpdateAutocompleteIdentifiers()
         {
             
@@ -428,8 +430,11 @@ namespace AmandaInterface
             Amanda amandaObj = Amanda.GetInstance();
             amandaTagParser.Parse(textBox.Text);
 
-            ICollection<string> items = amandaObj.GetIdentifiers(); //There doesn't seem to be an elegant way to make a copy..
-            amandaTagParser.AmandaTags.ForEach(q => items.Add(q.Name));
+            ICollection<string> tags = new List<string>();
+            amandaTagParser.AmandaTags.ForEach(q => tags.Add(q.Name));
+
+            ICollection<string> items = tags.Concat(amandaObj.GetIdentifiers()).ToList();//amandaTagParser.Concat(Identifiers).ToList();
+
             autocomplete.Items.SetAutocompleteItems(items);
         }
 
