@@ -14,14 +14,13 @@ using System.Drawing.Imaging;
 
 namespace AmandaInterface
 {
-   // [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignerCategory("Code")]
     class FileManagerTabControl : TabControl
     {
         OpenFileDialog openDialog = new OpenFileDialog();
 
         public FileManagerTabControl()
         {
-            
             this.ImageList = new ImageList();
             this.ImageList.Images.Add(Properties.Resources.tab_close);
             this.ImageList.Images.Add(Properties.Resources.tab_close___Copy);
@@ -40,6 +39,7 @@ namespace AmandaInterface
 
             AddNewFile();   
         }
+
 
         #region events
 
@@ -70,9 +70,7 @@ namespace AmandaInterface
                     CloseFile(this.SelectedFileTab);
                     SelectedIndex = tabIndex;
                 }
-            }
-
-            
+            }      
         }
 
         void _MouseMove(object sender, MouseEventArgs e)
@@ -103,6 +101,24 @@ namespace AmandaInterface
                 TabPages[i].ImageIndex = 0;
             }
         }
+  
+        private void _DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // if the dropped file is a text file
+            {
+                string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                foreach (string file in filePaths)
+                {
+                    OpenExistingFile(file);
+                }
+            }
+        }
+
+        private void _DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
 
         /// <summary>
         /// Converts a Tab Rectangle to the bounding rectangle of the close button
@@ -110,11 +126,13 @@ namespace AmandaInterface
         Rectangle ConvertRectangleBounds(Rectangle r)
         {
             return r = new Rectangle(r.X + r.Width - 13, r.Y + 7, 7, 9);
-        }
+        }   
+
+        #endregion
+
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            //
             // Draw the whole fucking tab control !
             //
             Graphics g = pevent.Graphics;
@@ -130,11 +148,11 @@ namespace AmandaInterface
             // Loop through all the tabs & paint them
             //
             TabPage currTab;
-            Rectangle TabBoundary, origTabBoundary; 
+            Rectangle TabBoundary, origTabBoundary;
             RectangleF TabTextBoundary;
             StringFormat format = new StringFormat();
             Bitmap image;
-            
+
             for (int i = 0; i < TabPages.Count; i++)
             {
                 currTab = TabPages[i];
@@ -171,7 +189,7 @@ namespace AmandaInterface
 
                 // Draw Tab Close Button 
                 //
-                if (ImageList.Images.Count > 0) 
+                if (ImageList.Images.Count > 0)
                 {
                     if (currTab.ImageIndex == -1) currTab.ImageIndex = 0;// Sometimes ImageIndex is not set yet
                     // Zet de kleur wit om naar transparency
@@ -183,27 +201,6 @@ namespace AmandaInterface
 
             }
         }
-
-        private void _DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) // if the dropped file is a text file
-            {
-                string[] filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                foreach (string file in filePaths)
-                {
-                    OpenExistingFile(file);
-                }
-            }
-        }
-
-        private void _DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
-        }
-
-        #endregion
-
 
         public void AddNewFile()
         {
@@ -329,58 +326,6 @@ namespace AmandaInterface
             Controls.Add(textBox); 
         }
 
-        public void Save()
-        {
-            if (!isEdited) return;
-
-            if (FileLocation == String.Empty)
-            {
-                SaveAs();
-            }
-            else
-            {
-                File.WriteAllText(FileLocation, textBox.Text);
-                isEdited = false;
-            }
-        }
-
-        public void SaveAs()
-        {
-            DialogResult result = saveDialog.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
-                try
-                {
-                    File.WriteAllText(saveDialog.FileName, textBox.Text);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Unable to write to file: {0}", ex.Message);
-                }
-
-                FileLocation = saveDialog.FileName;
-                isEdited = false;
-            }
-        }
-
-        public void AskToSaveFile()
-        {
-            if (!isEdited) return;
-
-            String file = (FileLocation == "") ? "Untitled" : FileLocation;
-
-            DialogResult result = MessageBox.Show("Save File " + file + "?",
-                                                    "Save File",
-                                                    MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.Yes)
-            {
-                Save();
-            }
-        }
-
-
         private void _KeyDown(object sender, KeyEventArgs e)
         {
             string allowedChars = "([{}]);,. ";
@@ -460,6 +405,58 @@ namespace AmandaInterface
                     e.ShiftNextLines = -e.TabLength;
                 }
                 return;
+            }
+        }
+
+
+        public void Save()
+        {
+            if (!isEdited) return;
+
+            if (FileLocation == String.Empty)
+            {
+                SaveAs();
+            }
+            else
+            {
+                File.WriteAllText(FileLocation, textBox.Text);
+                isEdited = false;
+            }
+        }
+
+        public void SaveAs()
+        {
+            DialogResult result = saveDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    File.WriteAllText(saveDialog.FileName, textBox.Text);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to write to file: {0}", ex.Message);
+                }
+
+                FileLocation = saveDialog.FileName;
+                isEdited = false;
+            }
+        }
+
+        public void AskToSaveFile()
+        {
+            if (!isEdited) return;
+
+            String file = (FileLocation == "") ? "Untitled" : FileLocation;
+
+            DialogResult result = MessageBox.Show("Save File " + file + "?",
+                                                    "Save File",
+                                                    MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                Save();
             }
         }
     }
