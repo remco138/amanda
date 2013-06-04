@@ -311,6 +311,16 @@ namespace AmandaInterface
         {
             Application.Exit();
         }
+
+        private void StopButton_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileManager.CloseSelectedTab();
+        }
     }
 
 }

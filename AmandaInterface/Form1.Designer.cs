@@ -70,9 +70,10 @@
             this.tbRun = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.fileManager = new AmandaInterface.FileManagerTabControl();
+            this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.StopButton.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -101,6 +102,7 @@
             this.fileToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newFileToolStripMenuItem1,
             this.openToolStripMenuItem,
+            this.closeToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator1,
@@ -345,6 +347,7 @@
             this.StopButton.Size = new System.Drawing.Size(792, 39);
             this.StopButton.TabIndex = 9;
             this.StopButton.Text = "toolStrip1";
+            this.StopButton.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.StopButton_ItemClicked);
             // 
             // runButton
             // 
@@ -443,6 +446,16 @@
             this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
+            // fileManager
+            // 
+            this.fileManager.AllowDrop = true;
+            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileManager.Location = new System.Drawing.Point(0, 0);
+            this.fileManager.Name = "fileManager";
+            this.fileManager.SelectedIndex = 0;
+            this.fileManager.Size = new System.Drawing.Size(792, 232);
+            this.fileManager.TabIndex = 0;
+            // 
             // tbConsole
             // 
             this.tbConsole.BackColor = System.Drawing.Color.White;
@@ -456,24 +469,23 @@
             this.tbConsole.TabIndex = 0;
             this.tbConsole.Text = "";
             // 
-            // fileManager
-            // 
-            this.fileManager.AllowDrop = true;
-            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileManager.Location = new System.Drawing.Point(0, 0);
-            this.fileManager.Name = "fileManager";
-            this.fileManager.SelectedIndex = 0;
-            this.fileManager.Size = new System.Drawing.Size(792, 232);
-            this.fileManager.TabIndex = 0;
-            // 
             // fileEditorTab1
             // 
+            this.fileEditorTab1.Content = "";
             this.fileEditorTab1.FileLocation = "";
             this.fileEditorTab1.Location = new System.Drawing.Point(0, 0);
             this.fileEditorTab1.Name = "fileEditorTab1";
             this.fileEditorTab1.Size = new System.Drawing.Size(200, 100);
             this.fileEditorTab1.TabIndex = 0;
             this.fileEditorTab1.UseVisualStyleBackColor = true;
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // mainForm
             // 
@@ -547,6 +559,7 @@
         private System.Windows.Forms.ToolStripButton clearButton;
         private FileManagerTabControl fileManager;
         private FileEditorTab fileEditorTab1;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
     }
 }
 

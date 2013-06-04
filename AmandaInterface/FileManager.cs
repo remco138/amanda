@@ -257,7 +257,16 @@ namespace AmandaInterface
                 Console.WriteLine("Unable to open file: {0}", ex.Message);
             }
         }
+        public void CloseSelectedTab()
+        {
+            var index = SelectedIndex;
+            CloseFile(SelectedFileTab);
 
+            if (index >= TabCount - 1)
+                SelectedIndex = TabCount - 1;
+            else
+                SelectedIndex = index;
+        }
         public void CloseFile(FileEditorTab fileTab)
         {
             // TODO: Make AskToSaveFile so that it also has a CANCEL button
