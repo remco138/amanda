@@ -21,6 +21,7 @@ void Interpret(char expr[]);
 bool Load(char filename[]);
 
 extern bool interrupted;
+void SetInterrupt(bool b);
 
 bool InitRemote(void);
 int CreateRemote(char s[]);

@@ -41,7 +41,7 @@ namespace AmandaInterface
             tbConsole.AppendText(tempOutput.ToString());
 
 
-            runButton.Click += (sender, e) => RunCode();
+            runButton.Click += new EventHandler(RunCodeHandler);
             loadButton.Click += (sender, e) =>
                 {
                     if (fileManager.SelectedTabTextBox.Text == "") return;
@@ -71,7 +71,11 @@ namespace AmandaInterface
             tbConsole.SelectionBackColor = Color.Transparent;
             // show output
             isRunning = true;
-            runButton.Enabled = false;
+            // change runButton to stopButton
+            runButton.Click -= new EventHandler(RunCodeHandler);
+            runButton.Click += new EventHandler(StopCodeHandler);
+            runButton.Image = Properties.Resources.stop;
+            // disable the rest of the buttons
             loadButton.Enabled = false;
             clearButton.Enabled = false;
 
@@ -81,6 +85,15 @@ namespace AmandaInterface
             {
                 rcBw.RunWorkerAsync();
             }
+        }
+
+        private void RunCodeHandler(object sender, EventArgs e) {
+            RunCode();
+        }
+
+        private void StopCodeHandler(object sender, EventArgs e)
+        {
+            AmandaObj.SetInterrupt(true);
         }
 
         private void runTimer_Tick(object sender, EventArgs e)
@@ -123,7 +136,10 @@ namespace AmandaInterface
             stopWatch.Stop();
             runTimer.Stop();
 
-            runButton.Enabled = true;
+            // change stopButton to runButton
+            runButton.Image = Properties.Resources.run;
+            runButton.Click -= new EventHandler(StopCodeHandler);
+            runButton.Click += new EventHandler(RunCodeHandler);
             loadButton.Enabled = true;
             clearButton.Enabled = true;      
             statusBar.BackColor = Color.LightSkyBlue;

@@ -60,7 +60,7 @@
             this.amandaDocsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutAmandaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.StopButton = new System.Windows.Forms.ToolStrip();
             this.runButton = new System.Windows.Forms.ToolStripButton();
             this.loadButton = new System.Windows.Forms.ToolStripButton();
             this.clearButton = new System.Windows.Forms.ToolStripButton();
@@ -74,7 +74,7 @@
             this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
             this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.StopButton.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -330,22 +330,22 @@
             this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.aboutAmandaToolStripMenuItem.Text = "About";
             // 
-            // toolStrip1
+            // StopButton
             // 
-            this.toolStrip1.BackColor = System.Drawing.Color.Transparent;
-            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStrip1.CanOverflow = false;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StopButton.BackColor = System.Drawing.Color.Transparent;
+            this.StopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.StopButton.CanOverflow = false;
+            this.StopButton.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runButton,
             this.loadButton,
             this.clearButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(792, 39);
-            this.toolStrip1.TabIndex = 9;
-            this.toolStrip1.Text = "toolStrip1";
+            this.StopButton.Location = new System.Drawing.Point(0, 24);
+            this.StopButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.StopButton.Name = "StopButton";
+            this.StopButton.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.StopButton.Size = new System.Drawing.Size(792, 39);
+            this.StopButton.TabIndex = 9;
+            this.StopButton.Text = "toolStrip1";
             // 
             // runButton
             // 
@@ -481,7 +481,7 @@
             this.ClientSize = new System.Drawing.Size(792, 569);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbRun);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.StopButton);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -489,8 +489,8 @@
             this.Name = "mainForm";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.StopButton.ResumeLayout(false);
+            this.StopButton.PerformLayout();
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -506,7 +506,7 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip StopButton;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.TextBox tbRun;

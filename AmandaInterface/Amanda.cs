@@ -41,6 +41,9 @@ namespace AmandaInterface
 
         [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool SetOutputCallback([MarshalAs(UnmanagedType.FunctionPtr)] OutputCallback callbackPointer);
+
+        [DllImport("AmandaCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetInterrupt([MarshalAs(UnmanagedType.Bool)] bool b);
     }
 
 
@@ -73,6 +76,11 @@ namespace AmandaInterface
         {
             AmandaHook.Interpret(expression);
             return true;
+        }
+
+        public void SetInterrupt(bool b)
+        {
+            AmandaHook.SetInterrupt(b);
         }
 
         //C char** to C# string is nasty

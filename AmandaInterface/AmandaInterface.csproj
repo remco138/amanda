@@ -137,6 +137,7 @@
     <Content Include="Images\load.png" />
     <Content Include="Images\run.gif" />
     <Content Include="Images\run.png" />
+    <Content Include="Images\stop.png" />
     <None Include="Resources\tab-close.png" />
     <None Include="Resources\tab-close - Copy.png" />
   </ItemGroup>

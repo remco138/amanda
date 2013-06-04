@@ -126,3 +126,4 @@ EXPORTS
 	gethashtable @125
 	SetOutputCallback @126
 	getMessages @127
+	SetInterrupt @128
