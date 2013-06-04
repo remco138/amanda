@@ -218,6 +218,7 @@ namespace AmandaInterface
             newPage.Padding = new System.Windows.Forms.Padding(3);
             
             this.TabPages.Add(newPage);
+            SelectedIndex = TabCount - 1;
         }
 
         public void OpenFile()
@@ -246,8 +247,10 @@ namespace AmandaInterface
 
                 FileEditorTab newPage = new FileEditorTab();
                 newPage.FileLocation = pathToFile;
+                newPage.Content = txt;
 
                 this.TabPages.Add(newPage);
+                SelectedIndex = TabCount - 1;
             }
             catch (IOException ex)
             {
@@ -296,6 +299,7 @@ namespace AmandaInterface
         public string Content
         {
             get { return textBox.Text; }
+            set { textBox.Text = value; }
         }
         public void Copy() { textBox.Copy(); }
         public void Paste() { textBox.Paste(); }

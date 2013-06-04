@@ -70,8 +70,8 @@
             this.tbRun = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.tbConsole = new System.Windows.Forms.RichTextBox();
+            this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
             this.menuStrip1.SuspendLayout();
             this.StopButton.SuspendLayout();
@@ -239,7 +239,6 @@
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
@@ -407,10 +406,10 @@
             // 
             // tbRun
             // 
-            this.tbRun.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.tbRun.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
             this.tbRun.Dock = System.Windows.Forms.DockStyle.Top;
             this.tbRun.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbRun.ForeColor = System.Drawing.Color.Chartreuse;
+            this.tbRun.ForeColor = System.Drawing.Color.Black;
             this.tbRun.Location = new System.Drawing.Point(0, 63);
             this.tbRun.Name = "tbRun";
             this.tbRun.Size = new System.Drawing.Size(792, 22);
@@ -444,16 +443,6 @@
             this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
-            // fileManager
-            // 
-            this.fileManager.AllowDrop = true;
-            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileManager.Location = new System.Drawing.Point(0, 0);
-            this.fileManager.Name = "fileManager";
-            this.fileManager.SelectedIndex = 0;
-            this.fileManager.Size = new System.Drawing.Size(792, 232);
-            this.fileManager.TabIndex = 0;
-            // 
             // tbConsole
             // 
             this.tbConsole.BackColor = System.Drawing.Color.White;
@@ -466,6 +455,16 @@
             this.tbConsole.Size = new System.Drawing.Size(792, 226);
             this.tbConsole.TabIndex = 0;
             this.tbConsole.Text = "";
+            // 
+            // fileManager
+            // 
+            this.fileManager.AllowDrop = true;
+            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileManager.Location = new System.Drawing.Point(0, 0);
+            this.fileManager.Name = "fileManager";
+            this.fileManager.SelectedIndex = 0;
+            this.fileManager.Size = new System.Drawing.Size(792, 232);
+            this.fileManager.TabIndex = 0;
             // 
             // fileEditorTab1
             // 
