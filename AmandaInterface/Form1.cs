@@ -18,7 +18,7 @@ namespace AmandaInterface
 {
     public partial class mainForm : Form
     {
-        Amanda AmandaObj;
+        public Amanda AmandaObj;
                
         OutputCallback outputCallback;
         StringBuilder tempOutput = new StringBuilder();
@@ -36,8 +36,8 @@ namespace AmandaInterface
 
             outputCallback = OutputCallbackMethod;
             AmandaHook.SetOutputCallback(outputCallback);
-          
-            AmandaObj = new Amanda();
+
+            AmandaObj = Amanda.GetInstance();
             tbConsole.AppendText(tempOutput.ToString());
 
 
@@ -49,9 +49,12 @@ namespace AmandaInterface
                     if (AmandaObj.Load(fileManager.SelectedTabTextBox.Text) == true)
                     {
                         MessageBox.Show("File Loaded");
-                        fileManager.UpdateAutocompleteIdentifiers();
+                        fileManager.UpdateAutocompleteIdentifiers(AmandaObj.GetIdentifiers());
                     }
                 };
+
+            //Hacky but meh
+            fileManager.UpdateAutocompleteIdentifiers(AmandaObj.GetIdentifiers());
 
             runTimer.Tick += new EventHandler(runTimer_Tick);
             runTimer.Interval = 20;
@@ -160,7 +163,7 @@ namespace AmandaInterface
         {
             tbConsole.Clear();
         }
-
+        
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveControl.Name == "tbRun")

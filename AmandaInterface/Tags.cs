@@ -69,6 +69,7 @@ namespace AmandaInterface
                 int counter = 0;
                 AmandaTag tag = null;
                 LastCodeParsed = code;
+                AmandaTags = new List<AmandaTag>();
 
                 foreach(string line in code.Split('\n'))
                 {

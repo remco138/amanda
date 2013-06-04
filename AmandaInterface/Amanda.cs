@@ -43,11 +43,35 @@ namespace AmandaInterface
         public static extern bool SetOutputCallback([MarshalAs(UnmanagedType.FunctionPtr)] OutputCallback callbackPointer);
     }
 
-
+    //
+    //Singleton class, I generally hate singletons, however it kinda makes sense to use it here
+    //since we really don't want more than 1 instance of the dll in memory
+    //
     public class Amanda
     {
-        public Amanda(string autorun = null)
+        private static Amanda Instance = null;
+        private static object LockObj = new object();
+
+        public static Amanda GetInstance()
         {
+            if (Instance == null)
+            {
+                lock (LockObj)
+                {
+                    Instance = new Amanda();
+                }
+            }
+            return Instance;
+        }
+
+        private Amanda(string autorun = null)
+        {
+            //Safety overkill..
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+
             AmandaHook.InitOptions(true, ""); //empty char will result in amanda loading up amanda.ini
             AmandaHook.CreateInterpreter();
             if (autorun != null) AmandaHook.Load(autorun);

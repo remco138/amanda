@@ -131,7 +131,7 @@ namespace AmandaInterface
         #endregion
 
 
-        public void UpdateAutocompleteIdentifiers()
+        public void UpdateAutocompleteIdentifiers(List<string> StockIdentifiers)
         {
             foreach(FileEditorTab tab in TabPages)
             {
@@ -307,7 +307,6 @@ namespace AmandaInterface
 
         static SaveFileDialog saveDialog = new SaveFileDialog();
 
-
         public FileEditorTab() : this("") { }
         public FileEditorTab(string content)
         {
@@ -360,6 +359,7 @@ namespace AmandaInterface
                 autocomplete.Show(true);
 
             }
+            UpdateAutocompleteIdentifiers();
         }
 
         private void _TextChanged(object sender, TextChangedEventArgs e)
@@ -416,17 +416,20 @@ namespace AmandaInterface
             }
         }
 
-        
+
+        ICollection<string> PrevIdentifierList;
         public void UpdateAutocompleteIdentifiers()
         {
-            // TODO: Parse de text & set deze shit in autocomplete object
-            //
             
             
             // DIT WERKT NOG NIET :(((((((((((((((
+            //of toch wel? :D, word per keydown opnieuw geparsed, zou niet langzaam moeten zijn omdat string compare snel is/kan zijn
+
+            Amanda amandaObj = Amanda.GetInstance();
             amandaTagParser.Parse(textBox.Text);
 
-            ICollection<string> items = new List<string>();
+            ICollection<string> items = amandaObj.GetIdentifiers(); //There doesn't seem to be an elegant way to make a copy..
+            amandaTagParser.AmandaTags.ForEach(q => items.Add(q.Name));
             autocomplete.Items.SetAutocompleteItems(items);
         }
 
