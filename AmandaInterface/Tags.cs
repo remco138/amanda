@@ -62,7 +62,7 @@ namespace AmandaInterface
         }
 
         //generates the tags (function names, variables, etc)
-        public void parse(string code)
+        public void Parse(string code)
         {
             if (code != LastCodeParsed)
             {

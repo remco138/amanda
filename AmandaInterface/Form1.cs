@@ -49,6 +49,7 @@ namespace AmandaInterface
                     if (AmandaObj.Load(fileManager.SelectedTabTextBox.Text) == true)
                     {
                         MessageBox.Show("File Loaded");
+                        fileManager.UpdateAutocompleteIdentifiers();
                     }
                 };
 
