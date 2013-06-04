@@ -131,6 +131,14 @@ namespace AmandaInterface
         #endregion
 
 
+        public void UpdateAutocompleteIdentifiers()
+        {
+            foreach(FileEditorTab tab in TabPages)
+            {
+                 tab.UpdateAutocompleteIdentifiers();
+            }
+        }
+
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             // Draw the whole fucking tab control !
@@ -284,6 +292,7 @@ namespace AmandaInterface
         bool isEdited;
         public FastColoredTextBox textBox;
         AutocompleteMenu autocomplete;
+        static AmandaTagParser amandaTagParser;
         public string Content
         {
             get { return textBox.Text; }
@@ -318,8 +327,7 @@ namespace AmandaInterface
             autocomplete.Items.MaximumSize = new System.Drawing.Size(200, 300);
             autocomplete.Items.Width = 400;
 
-           // Amanda AmandaObj = new Amanda();
-           // autocomplete.Items.SetAutocompleteItems(AmandaObj.GetIdentifiers()); // TODO: FIXXEN
+            amandaTagParser = new AmandaTagParser();
 
             saveDialog.Filter = "Amanda File|*.ama";
 
@@ -378,7 +386,7 @@ namespace AmandaInterface
             int at = e.LineText.IndexOf('=');
 
             AmandaTagParser tagParser = new AmandaTagParser();
-            tagParser.parse(textBox.Text);
+            tagParser.Parse(textBox.Text);
 
             /*
              *              All these todo's might not be neccessary, it's pretty good right now
@@ -408,6 +416,19 @@ namespace AmandaInterface
             }
         }
 
+        
+        public void UpdateAutocompleteIdentifiers()
+        {
+            // TODO: Parse de text & set deze shit in autocomplete object
+            //
+            
+            
+            // DIT WERKT NOG NIET :(((((((((((((((
+            amandaTagParser.Parse(textBox.Text);
+
+            ICollection<string> items = new List<string>();
+            autocomplete.Items.SetAutocompleteItems(items);
+        }
 
         public void Save()
         {
