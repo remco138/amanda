@@ -47,6 +47,14 @@ void WriteString(char string[])
 	//fflush(stdout);
 }
 
+void SetInterrupt(bool b) {
+	if(b == True) {
+		interrupted = True;
+	} else {
+		interrupted = False;
+	}
+}
+
 static void initgetstring(void)
 {
   #ifdef AMA_READLINE
