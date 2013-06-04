@@ -286,6 +286,11 @@ namespace AmandaInterface
             fileManager.SelectedFileTab.textBox.Margin = new Padding(10);
             fileManager.SelectedFileTab.textBox.Print(pds);
         }
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
 }
