@@ -275,8 +275,13 @@ namespace AmandaInterface
         {
             // TODO: Make AskToSaveFile so that it also has a CANCEL button
             //
-            fileTab.AskToSaveFile();
+            fileTab.AskToSaveFile();                
             TabPages.Remove(fileTab);
+
+            if (TabCount == 0)
+            {
+                this.AddNewFile();
+            }
         }
 
         /// <summary>
@@ -290,6 +295,8 @@ namespace AmandaInterface
         {
             get { return ((FileEditorTab)this.SelectedFileTab).textBox; }
         }
+
+
     }
 
 

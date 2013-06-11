@@ -298,11 +298,6 @@ namespace AmandaInterface
 
         }
 
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PrintDialogSettings pds = new PrintDialogSettings();
