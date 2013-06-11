@@ -51,6 +51,12 @@ namespace AmandaInterface
                         MessageBox.Show("File Loaded");
                         fileManager.UpdateAutocompleteIdentifiers(AmandaObj.GetIdentifiers());
                     }
+
+                    // Print if error
+                    //
+                    tbConsole.AppendText("\n\n");
+                    runTimer_Tick(null, null);
+                    
                 };
 
             //Hacky but meh

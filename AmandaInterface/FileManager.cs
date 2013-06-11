@@ -63,7 +63,7 @@ namespace AmandaInterface
                 // Left click already sets the target tab to selected so no need to do the stuff we do for the middle mouse button (looping through all the tabs) 
                 //
                 int tabIndex = TabPages.IndexOf(SelectedTab);
-                Rectangle r = ConvertRectangleBounds(GetTabRect(tabIndex));
+                Rectangle r = ConvertRectangleBounds_CloseButton(GetTabRect(tabIndex));
 
                 if (r.Contains(e.Location))
                 {
@@ -79,7 +79,7 @@ namespace AmandaInterface
 
             for (int i = 0; i < TabCount; i++)
             {
-                r = ConvertRectangleBounds(GetTabRect(i));
+                r = ConvertRectangleBounds_CloseButton(GetTabRect(i));
 
                 if (r.Contains(e.Location))
                 {
@@ -123,10 +123,14 @@ namespace AmandaInterface
         /// <summary>
         /// Converts a Tab Rectangle to the bounding rectangle of the close button
         /// </summary>
-        Rectangle ConvertRectangleBounds(Rectangle r)
+        Rectangle ConvertRectangleBounds_CloseButton(Rectangle r)
         {
             return r = new Rectangle(r.X + r.Width - 13, r.Y + 7, 7, 9);
-        }   
+        }
+        Rectangle ConvertRectangleBounds_CloseButton(int tabIndex)
+        {
+            return this.ConvertRectangleBounds_CloseButton(GetTabRect(tabIndex));
+        }
 
         #endregion
 
@@ -291,17 +295,23 @@ namespace AmandaInterface
 
     class FileEditorTab : TabPage
     {
-        private string _fileLocation = "";
+        private string fileLocation = "";
         public string FileLocation
         {
-            get { return _fileLocation; }
+            get { return fileLocation; }
             set
             {
                 this.Text = Path.GetFileName(value);
-                _fileLocation = value;
+                fileLocation = value;
             }
         }
-        bool isEdited;
+        private bool isEdited;
+        public bool IsEdited
+        {
+            get { return isEdited; }
+            set { this.isEdited = value; }
+        }
+
         public FastColoredTextBox textBox;
         AutocompleteMenu autocomplete;
         static AmandaTagParser amandaTagParser;
@@ -435,9 +445,6 @@ namespace AmandaInterface
 
         public void UpdateAutocompleteIdentifiers()
         {
-            
-            
-            // DIT WERKT NOG NIET :(((((((((((((((
             //of toch wel? :D, word per keydown opnieuw geparsed, zou niet langzaam moeten zijn omdat string compare snel is/kan zijn
 
             Amanda amandaObj = Amanda.GetInstance();
