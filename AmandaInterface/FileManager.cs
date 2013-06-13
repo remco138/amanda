@@ -145,7 +145,7 @@ namespace AmandaInterface
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            // Draw the whole fucking tab control !
+            // Draw the whole Tab control
             //
             Graphics g = pevent.Graphics;
             Pen borderGray = new Pen(Color.FromArgb(172, 172, 172));
@@ -217,7 +217,6 @@ namespace AmandaInterface
         public void AddNewFile()
         {
             // Add a new FileEditorTab (which has a FastColoredTextbox inside it)
-
             FileEditorTab newPage = new FileEditorTab();     
             newPage.Padding = new System.Windows.Forms.Padding(3);
             
@@ -242,6 +241,7 @@ namespace AmandaInterface
                 if (page.FileLocation == pathToFile)
                     return;
             }
+
 
             // Read file & Open a new Tab
             //
@@ -316,7 +316,15 @@ namespace AmandaInterface
         public bool IsEdited
         {
             get { return isEdited; }
-            set { this.isEdited = value; }
+            set
+            {
+                if (value)
+                    Text += "*";
+                else
+                    Text.Replace("*", String.Empty);
+
+                this.isEdited = value;
+            }
         }
 
         public FastColoredTextBox textBox;
@@ -396,7 +404,7 @@ namespace AmandaInterface
         {
             // Set isEdited to true so the we can ask the user to save the file when he closes the program.
             //
-            if (!isEdited) isEdited = true;
+            if (!IsEdited) IsEdited = true;
 
             e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle);
 
@@ -467,7 +475,7 @@ namespace AmandaInterface
 
         public void Save()
         {
-            if (!isEdited) return;
+            if (!IsEdited) return;
 
             if (FileLocation == String.Empty)
             {
@@ -476,7 +484,7 @@ namespace AmandaInterface
             else
             {
                 File.WriteAllText(FileLocation, textBox.Text);
-                isEdited = false;
+                IsEdited = false;
             }
         }
 
@@ -496,13 +504,13 @@ namespace AmandaInterface
                 }
 
                 FileLocation = saveDialog.FileName;
-                isEdited = false;
+                IsEdited = false;
             }
         }
 
         public void AskToSaveFile()
         {
-            if (!isEdited) return;
+            if (!IsEdited) return;
 
             String file = (FileLocation == "") ? "Untitled" : FileLocation;
 
