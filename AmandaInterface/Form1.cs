@@ -90,7 +90,6 @@ namespace AmandaInterface
             runButton.Image = Properties.Resources.stop;
             // disable the rest of the buttons
             loadButton.Enabled = false;
-            clearButton.Enabled = false;
 
             if (bwInterpret.IsBusy != true && bwTextToConsole.IsBusy != true)
             {
@@ -128,14 +127,13 @@ namespace AmandaInterface
         {
             conBwStopped = true;
             stopWatch.Stop();
-            //runTimer.Stop();
 
             // change stopButton to runButton
             runButton.Image = Properties.Resources.run;
             runButton.Click -= new EventHandler(StopCodeHandler);
             runButton.Click += new EventHandler(RunCodeHandler);
             loadButton.Enabled = true;
-            clearButton.Enabled = true;      
+                  
             statusBar.BackColor = Color.LightSkyBlue;
             lblStatus.Text = "Ready (Completed in: " + stopWatch.ElapsedMilliseconds + " Milliseconds) ";
 

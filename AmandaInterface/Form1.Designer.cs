@@ -34,6 +34,7 @@
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.newFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -63,7 +64,6 @@
             this.StopButton = new System.Windows.Forms.ToolStrip();
             this.runButton = new System.Windows.Forms.ToolStripButton();
             this.loadButton = new System.Windows.Forms.ToolStripButton();
-            this.clearButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -73,7 +73,6 @@
             this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.tbConsole = new System.Windows.Forms.RichTextBox();
             this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.StopButton.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -128,6 +127,14 @@
             this.openToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.openToolStripMenuItem.Text = "Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -338,8 +345,7 @@
             this.StopButton.CanOverflow = false;
             this.StopButton.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runButton,
-            this.loadButton,
-            this.clearButton});
+            this.loadButton});
             this.StopButton.Location = new System.Drawing.Point(0, 24);
             this.StopButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.StopButton.Name = "StopButton";
@@ -370,17 +376,6 @@
             this.loadButton.Size = new System.Drawing.Size(36, 36);
             this.loadButton.Text = "toolStripButton2";
             this.loadButton.ToolTipText = "Load";
-            // 
-            // clearButton
-            // 
-            this.clearButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.clearButton.Image = ((System.Drawing.Image)(resources.GetObject("clearButton.Image")));
-            this.clearButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.clearButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(36, 36);
-            this.clearButton.Text = "Clear console";
-            this.clearButton.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripProgressBar1
             // 
@@ -473,19 +468,12 @@
             // 
             this.fileEditorTab1.Content = "";
             this.fileEditorTab1.FileLocation = "";
+            this.fileEditorTab1.IsEdited = false;
             this.fileEditorTab1.Location = new System.Drawing.Point(0, 0);
             this.fileEditorTab1.Name = "fileEditorTab1";
             this.fileEditorTab1.Size = new System.Drawing.Size(200, 100);
             this.fileEditorTab1.TabIndex = 0;
             this.fileEditorTab1.UseVisualStyleBackColor = true;
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.closeToolStripMenuItem.Text = "Close";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // mainForm
             // 
@@ -556,7 +544,6 @@
         private System.Windows.Forms.ToolStripMenuItem amandaDocsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem aboutAmandaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton clearButton;
         private FileManagerTabControl fileManager;
         private FileEditorTab fileEditorTab1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
