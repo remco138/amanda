@@ -23,12 +23,12 @@ namespace AmandaInterface
         OutputCallback outputCallback;
         StringBuilder tempOutput = new StringBuilder();
         
-        System.Windows.Forms.Timer runTimer = new System.Windows.Forms.Timer();
-        System.Timers.Timer runTTimer = new System.Timers.Timer();
         bool isRunning = false;
+        bool conBwStopped = false;
 
         System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
-        BackgroundWorker rcBw = new BackgroundWorker();
+        BackgroundWorker bwInterpret = new BackgroundWorker();
+        BackgroundWorker bwTextToConsole = new BackgroundWorker();
 
         public mainForm()
         {
@@ -61,18 +61,21 @@ namespace AmandaInterface
 
             //Hacky but meh
             fileManager.UpdateAutocompleteIdentifiers(AmandaObj.GetIdentifiers());
-
-            runTimer.Tick += new EventHandler(runTimer_Tick);
-            runTimer.Interval = 20;
             
-            rcBw.WorkerSupportsCancellation = true;
-            rcBw.WorkerReportsProgress = false;
-            rcBw.DoWork += new DoWorkEventHandler(rcBw_doWork);
-            rcBw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
+            bwInterpret.WorkerSupportsCancellation = true;
+            bwInterpret.WorkerReportsProgress = false;
+            bwInterpret.DoWork += new DoWorkEventHandler(rcBw_doWork);
+            bwInterpret.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
+
+            bwTextToConsole.WorkerSupportsCancellation = true;
+            bwTextToConsole.WorkerReportsProgress = false;
+            bwTextToConsole.DoWork += new DoWorkEventHandler(conBw_doWork);
+            bwTextToConsole.RunWorkerCompleted += new RunWorkerCompletedEventHandler(conBw_runWorkerCompleted);
         }
 
         private void RunCode()
         {
+            conBwStopped = false;
             // show expression
             tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.SelectionBackColor = Color.Yellow;
@@ -89,11 +92,10 @@ namespace AmandaInterface
             loadButton.Enabled = false;
             clearButton.Enabled = false;
 
-            runTimer.Start(); // doet hetzelfde als runTimer.Enabled = true;
-
-            if (rcBw.IsBusy != true)
+            if (bwInterpret.IsBusy != true && bwTextToConsole.IsBusy != true)
             {
-                rcBw.RunWorkerAsync();
+                bwTextToConsole.RunWorkerAsync();
+                bwInterpret.RunWorkerAsync();
             }
         }
 
@@ -107,27 +109,8 @@ namespace AmandaInterface
         }
 
         private void runTimer_Tick(object sender, EventArgs e)
-        {           
-            // Make sure the console isn't getting too full
-            //
-            if (tbConsole.TextLength > 40000)
-            {
-                Console.WriteLine("Resetting Console Content");
-                tbConsole.Text = tbConsole.Text.Substring(35000);
-            }
-
-            // StringBuilder isn't threadsafe, so we use a lock here to prevent Exceptions
-            //
-            lock (tempOutput)
-            {
-                tbConsole.AppendText(tempOutput.ToString());
-                tempOutput.Clear();
-            }
-
-            // Scroll to the end of the textbox
-            //
-            tbConsole.SelectionStart = tbConsole.TextLength;
-            tbConsole.ScrollToCaret();
+        {
+            // blabla
         }
 
         private void rcBw_doWork(object sender, DoWorkEventArgs e)
@@ -143,8 +126,9 @@ namespace AmandaInterface
 
         private void rcBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            conBwStopped = true;
             stopWatch.Stop();
-            runTimer.Stop();
+            //runTimer.Stop();
 
             // change stopButton to runButton
             runButton.Image = Properties.Resources.run;
@@ -155,13 +139,44 @@ namespace AmandaInterface
             statusBar.BackColor = Color.LightSkyBlue;
             lblStatus.Text = "Ready (Completed in: " + stopWatch.ElapsedMilliseconds + " Milliseconds) ";
 
+            stopWatch.Reset();
+            isRunning = false;
+        }
+
+        private void conBw_doWork(object sender, DoWorkEventArgs e)
+        {
+            for (; ; )
+            {
+                Thread.Sleep(2);
+                if (conBwStopped)
+                    break;
+
+                // StringBuilder isn't threadsafe, so we use a lock here to prevent Exceptions
+                //
+                lock (tempOutput)
+                {
+                    tbConsole.Invoke((MethodInvoker)delegate
+                    {
+                        if (tbConsole.TextLength > 50000)
+                        {
+                            Console.WriteLine("Resetting Console Content");
+                            tbConsole.Text = tbConsole.Text.Substring(45000);
+                        }
+                        tbConsole.AppendText(tempOutput.ToString());
+                        tempOutput.Clear();
+                        tbConsole.SelectionStart = tbConsole.TextLength;
+                        tbConsole.ScrollToCaret();
+                    });
+                }
+            }
+        }
+
+        private void conBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
             tbConsole.AppendText(tempOutput.ToString()); // Voeg het laatste stukje text ook toe.
             tempOutput.Clear();
             tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.ScrollToCaret();
-
-            stopWatch.Reset();
-            isRunning = false;
         }
 
         private void OutputCallbackMethod(String output)  //Deze functie wordt bij elke WriteString() (in de amanda DLL) uitgevoerd.
