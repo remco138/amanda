@@ -421,7 +421,7 @@ namespace AmandaInterface
 
             foreach(string functionName in parser.AmandaTags.Select(q => q.Name))
             {
-                e.ChangedRange.SetStyle(FunctionStyle, functionName);
+                e.ChangedRange.SetStyle(FunctionStyle, @"\b" + functionName + @"\b" );
             }
         }
 
