@@ -342,6 +342,7 @@ namespace AmandaInterface
         static Style KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Italic);
         static Style CommentStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
         static Style ConstantStyle = new TextStyle(Brushes.Firebrick, null, FontStyle.Regular);
+        static Style FunctionStyle =  new TextStyle(Brushes.DarkCyan, null, FontStyle.Regular);
 
         static SaveFileDialog saveDialog = new SaveFileDialog();
 
@@ -400,19 +401,28 @@ namespace AmandaInterface
             UpdateAutocompleteIdentifiers();
         }
 
+
         private void _TextChanged(object sender, TextChangedEventArgs e)
         {
+            AmandaTagParser parser = new AmandaTagParser();
+            parser.Parse(textBox.Text);
+
             // Set isEdited to true so the we can ask the user to save the file when he closes the program.
             //
             if (!IsEdited) IsEdited = true;
 
-            e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle);
+            e.ChangedRange.ClearStyle(KeywordStyle, CommentStyle, ConstantStyle, FunctionStyle);
 
             e.ChangedRange.SetStyle(KeywordStyle, @"\b(where|if|else|True|False|otherwise)\b");
             e.ChangedRange.SetStyle(CommentStyle, @"\|\|.*");                          //comments ||...
             e.ChangedRange.SetStyle(ConstantStyle, @"(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
             e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
+
+            foreach(string functionName in parser.AmandaTags.Select(q => q.Name))
+            {
+                e.ChangedRange.SetStyle(FunctionStyle, functionName);
+            }
         }
 
         private void _AutoIndentNeeded(object sender, AutoIndentEventArgs e)
