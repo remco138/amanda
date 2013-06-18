@@ -71,6 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Amanda.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="Tags.cs" />
@@ -82,6 +88,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +147,33 @@
     <Content Include="Images\run.gif" />
     <Content Include="Images\run.png" />
     <Content Include="Images\stop.png" />
+    <None Include="Resources\about.wav" />
+    <None Include="Resources\aboutclose.mp3" />
+    <Content Include="Resources\documentation\css\styles.css" />
+    <Content Include="Resources\documentation\documentation.html" />
+    <Content Include="Resources\documentation\empty.html" />
+    <Content Include="Resources\documentation\images\bg.png" />
+    <Content Include="Resources\documentation\images\logo.png" />
+    <Content Include="Resources\documentation\images\picture1.jpg" />
+    <Content Include="Resources\documentation\images\picture2.jpg" />
+    <Content Include="Resources\documentation\images\picture3.jpg" />
+    <Content Include="Resources\documentation\images\picture4.jpg" />
+    <Content Include="Resources\documentation\index.html" />
+    <Content Include="Resources\documentation\index_0.html" />
+    <Content Include="Resources\documentation\index_1.html" />
+    <Content Include="Resources\documentation\index_10.html" />
+    <Content Include="Resources\documentation\index_11.html" />
+    <Content Include="Resources\documentation\index_12.html" />
+    <Content Include="Resources\documentation\index_13.html" />
+    <Content Include="Resources\documentation\index_14.html" />
+    <Content Include="Resources\documentation\index_2.html" />
+    <Content Include="Resources\documentation\index_3.html" />
+    <Content Include="Resources\documentation\index_4.html" />
+    <Content Include="Resources\documentation\index_5.html" />
+    <Content Include="Resources\documentation\index_6.html" />
+    <Content Include="Resources\documentation\index_7.html" />
+    <Content Include="Resources\documentation\index_8.html" />
+    <Content Include="Resources\documentation\index_9.html" />
     <None Include="Resources\tab-close.png" />
     <None Include="Resources\tab-close - Copy.png" />
   </ItemGroup>

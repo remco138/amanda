@@ -62,16 +62,16 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutAmandaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StopButton = new System.Windows.Forms.ToolStrip();
-            this.runButton = new System.Windows.Forms.ToolStripButton();
-            this.loadButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tbRun = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.tbConsole = new System.Windows.Forms.RichTextBox();
+            this.runButton = new System.Windows.Forms.ToolStripButton();
+            this.loadButton = new System.Windows.Forms.ToolStripButton();
+            this.fileManager = new AmandaInterface.FileManagerTabControl();
             this.fileEditorTab1 = new AmandaInterface.FileEditorTab();
             this.menuStrip1.SuspendLayout();
             this.StopButton.SuspendLayout();
@@ -324,19 +324,21 @@
             // amandaDocsToolStripMenuItem
             // 
             this.amandaDocsToolStripMenuItem.Name = "amandaDocsToolStripMenuItem";
-            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.amandaDocsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.amandaDocsToolStripMenuItem.Text = "Amanda Docs";
+            this.amandaDocsToolStripMenuItem.Click += new System.EventHandler(this.amandaDocsToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
             // 
             // aboutAmandaToolStripMenuItem
             // 
             this.aboutAmandaToolStripMenuItem.Name = "aboutAmandaToolStripMenuItem";
-            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.aboutAmandaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutAmandaToolStripMenuItem.Text = "About";
+            this.aboutAmandaToolStripMenuItem.Click += new System.EventHandler(this.aboutAmandaToolStripMenuItem_Click);
             // 
             // StopButton
             // 
@@ -354,28 +356,6 @@
             this.StopButton.TabIndex = 9;
             this.StopButton.Text = "toolStrip1";
             this.StopButton.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.StopButton_ItemClicked);
-            // 
-            // runButton
-            // 
-            this.runButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.runButton.Image = ((System.Drawing.Image)(resources.GetObject("runButton.Image")));
-            this.runButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.runButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(36, 36);
-            this.runButton.Text = "toolStripButton1";
-            this.runButton.ToolTipText = "Run";
-            // 
-            // loadButton
-            // 
-            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadButton.Image = ((System.Drawing.Image)(resources.GetObject("loadButton.Image")));
-            this.loadButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(36, 36);
-            this.loadButton.Text = "toolStripButton2";
-            this.loadButton.ToolTipText = "Load";
             // 
             // toolStripProgressBar1
             // 
@@ -441,16 +421,6 @@
             this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 0;
             // 
-            // fileManager
-            // 
-            this.fileManager.AllowDrop = true;
-            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileManager.Location = new System.Drawing.Point(0, 0);
-            this.fileManager.Name = "fileManager";
-            this.fileManager.SelectedIndex = 0;
-            this.fileManager.Size = new System.Drawing.Size(792, 232);
-            this.fileManager.TabIndex = 0;
-            // 
             // tbConsole
             // 
             this.tbConsole.BackColor = System.Drawing.Color.White;
@@ -463,6 +433,38 @@
             this.tbConsole.Size = new System.Drawing.Size(792, 226);
             this.tbConsole.TabIndex = 0;
             this.tbConsole.Text = "";
+            // 
+            // runButton
+            // 
+            this.runButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.runButton.Image = ((System.Drawing.Image)(resources.GetObject("runButton.Image")));
+            this.runButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.runButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.runButton.Name = "runButton";
+            this.runButton.Size = new System.Drawing.Size(36, 36);
+            this.runButton.Text = "toolStripButton1";
+            this.runButton.ToolTipText = "Run";
+            // 
+            // loadButton
+            // 
+            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.loadButton.Image = ((System.Drawing.Image)(resources.GetObject("loadButton.Image")));
+            this.loadButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(36, 36);
+            this.loadButton.Text = "toolStripButton2";
+            this.loadButton.ToolTipText = "Load";
+            // 
+            // fileManager
+            // 
+            this.fileManager.AllowDrop = true;
+            this.fileManager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileManager.Location = new System.Drawing.Point(0, 0);
+            this.fileManager.Name = "fileManager";
+            this.fileManager.SelectedIndex = 0;
+            this.fileManager.Size = new System.Drawing.Size(792, 232);
+            this.fileManager.TabIndex = 0;
             // 
             // fileEditorTab1
             // 

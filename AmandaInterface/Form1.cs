@@ -335,6 +335,26 @@ namespace AmandaInterface
         {
             fileManager.CloseSelectedTab();
         }
+
+        private void amandaDocsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(Application.StartupPath + @"\documentation\index.html");
+            }
+            catch (Win32Exception ex)
+            {
+                MessageBox.Show("Kan de documentatie bestanden niet vinden! Vraag je leraar om hulp.");
+            }
+        }
+
+        private void aboutAmandaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About aboutForm = new About();
+            aboutForm.StartPosition = FormStartPosition.Manual;
+            aboutForm.Location = new Point(this.Location.X + (this.Width - aboutForm.Width) / 2, this.Location.Y + (this.Height - aboutForm.Height) / 2);
+            aboutForm.Show(this);
+        }
     }
 
 }
