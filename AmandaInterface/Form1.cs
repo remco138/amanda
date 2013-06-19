@@ -56,7 +56,9 @@ namespace AmandaInterface
                     //
                     tbConsole.AppendText("\n\n");
                     tbConsole.AppendText(tempOutput.ToString());
-                    tempOutput.Clear();                  
+                    tempOutput.Clear();
+                    tbConsole.SelectionStart = tbConsole.TextLength;
+                    tbConsole.ScrollToCaret();
                 };
 
             //

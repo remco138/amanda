@@ -69,7 +69,6 @@ namespace AmandaInterface
 
         private Amanda(string autorun = null)
         {
-            //Safety overkill..
             if (Instance == null)
             {
                 Instance = this;
@@ -107,7 +106,7 @@ namespace AmandaInterface
             AmandaHook.SetInterrupt(b);
         }
 
-        //C char** to C# string is nasty
+        //C char** to C# string
         public List<string> GetIdentifiers(string search = "")
         {
             return CStringPointerToList(AmandaHook.gethashtable(search));
@@ -125,7 +124,7 @@ namespace AmandaInterface
                 IntPtr strPtr = (IntPtr)Marshal.PtrToStructure(ptr, typeof(IntPtr));
                 functionList.Add(Marshal.PtrToStringAnsi(strPtr));
                 ptr = new IntPtr(ptr.ToInt64() + IntPtr.Size);
-                if (functionList[i] == "\n\n\n") //pretty lame but who cares
+                if (functionList[i] == "\n\n\n")
                 {
                     functionList.RemoveAt(i);
                     break;
