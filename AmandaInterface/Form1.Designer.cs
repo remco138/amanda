@@ -354,8 +354,7 @@
             this.StopButton.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.StopButton.Size = new System.Drawing.Size(792, 39);
             this.StopButton.TabIndex = 9;
-            this.StopButton.Text = "toolStrip1";
-            this.StopButton.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.StopButton_ItemClicked);
+            this.StopButton.Text = "toolStrip1";  
             // 
             // toolStripProgressBar1
             // 

@@ -24,7 +24,7 @@ namespace AmandaInterface
         StringBuilder tempOutput = new StringBuilder();
         
         bool isRunning = false;
-        bool conBwStopped = false;
+        bool stop_bwTextToConsole = false;
 
         System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
         BackgroundWorker bwInterpret = new BackgroundWorker();
@@ -39,7 +39,7 @@ namespace AmandaInterface
 
             AmandaObj = Amanda.GetInstance();
             tbConsole.AppendText(tempOutput.ToString());
-
+            tempOutput.Clear(); 
 
             runButton.Click += new EventHandler(RunCodeHandler);
             loadButton.Click += (sender, e) =>
@@ -55,32 +55,31 @@ namespace AmandaInterface
                     // Print if error
                     //
                     tbConsole.AppendText("\n\n");
-                    runTimer_Tick(null, null);
-                    
+                    tbConsole.AppendText(tempOutput.ToString());
+                    tempOutput.Clear();                  
                 };
 
-            //Hacky but meh
+            //
             fileManager.UpdateAutocompleteIdentifiers(AmandaObj.GetIdentifiers());
             
             bwInterpret.WorkerSupportsCancellation = true;
             bwInterpret.WorkerReportsProgress = false;
-            bwInterpret.DoWork += new DoWorkEventHandler(rcBw_doWork);
-            bwInterpret.RunWorkerCompleted += new RunWorkerCompletedEventHandler(rcBw_runWorkerCompleted);
+            bwInterpret.DoWork += new DoWorkEventHandler(bwInterpret_doWork);
+            bwInterpret.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwInterpret_runWorkerCompleted);
 
             bwTextToConsole.WorkerSupportsCancellation = true;
             bwTextToConsole.WorkerReportsProgress = false;
-            bwTextToConsole.DoWork += new DoWorkEventHandler(conBw_doWork);
-            bwTextToConsole.RunWorkerCompleted += new RunWorkerCompletedEventHandler(conBw_runWorkerCompleted);
+            bwTextToConsole.DoWork += new DoWorkEventHandler(bwTextToConsole_doWork);
+            bwTextToConsole.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bwTextToConsole_runWorkerCompleted);
         }
 
         private void RunCode()
         {
-            conBwStopped = false;
+            stop_bwTextToConsole = false;
             // show expression
             tbConsole.SelectionStart = tbConsole.TextLength;
             tbConsole.SelectionBackColor = Color.Yellow;
-            string expr = "> " + tbRun.Text + "\r\n";
-            tbConsole.AppendText(expr);
+            tbConsole.AppendText("> " + tbRun.Text + "\r\n");
             tbConsole.SelectionBackColor = Color.Transparent;
             // show output
             isRunning = true;
@@ -98,7 +97,8 @@ namespace AmandaInterface
             }
         }
 
-        private void RunCodeHandler(object sender, EventArgs e) {
+        private void RunCodeHandler(object sender, EventArgs e) 
+        {
             RunCode();
         }
 
@@ -107,12 +107,7 @@ namespace AmandaInterface
             AmandaObj.SetInterrupt(true);
         }
 
-        private void runTimer_Tick(object sender, EventArgs e)
-        {
-            // blabla
-        }
-
-        private void rcBw_doWork(object sender, DoWorkEventArgs e)
+        private void bwInterpret_doWork(object sender, DoWorkEventArgs e)
         {
             // Start the Amanda Interpereter & active the statusbar
             //
@@ -123,9 +118,9 @@ namespace AmandaInterface
             AmandaObj.Interpret(tbRun.Text);        
         }
 
-        private void rcBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bwInterpret_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            conBwStopped = true;
+            stop_bwTextToConsole = true;
             stopWatch.Stop();
 
             // change stopButton to runButton
@@ -141,12 +136,12 @@ namespace AmandaInterface
             isRunning = false;
         }
 
-        private void conBw_doWork(object sender, DoWorkEventArgs e)
+        private void bwTextToConsole_doWork(object sender, DoWorkEventArgs e)
         {
             for (; ; )
             {
                 Thread.Sleep(2);
-                if (conBwStopped)
+                if (stop_bwTextToConsole)
                     break;
 
                 // StringBuilder isn't threadsafe, so we use a lock here to prevent Exceptions
@@ -169,7 +164,7 @@ namespace AmandaInterface
             }
         }
 
-        private void conBw_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bwTextToConsole_runWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             tbConsole.AppendText(tempOutput.ToString()); // Voeg het laatste stukje text ook toe.
             tempOutput.Clear();
@@ -193,6 +188,9 @@ namespace AmandaInterface
                 e.Handled = true;
             }
         }
+
+
+        #region toolStripEvents
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
@@ -326,11 +324,6 @@ namespace AmandaInterface
             Application.Exit();
         }
 
-        private void StopButton_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fileManager.CloseSelectedTab();
@@ -355,6 +348,9 @@ namespace AmandaInterface
             aboutForm.Location = new Point(this.Location.X + (this.Width - aboutForm.Width) / 2, this.Location.Y + (this.Height - aboutForm.Height) / 2);
             aboutForm.Show(this);
         }
+
+        #endregion
+    
     }
 
 }
