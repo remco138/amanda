@@ -415,7 +415,7 @@ namespace AmandaInterface
 
             e.ChangedRange.SetStyle(KeywordStyle, @"\b(where|if|else|True|False|otherwise)\b");
             e.ChangedRange.SetStyle(CommentStyle, @"\|\|.*");                          //comments ||...
-            e.ChangedRange.SetStyle(ConstantStyle, @"(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
+            e.ChangedRange.SetStyle(ConstantStyle, @"\b(\B-)?[0-9]+\b");                  //numbers 123, -123, to be removed?
             e.ChangedRange.SetStyle(ConstantStyle, @"""[^""\\]*(?:\\.[^""\\]*)*""?");   //string "", source: stackoverflow
             e.ChangedRange.SetStyle(ConstantStyle, @"'[^'\\]*(?:\\.[^'\\]*)*'?");       //char ''
 
